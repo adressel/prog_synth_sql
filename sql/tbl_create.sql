@@ -1,0 +1,39 @@
+CREATE TABLE Usr (
+	username VARCHAR(20) NOT NULL,
+	firstname VARCHAR(20) NOT NULL,
+	lastname VARCHAR(20) NOT NULL,
+	password VARCHAR(20) NOT NULL,
+	email VARCHAR(40) NOT NULL,
+	PRIMARY KEY (username)
+);
+	
+CREATE TABLE Album (
+	albumid INTEGER NOT NULL AUTO_INCREMENT,
+	title VARCHAR(50) NOT NULL,
+	created DATE NOT NULL,
+	lastupdated DATE NOT NULL,
+	username VARCHAR(20) NOT NULL,
+	PRIMARY KEY (albumid),
+	FOREIGN KEY (username) REFERENCES Usr(username)
+		ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Photo (
+	picid VARCHAR(40) NOT NULL,
+	url VARCHAR(255) NOT NULL,
+	format CHAR(3) NOT NULL,
+	datetaken DATE NOT NULL,
+	PRIMARY KEY (picid)
+);
+
+CREATE TABLE Contain (
+	albumid INTEGER NOT NULL,
+	picid VARCHAR(40) NOT NULL,
+	caption VARCHAR(255) NOT NULL,
+	sequencenum INTEGER NOT NULL,
+	PRIMARY KEY (albumid, picid),
+	FOREIGN KEY (albumid) REFERENCES Album(albumid)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (picid) REFERENCES Photo(picid)
+		ON DELETE CASCADE ON UPDATE CASCADE
+);
