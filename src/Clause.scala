@@ -7,4 +7,5 @@ object Clause {
 
 class Clause {
 	val id = Clause.newClauseId
+	def print() {}
 }
