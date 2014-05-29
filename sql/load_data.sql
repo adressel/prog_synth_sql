@@ -23,7 +23,7 @@ INSERT INTO Usr VALUES (
 INSERT INTO Album (title, created, lastupdated, username)  VALUES (
 	'I love sports',
 	'2008-12-29 23:59:59',
-	'2008-12-31 23:59:59',
+	'2008-12-30 23:59:59',
 	'sportslover'
 ),
 (
@@ -34,8 +34,8 @@ INSERT INTO Album (title, created, lastupdated, username)  VALUES (
 ),
 (
 	'Around The World',
-	'2007-12-31 23:59:59',
-	'2008-02-31 23:59:59',
+	'2007-12-29 23:59:59',
+	'2008-02-20 23:59:59',
 	'traveler'
 ),
 (
