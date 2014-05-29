@@ -4,7 +4,7 @@ import scala.collection.mutable.MutableList
 
 
 class AttributeClause (tableName: String, attrName: String, constant : MutableList[String]) extends Clause {
-	override def toString() = tableName + "  " + attrName 
+	override def toString() = tableName + "  " + attrName + constant.mkString(",")
 }
 
 object AttributeClause {
@@ -12,15 +12,14 @@ object AttributeClause {
 		println("hi")
 	}
 	//creates the list of attributes given two tables
-	def populate(connection: Connection, tableName1 : String, tableName2 : String)  = {
-	    var returnList : List[AttributeClause] = List()
+	def populate(connection: Connection, tableName1 : String, tableName2 : String) : MutableList[AttributeClause] = {
 		val statement = connection.createStatement();
 	    val statement2 = connection.createStatement();
       // resultSet gets the result of the SQL query
 
 	     val  resultSet = statement
-	          .executeQuery("SHOW columns FROM "+tableName1+";");
-	  	
+	          .executeQuery("SHOW columns FROM "+tableName1+";")
+	     
 	     val x : MutableList[AttributeClause] = MutableList()
 	     
 	     while (resultSet.next())
@@ -35,6 +34,6 @@ object AttributeClause {
 	       }
 	       x += new AttributeClause(tableName1, test, constList)
 	     }
-	
+	     x
 	}
 }
