@@ -1,7 +1,7 @@
 package src
 import java.sql.Connection
 
-class ResultClause extends Clause{
+class ResultClause (row_id1: Int, row_id2 : Int) extends Clause{
 	
 }
 

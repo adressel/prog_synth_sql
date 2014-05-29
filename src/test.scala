@@ -13,13 +13,13 @@ object test extends App {
 	val connection = DriverManager.getConnection(url, username, password)
 	if(connection == null) println("failed")
 	
-	val statement = connection.createStatement()
-	val resultSet = statement.executeQuery("SELECT * FROM album")
-	while(resultSet.next()) {
-		println(resultSet.getString("username"))
-	}
-	println("HI")
-	AttributeClause.test
+//	val statement = connection.createStatement()
+//	val resultSet = statement.executeQuery("SELECT * FROM album")
+//	while(resultSet.next()) {
+//		println(resultSet.getString("username"))
+//	}
+	
+	Utility.getPrimaryKeys(connection, "contain")
 	
 	connection.close()
 }
