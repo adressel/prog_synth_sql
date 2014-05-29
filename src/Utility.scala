@@ -6,7 +6,7 @@ import java.sql.ResultSet
 
 object Utility {
 	//returns a list of primary keys for a table
-	def getPrimaryKeys(connection: Connection, tableName: String) = {
+	def getPrimaryKeys(connection: Connection, tableName: String) : ArrayBuffer[String] = {
 		var primaryKeys : ArrayBuffer[String] = ArrayBuffer()
 		val keys = connection.getMetaData().getPrimaryKeys(null, null, tableName)
 		while(keys.next()) {
@@ -16,7 +16,7 @@ object Utility {
 	}
 	
 	//converts a resultSet (that is assumed to be valid) to a List[Any]
-	def resultToList(result : ResultSet) = {
+	def resultToList(result : ResultSet) : ArrayBuffer[Any] = {
 		val resultList : ArrayBuffer[Any] = ArrayBuffer()
 		
 		val columnCount = result.getMetaData().getColumnCount()
@@ -30,7 +30,8 @@ object Utility {
 	//creates a resultSet from select (columns) from tableName
 	//for instance, with tableName = "album" and columns = List("id", "location")
 	//it would return the resultSet from select id, location from album
-	def selectAllColumns(connection: Connection, tableName: String, columns: ArrayBuffer[String]) = {
+	def selectAllColumns(connection: Connection, tableName: String, 
+			columns: ArrayBuffer[String]) : ResultSet = {
 		val statement = connection.createStatement()
 		statement.executeQuery(s"select ${columns.mkString(", ")} from $tableName")
 	}
