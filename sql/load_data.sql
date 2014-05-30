@@ -408,7 +408,7 @@ INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 );
 
 
-INSERT INTO OutputAtoC (picid, caption, title, username) VALUES
+INSERT INTO OutputAtoC (containpicid, containcaption, albumtitle, albumusername) VALUES
 (
 	'space_EagleNebula',
 	'space_EagleNebula caption',

@@ -39,9 +39,9 @@ CREATE TABLE Contain (
 );
 
 CREATE TABLE OutputAtoC (
-	picid VARCHAR(40) NOT NULL,
-	caption VARCHAR(255) NOT NULL,
-	title VARCHAR(50) NOT NULL,
-	username VARCHAR(20) NOT NULL,
-	PRIMARY KEY (picid)
+	containpicid VARCHAR(40) NOT NULL,
+	containcaption VARCHAR(255) NOT NULL,
+	albumtitle VARCHAR(50) NOT NULL,
+	albumusername VARCHAR(20) NOT NULL,
+	PRIMARY KEY (containpicid)
 );
