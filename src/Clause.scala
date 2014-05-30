@@ -18,16 +18,16 @@ object Clause {
 	// rule functions create the clauses for each rule
 	// at least one attribute variable is true
 	def rule1 = {
-		for (attr <- AttributeVariable.all) yield{
-			(attr, true)
-		}
+		val list : ArrayBuffer[Variable.Literal] = ArrayBuffer()
+		for (attr <- AttributeVariable.all) list :+ (attr, true)
+		clauses += new Clause(list.toList)
 	}
 	
 	// at least one condition variable is true
 	def rule2 = {
-		for (attr <- ConditionVariable.all) yield{
-			(attr, true)
-		}
+		val list : ArrayBuffer[Variable.Literal] = ArrayBuffer()
+		for (attr <- ConditionVariable.all) list :+ (attr, true)
+		clauses += new Clause(list.toList)
 	}
 	
 	// maps attribute variable (select) to output attributes
@@ -37,14 +37,14 @@ object Clause {
 			var contain = false
 			for(attrOut <- OutputDesiredVariable.all){
 				if (attr.tableName == attrOut.tableName && attr.attrName == attrOut.attrName){
-				  attrList += (attr, true)
+				  attrList += new Variable.Literal (attr, true)
 				  contain = true
 				}
 			}
 			if(!contain)
-				(attr, false)// add to list
+				clauses += new Clause (List((attr, false)))// add to list
 		}
-		
+		clauses += new Clause (attrList.toList)
 	}
 	
 	// map condition variables to output variables
