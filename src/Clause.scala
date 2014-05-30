@@ -1,6 +1,7 @@
 package src
 import scala.collection.mutable._
 class Clause (
+	//Variable.Literal is just a Tuple2[Variable, Boolean]
 	val literals : List[Variable.Literal]
 ) {
 	def printString = {
