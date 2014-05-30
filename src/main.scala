@@ -6,7 +6,7 @@ import scala.collection.mutable.MutableList
 
 object main extends App {
 	val databaseName = "test"
-	 val driver = "com.mysql.jdbc.Driver"
+	val driver = "com.mysql.jdbc.Driver"
 	val url = "jdbc:mysql://localhost:3306/" + databaseName
 	val username = "root"
 	val password = "123456"
@@ -16,19 +16,15 @@ object main extends App {
 	if(connection == null) println("failed")
 	
 	val tableNames : MutableList[String] = MutableList()
-	 val statement = connection.createStatement();
-	 val  resultSet = statement.executeQuery("SHOW tables;")
-	 while (resultSet.next())
-	 {
-	   tableNames += resultSet.getString("Tables_in_" + databaseName)
-	 }
+	val statement = connection.createStatement();
+	val  resultSet = statement.executeQuery("SHOW tables;")
+	while (resultSet.next()) {
+		tableNames += resultSet.getString("Tables_in_" + databaseName)
+	}
 
-	val x = AttributeClause.populate(connection, tableNames.toList)
-	println(x)
+	val acs = AttributeClause.populate(connection, tableNames.toList)
+	val ccs = ConditionClause.populate(connection, acs.toList)
+	val otv = OutputVariable.populate(connection, tableNames(1), tableNames(2))
 	
-	val y = ConditionClause.populate(connection, x.toList)
-	
-	println(y._1)
-	AttributeClause.test
 	
 }

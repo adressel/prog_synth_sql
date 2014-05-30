@@ -1,11 +1,11 @@
 package src
 
-object Clause {
-	private var count = 0;
-	def newClauseId() = {count += 1; count}
-}
-
 class Clause {
-	val id = Clause.newClauseId
-	def print() {}
+	val clauses : List[Tuple2[Variable, Boolean]] = List()
+	def printString = {
+	  //StringBuilder
+	  for(clausePair <- clauses) {
+	    //if true add - 
+	  }
+	}
 }

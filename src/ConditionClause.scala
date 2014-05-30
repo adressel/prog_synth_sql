@@ -1,12 +1,11 @@
 package src
 import java.sql.Connection
-import src.AttributeClause
 import scala.collection.mutable.MutableList
 
 class ConditionClause(
     left : AttributeClause, 
-    op : ConditionClause.Operator.Value) 
-extends Clause 
+    op : ConditionClause.Operator.Value
+) extends Variable 
 {}
 
 class UnaryCondition(
@@ -14,16 +13,17 @@ class UnaryCondition(
     op : ConditionClause.Operator.Value,
     right: Any
 )
-extends ConditionClause(left, op)
-{override def toString() = left + "  " + op + "  " + right + "\n"
+extends ConditionClause(left, op) {
+	override def toString() = left + "  " + op + "  " + right + "\n"
 }
 
 class BinaryCondition(
     left : AttributeClause, 
     op : ConditionClause.Operator.Value,
     right: AttributeClause
-) extends ConditionClause(left, op) 
-{override def toString() = left + "  " + op + "  " + right + "\n"}
+) extends ConditionClause(left, op) {
+	override def toString() = left + "  " + op + "  " + right + "\n"
+}
 
 object ConditionClause {
 	object Operator extends Enumeration {
