@@ -22,8 +22,8 @@ object main extends App {
 		tableNames += resultSet.getString("Tables_in_" + databaseName)
 	}
 
-	val acs = AttributeVariable.populate(connection, tableNames.toList)
-	val ccs = ConditionVariable.populate(connection, acs.toList)
-	val otv = OutputVariable.populate(connection, tableNames(1), tableNames(2))
+	AttributeVariable.populate(connection, List("album", "contain"))
+	ConditionVariable.populate(connection, AttributeVariable.all)
+	OutputVariable.populate(connection, tableNames(1), tableNames(2))
 	
 }

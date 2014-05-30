@@ -15,7 +15,6 @@ object Utility {
 		primaryKeys.toVector
 	}
 	
-	
 	//converts a resultSet (that is assumed to be valid) to a List[Any]
 	def resultToVector(result : ResultSet) : Vector[Any] = {
 		val resultList : ArrayBuffer[Any] = ArrayBuffer()

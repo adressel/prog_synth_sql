@@ -1,24 +1,29 @@
 package src
 import java.sql.Connection
-import scala.collection.mutable.MutableList
+import scala.collection.mutable.ArrayBuffer
 
 class AttributeVariable (
 	val tableName: String, 
 	val attrName: String, 
-	val constant : List[String],
+	val constant : Vector[String],
 	val attrType : String
 ) extends Variable {
 	override def toString() = tableName + "  " + attrName + "  " + constant.mkString(",") + "\n"
-	val constList = constant.toList
+	val constVector = constant.toVector
 }
 
 object AttributeVariable {
+	private var attrs : Vector[AttributeVariable] = Vector()
+	
+	def all = attrs
+	
 	def test = {
 		println("hi")
 	}
-	//creates the list of attributes given two tables
-	def populate(connection: Connection, tableName : List[String]) : MutableList[AttributeVariable] = {
-		val x : MutableList[AttributeVariable] = MutableList()
+	
+	//creates the Vector of attributes given two tables
+	def populate(connection: Connection, tableName : Vector[String]) = {
+		val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
 		for (table <- tableName)
 		{
 		    val statement = connection.createStatement();
@@ -33,10 +38,10 @@ object AttributeVariable {
 		       val test = resultSet.getString("field");
 		       val attrType = resultSet.getString("type");
 		       val constantSet = statement2.executeQuery("select distinct " + test + " from  "+ table +";");
-		       val constList : MutableList[String] = MutableList()
+		       val constVector : ArrayBuffer[String] = ArrayBuffer()
 		       while (constantSet.next())
 		       {
-		         constList += constantSet.getString(test)
+		         constVector += constantSet.getString(test)
 		       }
 		      val index = attrType.indexOf("(");
 		      val typeStr = 
@@ -44,9 +49,9 @@ object AttributeVariable {
 		        	attrType.substring(0, index)
 		        else 
 		            attrType
-		       x += new AttributeVariable(table, test, constList.toList, typeStr)
+		       x += new AttributeVariable(table, test, constVector.toVector, typeStr)
 		     }
 		}
-	     x
+	    attrs = x.toVector
 	}
 }

@@ -3,7 +3,7 @@ import scala.collection.mutable._
 import java.sql.Connection
 
 class OutputVariable (
-	key1 : Vector[Any], 
+	key1: Vector[Any],
 	key2: Vector[Any]
 ) extends Variable {
 	override def print() = {
@@ -12,8 +12,13 @@ class OutputVariable (
 }
 
 object OutputVariable {
-	var tableNames : List[String] = List()
-	var pKeys : List[Vector[String]] = List()
+	var tableNames : Vector[String] = Vector()
+	var pKeys : Vector[Vector[String]] = Vector()
+	
+	private var otvs : Vector[OutputVariable] = Vector()
+	
+	def all = otvs
+	
 	
 	/*** Functions ***/
 	def selectQuery : String = {
@@ -21,12 +26,12 @@ object OutputVariable {
 		s"select ${selectArgs.mkString(", ")} from ${tableNames.mkString(", ")} "
 	}
 	
-	// return a list of condition clauses given two tables
+	// return a Vector of condition clauses given two tables
 	def populate(connection: Connection, tableName1 : String, tableName2 : String)  = {
 		
-		tableNames = List(tableName1, tableName2)
+		tableNames = Vector(tableName1, tableName2)
 		
-		pKeys = List(Utility.getPrimaryKeys(connection, tableName1),
+		pKeys = Vector(Utility.getPrimaryKeys(connection, tableName1),
 				Utility.getPrimaryKeys(connection, tableName2))
 		
 		val OutputVariables : ArrayBuffer[OutputVariable] = ArrayBuffer()
@@ -39,7 +44,6 @@ object OutputVariable {
 						Utility.resultToVector(resultSet2))
 			}
 		}
-		
-		OutputVariables.toVector
+		otvs = OutputVariables.toVector
 	}
 }
