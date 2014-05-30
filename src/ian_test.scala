@@ -12,10 +12,10 @@ object ian_test extends App {
 	val connection = DriverManager.getConnection(url, username, password)
 	if(connection == null) println("failed")
 	
-	val rcs = ResultClause.populate(connection, "album", "usr")
-	for(rc <- rcs) {
-		rc.print
-	}
-	
+//	val rcs = ResultClause.populate(connection, "album", "usr")
+//	for(rc <- rcs) {
+//		rc.print
+//	}
+//	
 	connection.close()
 }
