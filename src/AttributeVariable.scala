@@ -2,7 +2,7 @@ package src
 import java.sql.Connection
 import scala.collection.mutable.MutableList
 
-class AttributeClause (
+class AttributeVariable (
 	tableName: String, 
 	attrName: String, 
 	constant : MutableList[String]
@@ -11,13 +11,13 @@ class AttributeClause (
 	val constList = constant.toList
 }
 
-object AttributeClause {
+object AttributeVariable {
 	def test = {
 		println("hi")
 	}
 	//creates the list of attributes given two tables
-	def populate(connection: Connection, tableName : List[String]) : MutableList[AttributeClause] = {
-		val x : MutableList[AttributeClause] = MutableList()
+	def populate(connection: Connection, tableName : List[String]) : MutableList[AttributeVariable] = {
+		val x : MutableList[AttributeVariable] = MutableList()
 		for (table <- tableName)
 		{
 		    val statement = connection.createStatement();
@@ -43,7 +43,7 @@ object AttributeClause {
 		        	attrType.substring(0, index)
 		        else 
 		            attrType
-		       x += new AttributeClause(table, test, constList.toList, typeStr)
+		       x += new AttributeVariable(table, test, constList.toList, typeStr)
 		     }
 		}
 	     x
