@@ -30,13 +30,20 @@ object AttributeClause {
 		     while (resultSet.next())
 		     {
 		       val test = resultSet.getString("field");
+		       val attrType = resultSet.getString("type");
 		       val constantSet = statement2.executeQuery("select distinct " + test + " from  "+ table +";");
 		       val constList : MutableList[String] = MutableList()
 		       while (constantSet.next())
 		       {
 		         constList += constantSet.getString(test)
 		       }
-		       x += new AttributeClause(table, test, constList)
+		      val index = attrType.indexOf("(");
+		      val typeStr = 
+		        if (index != -1)
+		        	attrType.substring(0, index)
+		        else 
+		            attrType
+		       x += new AttributeClause(table, test, constList.toList, typeStr)
 		     }
 		}
 	     x
