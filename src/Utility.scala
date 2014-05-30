@@ -27,6 +27,16 @@ object Utility {
 		resultList.toVector
 	}
 	
+	//takes query string and returns vector of vector of results
+	def queryToVector(query : String) : Vector[Vector[Any]] = {
+		val rs = Data.connection.createStatement().executeQuery(query)
+		val results : ArrayBuffer[Vector[Any]] = ArrayBuffer()
+		while(rs.next()) {
+			results +: resultToVector(rs)
+		}
+		results.toVector
+	}
+	
 	//creates a resultSet from select (columns) from tableName
 	//for instance, with tableName = "album" and columns = List("id", "location")
 	//it would return the resultSet from select id, location from album

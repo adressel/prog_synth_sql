@@ -2,11 +2,13 @@ package src
 import java.sql.Connection
 import scala.collection.mutable.ArrayBuffer
 
-class ConditionVariable(
+abstract class ConditionVariable(
     left : AttributeVariable, 
     op : ConditionVariable.Operator.Value
 ) extends Variable 
-{}
+{
+	def query : String
+}
 
 class UnaryCondition(
     left : AttributeVariable, 
@@ -14,7 +16,8 @@ class UnaryCondition(
     right: Any
 )
 extends ConditionVariable(left, op) {
-	override def toString() = left + "  " + op + "  " + right + "\n"
+	override def toString() = s"$left $op $right\n"
+	override def query = s"$left ${ConditionVariable.opToString(op)} $right"
 }
 
 class BinaryCondition(
@@ -22,7 +25,8 @@ class BinaryCondition(
     op : ConditionVariable.Operator.Value,
     right: AttributeVariable
 ) extends ConditionVariable(left, op) {
-	override def toString() = left + "  " + op + "  " + right + "\n"
+	override def toString() = s"$left $op $right\n"
+	override def query = s"$left ${ConditionVariable.opToString(op)} $right"
 }
 
 object ConditionVariable {
@@ -32,6 +36,18 @@ object ConditionVariable {
 	object Operator extends Enumeration {
 		type Operator = Value
 		val Equal, NotEqual, Less, Greater, LessEq, GreatEq = Value
+	}
+	
+	def opToString(op : Operator.Value) = {
+		op match {
+			case Operator.Equal => "=="
+			case Operator.NotEqual => "!="
+			case Operator.Less => "<"
+			case Operator.Greater => ">"
+			case Operator.LessEq => "<="
+			case Operator.GreatEq => ">="
+			case _ => "null"
+		}
 	}
   
 	// return a Vector of condition clauses given two tables
