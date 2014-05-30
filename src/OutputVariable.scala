@@ -30,18 +30,18 @@ object OutputVariable {
 	}
 	
 	// return a Vector of condition clauses given two tables
-	def populate(connection: Connection, tableNameVec : Vector[String])  = {
+	def populate(tableNameVec : Vector[String])  = {
 		
 		tableNames = tableNameVec
 		
-		pKeys = Vector(Utility.getPrimaryKeys(connection, tableNames(0)),
-				Utility.getPrimaryKeys(connection, tableNames(1)))
+		pKeys = Vector(Utility.getPrimaryKeys(tableNames(0)),
+				Utility.getPrimaryKeys(tableNames(1)))
 		
 		val OutputVariables : ArrayBuffer[OutputVariable] = ArrayBuffer()
 		
-		val resultSet1 = Utility.selectAllColumns(connection, tableNames(0), pKeys(0))
+		val resultSet1 = Utility.selectAllColumns(tableNames(0), pKeys(0))
 		while(resultSet1.next()) {
-			val resultSet2 = Utility.selectAllColumns(connection, tableNames(1), pKeys(1))
+			val resultSet2 = Utility.selectAllColumns(tableNames(1), pKeys(1))
 			while(resultSet2.next()) {
 				OutputVariables += new OutputVariable(Utility.resultToVector(resultSet1), 
 						Utility.resultToVector(resultSet2))

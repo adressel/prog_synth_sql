@@ -18,12 +18,12 @@ object AttributeVariable {
 	def all = attrs
 	
 	//creates the Vector of attributes given two tables
-	def populate(connection: Connection, tableName : Vector[String]) = {
+	def populate(tableName : Vector[String]) = {
 		val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
 		for (table <- tableName)
 		{
-		    val statement = connection.createStatement();
-		    val statement2 = connection.createStatement();
+		    val statement = Data.connection.createStatement();
+		    val statement2 = Data.connection.createStatement();
 	      // resultSet gets the result of the SQL query
 	
 		     val  resultSet = statement

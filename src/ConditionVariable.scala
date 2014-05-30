@@ -51,7 +51,7 @@ object ConditionVariable {
 	}
   
 	// return a Vector of condition clauses given two tables
-	def populate(connection: Connection, attrVector : Vector[AttributeVariable]) = {
+	def populate(attrVector : Vector[AttributeVariable]) = {
 		val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
 		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
 		for (attr <- attrVector) { 
