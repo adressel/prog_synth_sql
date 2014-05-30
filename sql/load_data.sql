@@ -406,3 +406,42 @@ INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 	'space_OrionNebula caption',
 	4
 );
+
+
+INSERT INTO OutputAtoC (picid, caption, title, username) VALUES
+(
+	'space_EagleNebula',
+	'space_EagleNebula caption',
+	'Cool Space Shots',
+	'spacejunkie'
+),
+(
+	'space_GalaxyCollision',
+	'space_GalaxyCollision caption',
+	'Cool Space Shots',
+	'spacejunkie'
+),
+(
+	'space_HelixNebula',
+	'space_HelixNebula caption',
+	'Cool Space Shots',
+	'spacejunkie'
+),
+(	
+	'space_MilkyWay',
+	'space_MilkyWay caption',
+	'Cool Space Shots',
+	'spacejunkie'
+),
+(
+	'space_OrionNebula',
+	'space_OrionNebula caption',
+	'Cool Space Shots',
+	'spacejunkie'
+);
+
+
+
+
+
+
