@@ -12,28 +12,28 @@ class OutputVariable (
 }
 
 object OutputVariable {
-	var tableNames : Tuple2[String, String] = ("","")
-	var pKeys : Tuple2[Vector[String],Vector[String]] = (Vector(),Vector())
+	var tableNames : List[String] = List()
+	var pKeys : List[Vector[String]] = List()
 	
 	/*** Functions ***/
-	def selectString : String = {
-		val selectArgs = (pKeys._1 ++: pKeys._2).mkString(", ")
-		s"select $selectArgs from "
+	def selectQuery : String = {
+		val selectArgs = pKeys(0).map(_+tableNames(0)) ++: pKeys(1).map(_+tableNames(1))
+		s"select ${selectArgs.mkString(", ")} from ${tableNames.mkString(", ")} "
 	}
 	
 	// return a list of condition clauses given two tables
 	def populate(connection: Connection, tableName1 : String, tableName2 : String)  = {
 		
-		tableNames = (tableName1, tableName2)
+		tableNames = List(tableName1, tableName2)
 		
-		pKeys = (Utility.getPrimaryKeys(connection, tableName1),
+		pKeys = List(Utility.getPrimaryKeys(connection, tableName1),
 				Utility.getPrimaryKeys(connection, tableName2))
 		
 		val OutputVariables : ArrayBuffer[OutputVariable] = ArrayBuffer()
 		
-		val resultSet1 = Utility.selectAllColumns(connection, tableName1, pKeys._1)
+		val resultSet1 = Utility.selectAllColumns(connection, tableName1, pKeys(0))
 		while(resultSet1.next()) {
-			val resultSet2 = Utility.selectAllColumns(connection, tableName2, pKeys._2)
+			val resultSet2 = Utility.selectAllColumns(connection, tableName2, pKeys(1))
 			while(resultSet2.next()) {
 				OutputVariables += new OutputVariable(Utility.resultToVector(resultSet1), 
 						Utility.resultToVector(resultSet2))
