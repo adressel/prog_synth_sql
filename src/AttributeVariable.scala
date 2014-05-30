@@ -3,9 +3,10 @@ import java.sql.Connection
 import scala.collection.mutable.MutableList
 
 class AttributeVariable (
-	tableName: String, 
-	attrName: String, 
-	constant : MutableList[String]
+	val tableName: String, 
+	val attrName: String, 
+	val constant : List[String],
+	val attrType : String
 ) extends Variable {
 	override def toString() = tableName + "  " + attrName + "  " + constant.mkString(",") + "\n"
 	val constList = constant.toList

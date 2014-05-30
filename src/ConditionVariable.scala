@@ -39,7 +39,7 @@ object ConditionVariable {
 		  for (op <- ConditionVariable.Operator.values){
 			for (attr2 <- attrList)
 			 {
-				if (attr.typeAttr == attr2.typeAttr)
+				if (attr.attrType == attr2.attrType)
 				 binaryList += new BinaryCondition(attr, op, attr2)  
 			  }
 			for (const <- attr.constant)
