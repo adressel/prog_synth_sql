@@ -26,4 +26,5 @@ object main extends App {
 	val ccs = ConditionVariable.populate(connection, acs.toList)
 	val otv = OutputVariable.populate(connection, tableNames(1), tableNames(2))
 	
+	
 }

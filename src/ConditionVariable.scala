@@ -32,7 +32,7 @@ object ConditionVariable {
 	}
   
 	// return a list of condition clauses given two tables
-	def populate(connection: Connection, attrList : List[AttributeClause])  : List[ConditionVariable] = {
+	def populate(connection: Connection, attrList : List[AttributeVariable])  : List[ConditionVariable] = {
 		val binaryList: MutableList[BinaryCondition] = MutableList()
 		val unaryList: MutableList[UnaryCondition] = MutableList()
 		for (attr <- attrList) { 
