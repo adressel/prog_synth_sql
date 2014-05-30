@@ -1,7 +1,6 @@
 package src
 import java.sql.Connection
 import scala.collection.mutable.MutableList
-import src.Utility
 
 class AttributeClause (tableName: String, attrName: String, constant : MutableList[String]) extends Clause {
 	override def toString() = tableName + "  " + attrName + "  " + constant.mkString(",") + "\n"

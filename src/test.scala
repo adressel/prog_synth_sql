@@ -13,13 +13,10 @@ object test extends App {
 	val connection = DriverManager.getConnection(url, username, password)
 	if(connection == null) println("failed")
 	
-//	val statement = connection.createStatement()
-//	val resultSet = statement.executeQuery("SELECT * FROM album")
-//	while(resultSet.next()) {
-//		println(resultSet.getString("username"))
-//	}
-	
-	Utility.getPrimaryKeys(connection, "contain")
+	val rcs = ResultClause.populate(connection, "album", "usr")
+	for(rc <- rcs) {
+		rc.print
+	}
 	
 	connection.close()
 }
