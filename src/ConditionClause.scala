@@ -32,19 +32,24 @@ object ConditionClause {
 	}
   
 	// return a list of condition clauses given two tables
-	def populate(connection: Connection, attrList : List[AttributeClause])  : Tuple2[List[UnaryCondition], List[BinaryCondition]] = {
+	def populate(connection: Connection, attrList : List[AttributeClause])  : List[ConditionClause] = {
 		val binaryList: MutableList[BinaryCondition] = MutableList()
 		val unaryList: MutableList[UnaryCondition] = MutableList()
 		for (attr <- attrList) { 
 		  for (op <- ConditionClause.Operator.values){
 			for (attr2 <- attrList)
 			 {
+				if (attr.typeAttr == attr2.typeAttr)
 				 binaryList += new BinaryCondition(attr, op, attr2)  
 			  }
-			unaryList += new UnaryCondition(attr, op, attr.constList)
+			for (const <- attr.constant)
+			{
+			  unaryList += new UnaryCondition(attr, op, const)
+			}
+			
 		  }
 		}
-		new Tuple2(unaryList.toList, binaryList.toList)
+		(binaryList.toList) ::: (unaryList.toList)
 	}
 }
 

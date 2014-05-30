@@ -30,7 +30,7 @@ object main extends App {
 	
 	val y = ConditionClause.populate(connection, x.toList)
 	
-	println(y._1)
+	println(y)
 	AttributeClause.test
 	
 }

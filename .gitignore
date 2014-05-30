@@ -52,3 +52,5 @@ local.properties
 .buildpath
 
 src/test.scala
+
+src/test.scala
