@@ -30,12 +30,7 @@ object Clause {
 	}
 	
 	// map condition variables to output variables
-	def rule4 = {
-		
-	}
-	
-	// map output variable to condition variables
-	def rule5 = {
+	def rule4and5 () {
 		
 	}
 	

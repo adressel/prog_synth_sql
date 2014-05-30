@@ -17,10 +17,6 @@ object AttributeVariable {
 	
 	def all = attrs
 	
-	def test = {
-		println("hi")
-	}
-	
 	//creates the Vector of attributes given two tables
 	def populate(connection: Connection, tableName : Vector[String]) = {
 		val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()

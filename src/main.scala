@@ -9,7 +9,7 @@ object main extends App {
 	val driver = "com.mysql.jdbc.Driver"
 	val url = "jdbc:mysql://localhost:3306/" + databaseName
 	val username = "root"
-	val password = "123456"
+	val password = ""
 
 	Class.forName(driver)
 	val connection = DriverManager.getConnection(url, username, password)
@@ -22,8 +22,9 @@ object main extends App {
 		tableNames += resultSet.getString("Tables_in_" + databaseName)
 	}
 
-	AttributeVariable.populate(connection, List("album", "contain"))
+	AttributeVariable.populate(connection, Vector("album", "contain"))
 	ConditionVariable.populate(connection, AttributeVariable.all)
-	OutputVariable.populate(connection, tableNames(1), tableNames(2))
+	OutputVariable.populate(connection, Vector("album", "contain"))
+	
 	
 }
