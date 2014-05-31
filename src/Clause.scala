@@ -19,33 +19,34 @@ object Clause {
 	// rule functions create the clauses for each rule
 	// at least one attribute variable is true
 	def rule1 = {
-		val list : ArrayBuffer[Variable.Literal] = ArrayBuffer()
-		for (attr <- AttributeVariable.all) list :+ (attr, true)
+		val list : MutableList[Variable.Literal] = MutableList()
+		for (attr <- AttributeVariable.all) list += ((attr, true))
 		clauses += new Clause(list.toList)
 	}
 	
 	// at least one condition variable is true
 	def rule2 = {
-		val list : ArrayBuffer[Variable.Literal] = ArrayBuffer()
-		for (attr <- ConditionVariable.all) list :+ (attr, true)
+	  	val list : MutableList[Variable.Literal] = MutableList()
+		for (attr <- ConditionVariable.all) list += ((attr, true))
 		clauses += new Clause(list.toList)
 	}
 	
 	// maps attribute variable (select) to output attributes
 	def rule3 = {
-	  val attrList : MutableList[Tuple2[Variable, Boolean]] = MutableList()
 		for (attr <- AttributeVariable.all){
 			var contain = false
 			for(attrOut <- OutputDesiredVariable.all){
 				if (attr.tableName == attrOut.tableName && attr.attrName == attrOut.attrName){
-				  attrList += new Variable.Literal (attr, true)
+				  val list : MutableList[Variable.Literal] = MutableList()
+				  list += new Variable.Literal (attrOut, true)
+				  list += new Variable.Literal (attr, false)
+				  clauses += new Clause (list.toList)
 				  contain = true
 				}
 			}
 			if(!contain)
 				clauses += new Clause (List((attr, false)))// add to list
 		}
-		clauses += new Clause (attrList.toList)
 	}
 	
 	// map condition variables to output variables
