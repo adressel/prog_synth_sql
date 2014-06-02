@@ -29,7 +29,6 @@ object Utility {
 	
 	//takes query string and returns vector of vector of results
 	def queryToVector(query : String) : Vector[Vector[Any]] = {
-		println(query)
 		val rs = Data.connection.createStatement().executeQuery(query)
 		val results : ArrayBuffer[Vector[Any]] = ArrayBuffer()
 		while(rs.next()) {

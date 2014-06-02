@@ -70,9 +70,6 @@ object Clause {
 				}
 			}
 		}
-		
-		
-		
 		for((v, otv) <- otvMap) {
 			val newClause = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
 			clauses :+ newClause
@@ -102,11 +99,11 @@ object Clause {
 			val resultSet = statement.executeQuery(query + tempList.mkString("and ") + ";") 
 			if (resultSet.next()){
 				val row = resultSet.getInt("rownum")
-			    println(row + tempList.mkString("and "))
+				result(row) += output
+			    //println(row + tempList.mkString("and "))
 			}
-			
-
 		}
+		
 	}
 	
 	// list undesired output variables
