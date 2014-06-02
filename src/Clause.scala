@@ -57,8 +57,8 @@ object Clause {
 		for(cv <- ConditionVariable.all) {
 			val matches = Utility.queryToVector(OutputVariable.selectQuery + cv.query)
 			for(m <- matches) {
-				clauses :+ new Clause(List((cv, false), (otvMap(m), true)))
-				otvMap(m).matches :+ cv
+				clauses += new Clause(List((cv, false), (otvMap(m), true)))
+				otvMap(m).matches += cv
 			}
 			
 			//print for debugging
@@ -72,8 +72,8 @@ object Clause {
 			}
 		}
 		for((v, otv) <- otvMap) {
-			val newClause = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
-			clauses :+ newClause
+			val clauseList = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
+			clauses += new Clause(clauseList)
 		}
 	}
 	

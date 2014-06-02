@@ -10,5 +10,5 @@ object ian_test extends App {
 	OutputDesiredVariable.populate(Vector("album", "contain"), "OutputAtoC")
 	OutputVariable.populate(Vector("album", "contain"))
 	Clause.rule4and5
-	
+	printer.printFile
 }
