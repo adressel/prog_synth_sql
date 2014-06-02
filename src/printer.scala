@@ -7,7 +7,7 @@ object printer {
 	
 	def printFile = {
 		val out = new PrintWriter(s"${root}results.txt")
-		val header = "c  output.enc\n c\n p cnf "+ Variable.count +" " + Clause.clauses.length + " \n"
+		val header = "c output.enc\nc\np cnf "+ Variable.count +" " + Clause.clauses.length + " \n"
 		out.print(header)
 		for (clause <- Clause.clauses){
 		  var cnf = ""
