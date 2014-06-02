@@ -21,6 +21,7 @@ extends ConditionVariable(left, op) {
 	def rightQuery = {
 		right match {
 			case x: String => "\"" + x + "\""
+			case x: Vector[Any] => println("nooooo"); System.exit(1)
 			case _ => right.toString
 		}
 	}

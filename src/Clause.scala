@@ -63,11 +63,12 @@ object Clause {
 			
 			//print for debugging
 			if(matches.size > 0) {
-				println(cv + "YO")
 				for(m <- matches) {
-					println(m.mkString(", ") + "hi")
+//					println(m.mkString(", ") + "hi")
 					println(otvMap(m))
 				}
+				println("////////////////////////")
+				println("")
 			}
 		}
 		for((v, otv) <- otvMap) {
