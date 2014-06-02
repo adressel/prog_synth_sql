@@ -16,8 +16,17 @@ class UnaryCondition(
     right: Any
 )
 extends ConditionVariable(left, op) {
+	
+	// wraps string literals in quotes so that SQL can understand
+	def rightQuery = {
+		right match {
+			case x: String => "\"" + x + "\""
+			case _ => right.toString
+		}
+	}
+	
 	override def toString() = s"$left $op $right"
-	override def query = s"${left.name} ${ConditionVariable.opToString(op)} $right"
+	override def query = s"${left.name} ${ConditionVariable.opToString(op)} $rightQuery"
 }
 
 class BinaryCondition(

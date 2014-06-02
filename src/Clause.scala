@@ -51,7 +51,7 @@ object Clause {
 	
 	// map condition variables to output variables
 	def rule4and5 = {
-		// create a map from tuple(pKeys, pKeys) to output Variables (inefficient, but no other way atm)
+		// create a mapping from the OTV vector to the Output Variable
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
 		for(cv <- ConditionVariable.all) {
@@ -62,10 +62,12 @@ object Clause {
 			}
 			
 			//print for debugging
-			println(cv)
-			for(m <- matches) {
-				println(m.mkString(", ") + "hi")
-				println(otvMap(m))
+			if(matches.size > 0) {
+				println(cv + "YO")
+				for(m <- matches) {
+					println(m.mkString(", ") + "hi")
+					println(otvMap(m))
+				}
 			}
 		}
 		

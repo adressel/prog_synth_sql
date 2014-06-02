@@ -16,7 +16,6 @@ class OutputVariable (
 
 object OutputVariable {
 	var tableNames : Vector[String] = Vector()
-	var pKeys : Vector[Vector[String]] = Vector()
 	var keys : Vector[String] = Vector()
 	private var otvs : Vector[OutputVariable] = Vector()
 	
@@ -25,22 +24,22 @@ object OutputVariable {
 	
 	/*** Functions ***/
 	def selectQuery : String = {
-		val selectArgs = pKeys(0).map(tableNames(0)+"."+_) ++: pKeys(1).map(tableNames(1)+"."+_)
-		s"select ${selectArgs.mkString(", ")} from ${tableNames.mkString(", ")} where "
+		s"select ${keys.mkString(", ")} from ${tableNames.mkString(", ")} where "
 	}
 	
 	// return a Vector of condition clauses given two tables
 	def populate(tableNameVec : Vector[String])  = {
 		
 		tableNames = tableNameVec
-		keys = for (attr <- OutputDesiredVariable.all) yield{
+		keys = for (attr <- OutputDesiredVariable.all) yield {
 			attr.tableName + "." + attr.attrName // Temporarily using
 		}
+	
 		val OutputVariables : ArrayBuffer[OutputVariable] = ArrayBuffer()
-		val resultSet1 = Utility.selectAllColumns(tableNames, keys.toVector)
-		while(resultSet1.next()) {
-		  OutputVariables += new OutputVariable(Utility.resultToVector(resultSet1)) 
-		}
+		val results = Utility.queryToVector(selectQuery + "true")
+		for(result <- results)
+		  OutputVariables += new OutputVariable(result) 
+		
 		otvs = OutputVariables.toVector
 	}
 }
