@@ -2,7 +2,7 @@ package src
 
 object Variable {
 	type Literal = Tuple2[Variable, Boolean]
-	private var count = 0;
+	var count = 0;
 	def newId() = {count += 1; count}
 }
 

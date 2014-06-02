@@ -78,8 +78,9 @@ object Clause {
 	
 	// map desired output variables to output variables
 	def rule6 = {
-	   	val result : MutableList[MutableList[OutputVariable]] = MutableList()
-	   	for( i <- 0 until OutputDesiredVariable.all.length  ) {
+	   	val result : MutableList[MutableList[Variable.Literal]] = MutableList()
+	   	
+	   	for( i <- 0 until OutputDesiredVariable.numForRows  ) {
 	   	  result += new MutableList()
 	   	}
 		for (output <- OutputVariable.all){
@@ -99,11 +100,11 @@ object Clause {
 			val resultSet = statement.executeQuery(query + tempList.mkString("and ") + ";") 
 			if (resultSet.next()){
 				val row = resultSet.getInt("rownum")
-				result(row) += output
+				result(row - 1) += ((output,true))
 			    //println(row + tempList.mkString("and "))
 			}
 		}
-		
+		for (singleRes <- result) clauses += new Clause(singleRes.toList)
 	}
 	
 	// list undesired output variables

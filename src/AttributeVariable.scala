@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 class AttributeVariable (
 	val tableName: String, 
 	val attrName: String, 
-	val constant : Vector[String],
+	val constant : Vector[Any],
 	val attrType : String
 ) extends Variable {
 	override def toString() = tableName + "  " + attrName + "  " + constant.mkString(",")
@@ -34,18 +34,24 @@ object AttributeVariable {
 		     {
 		       val test = resultSet.getString("field");
 		       val attrType = resultSet.getString("type");
-		       val constantSet = statement2.executeQuery("select distinct " + test + " from  "+ table +";");
-		       val constVector : ArrayBuffer[String] = ArrayBuffer()
-		       while (constantSet.next())
-		       {
-		         constVector += constantSet.getString(test)
-		       }
-		      val index = attrType.indexOf("(");
+		       val index = attrType.indexOf("(");
 		      val typeStr = 
 		        if (index != -1)
 		        	attrType.substring(0, index)
 		        else 
 		            attrType
+		       val constantSet = statement2.executeQuery("select distinct " + test + " from  "+ table +";");
+		       val constVector : ArrayBuffer[Any] = ArrayBuffer()
+		       while (constantSet.next()){
+		         if (typeStr == "INT")
+		        	 constVector += constantSet.getInt(test)
+		         else 
+		             constVector += constantSet.getString(test)
+		       }
+		       val otherConst = Utility.queryToVector(s"select max($test), min($test), avg($test) from  "+ table +";");
+		       constVector += otherConst(0).toVector
+		       
+		      
 		       x += new AttributeVariable(table, test, constVector.toVector, typeStr)
 		     }
 		}
