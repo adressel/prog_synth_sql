@@ -43,7 +43,8 @@ object AttributeVariable {
 		        	 constVector += constantSet.getObject(attrname)
 		       }
 		       val otherConst = Utility.queryToVector(s"select max($attrname), min($attrname), avg($attrname) from $table;");
-		       constVector += otherConst(0).toVector
+		       //constVector += otherConst(0).toVector
+		       println(s"select max($attrname), min($attrname), avg($attrname) from $table;")
 		       x += new AttributeVariable(table, attrname, constVector.toVector, typeStr)
 		     }
 		}
