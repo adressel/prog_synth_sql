@@ -12,4 +12,6 @@ object Data {
 	Class.forName(driver)
 	val connection = DriverManager.getConnection(url, username, password)
 	if(connection == null) println("failed")
+	
+	def closeConnection = connection.close
 }

@@ -11,6 +11,8 @@ class OutputVariable (
 		println(s"id: $id key1:${key1.mkString(", ")} key2: ${key2.mkString(", ")}")
 	}
 	
+	override def toString = keyVector.mkString(", ")
+	
 	def keyVector = key1 ++ key2
 }
 
@@ -25,8 +27,8 @@ object OutputVariable {
 	
 	/*** Functions ***/
 	def selectQuery : String = {
-		val selectArgs = pKeys(0).map(_+tableNames(0)) ++: pKeys(1).map(_+tableNames(1))
-		s"select ${selectArgs.mkString(", ")} from ${tableNames.mkString(", ")} "
+		val selectArgs = pKeys(0).map(tableNames(0)+"."+_) ++: pKeys(1).map(tableNames(1)+"."+_)
+		s"select ${selectArgs.mkString(", ")} from ${tableNames.mkString(", ")} where "
 	}
 	
 	// return a Vector of condition clauses given two tables

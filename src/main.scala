@@ -10,4 +10,6 @@ object main extends App {
 	ConditionVariable.populate(AttributeVariable.all)
 	OutputVariable.populate(Vector("album", "contain"))
 	
+	
+	
 }

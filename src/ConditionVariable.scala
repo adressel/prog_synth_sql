@@ -16,8 +16,8 @@ class UnaryCondition(
     right: Any
 )
 extends ConditionVariable(left, op) {
-	override def toString() = s"$left $op $right\n"
-	override def query = s"$left ${ConditionVariable.opToString(op)} $right"
+	override def toString() = s"$left $op $right"
+	override def query = s"${left.name} ${ConditionVariable.opToString(op)} $right"
 }
 
 class BinaryCondition(
@@ -25,8 +25,8 @@ class BinaryCondition(
     op : ConditionVariable.Operator.Value,
     right: AttributeVariable
 ) extends ConditionVariable(left, op) {
-	override def toString() = s"$left $op $right\n"
-	override def query = s"$left ${ConditionVariable.opToString(op)} $right"
+	override def toString() = s"$left $op $right"
+	override def query = s"${left.name} ${ConditionVariable.opToString(op)} ${right.name}"
 }
 
 object ConditionVariable {
@@ -40,7 +40,7 @@ object ConditionVariable {
 	
 	def opToString(op : Operator.Value) = {
 		op match {
-			case Operator.Equal => "=="
+			case Operator.Equal => "="
 			case Operator.NotEqual => "!="
 			case Operator.Less => "<"
 			case Operator.Greater => ">"

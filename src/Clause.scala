@@ -59,7 +59,17 @@ object Clause {
 				clauses :+ new Clause(List((cv, false), (otvMap(m), true)))
 				otvMap(m).matches :+ cv
 			}
+			
+			//print for debugging
+			println(cv)
+			for(m <- matches) {
+				println(m.mkString(", ") + "hi")
+				println(otvMap(m))
+			}
 		}
+		
+		
+		
 		for((v, otv) <- otvMap) {
 			val newClause = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
 			clauses :+ newClause

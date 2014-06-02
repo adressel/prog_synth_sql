@@ -8,7 +8,8 @@ class AttributeVariable (
 	val constant : Vector[String],
 	val attrType : String
 ) extends Variable {
-	override def toString() = tableName + "  " + attrName + "  " + constant.mkString(",") + "\n"
+	override def toString() = tableName + "  " + attrName + "  " + constant.mkString(",")
+	def name = s"$tableName.$attrName"
 	val constVector = constant.toVector
 }
 

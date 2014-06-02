@@ -4,14 +4,11 @@ import java.sql.Connection
 import com.mysql.jdbc
 
 object ian_test extends App {
-	val driver = "com.mysql.jdbc.Driver"
-	val url = "jdbc:mysql://localhost:3306/test"
-	val username = "root"
-	val password = ""
-	Class.forName(driver)
-	val connection = DriverManager.getConnection(url, username, password)
-	if(connection == null) println("failed")
 	
+	AttributeVariable.populate(Vector("album", "contain"))
+	ConditionVariable.populate(AttributeVariable.all)
+	OutputVariable.populate(Vector("album", "contain"))
 	
-	connection.close()
+	Clause.rule4and5
+	
 }
