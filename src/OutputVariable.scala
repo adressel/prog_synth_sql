@@ -10,9 +10,8 @@ class OutputVariable (
 	override def print() = {
 		println(s"id: $id key1:${key1.mkString(", ")} key2: ${key2.mkString(", ")}")
 	}
-	
-	override def toString = keyVector.mkString(", ")
-	
+	override def toString() = s"id: $id key1:${key1.mkString(", ")} key2: ${key2.mkString(", ")}"
+
 	def keyVector = key1 ++ key2
 }
 

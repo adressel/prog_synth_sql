@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 class OutputDesiredVariable (
 	val tableName: String, 
 	val attrName: String 
-) {
+)extends Variable {
 	override def toString() = tableName + "  " + attrName +  "\n"
 }
 
@@ -15,15 +15,14 @@ object OutputDesiredVariable {
 	def all = attrs
 	
 	//creates the Vector of attributes given two tables
-	def populate(connection: Connection, tableNames : Vector[String], output : String) = {
+	def populate(tableNames : Vector[String], output : String) = {
 		val x : ArrayBuffer[OutputDesiredVariable] = ArrayBuffer()
 		for (table <- tableNames)
 		{
-		    val statement = connection.createStatement()
+		    val statement = Data.connection.createStatement()
 		    // resultSet gets the result of the SQL query
 		    val  resultSet = statement
-		          .executeQuery("SHOW columns FROM "+ output +";")
-		     
+		          .executeQuery("SHOW columns FROM "+ output +";") 
 		     while (resultSet.next())
 		     {
 		       val test = resultSet.getString("field")
