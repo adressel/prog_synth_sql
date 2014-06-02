@@ -44,7 +44,7 @@ object Utility {
 	def selectAllColumns(tableName: Vector[String], 
 			columns: Vector[String]) : ResultSet = {
 		val statement = Data.connection.createStatement()
-		println(s"select ${columns.mkString(", ")} from $tableName")
+		//println(s"select ${columns.mkString(", ")} from $tableName")
 		statement.executeQuery(s"select ${columns.mkString(", ")} from ${tableName.mkString(", ")} ")
 	}
 }
