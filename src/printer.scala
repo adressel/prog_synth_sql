@@ -6,7 +6,7 @@ object printer {
 //	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 	
 	def printFile = {
-		val out = new PrintWriter(s"${root}results.txt")
+		val out = new PrintWriter(s"${root}results.cnf")
 		val header = "c output.enc\nc\np cnf "+ Variable.count +" " + Clause.clauses.length + " \n"
 		out.print(header)
 		for (clause <- Clause.clauses){
