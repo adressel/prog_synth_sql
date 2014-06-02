@@ -43,5 +43,6 @@ CREATE TABLE OutputAtoC (
 	containcaption VARCHAR(255) NOT NULL,
 	albumtitle VARCHAR(50) NOT NULL,
 	albumusername VARCHAR(20) NOT NULL,
-	PRIMARY KEY (containpicid)
+	rownum INTEGER NOT NULL,
+	PRIMARY KEY (rownum)
 );

@@ -8,6 +8,7 @@ object Data {
 	val url = "jdbc:mysql://localhost:3306/" + databaseName
 	val username = "root"
 	val password = "123456"
+	val desiredTableName = "OutputAtoC"
 
 	Class.forName(driver)
 	val connection = DriverManager.getConnection(url, username, password)

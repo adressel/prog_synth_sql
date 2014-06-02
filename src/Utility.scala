@@ -41,9 +41,10 @@ object Utility {
 	//creates a resultSet from select (columns) from tableName
 	//for instance, with tableName = "album" and columns = List("id", "location")
 	//it would return the resultSet from select id, location from album
-	def selectAllColumns(tableName: String, 
+	def selectAllColumns(tableName: Vector[String], 
 			columns: Vector[String]) : ResultSet = {
 		val statement = Data.connection.createStatement()
-		statement.executeQuery(s"select ${columns.mkString(", ")} from $tableName")
+		println(s"select ${columns.mkString(", ")} from $tableName")
+		statement.executeQuery(s"select ${columns.mkString(", ")} from ${tableName.mkString(", ")} ")
 	}
 }

@@ -4,7 +4,8 @@ import scala.collection.mutable.ArrayBuffer
 
 class OutputDesiredVariable (
 	val tableName: String, 
-	val attrName: String 
+	val attrName: String,
+	val attrType : String
 )extends Variable {
 	override def toString() = tableName + "  " + attrName +  "\n"
 }
@@ -25,9 +26,12 @@ object OutputDesiredVariable {
 		          .executeQuery("SHOW columns FROM "+ output +";") 
 		     while (resultSet.next())
 		     {
-		       val test = resultSet.getString("field")
-		       if (test.indexOf(table.toLowerCase()) == 0)
-		         x += new OutputDesiredVariable(table, test.substring(table.length()))
+		       val attr = resultSet.getString("field")
+		       val attrType = resultSet.getString("type")
+		       if (attr.indexOf(table.toLowerCase()) == 0)
+		       {println(attr.substring(table.length()))
+		         x += new OutputDesiredVariable(table, attr.substring(table.length()), attrType)
+		       }
 		     }
 		}
 	   attrs = x.toVector

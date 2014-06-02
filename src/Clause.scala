@@ -79,7 +79,32 @@ object Clause {
 	
 	// map desired output variables to output variables
 	def rule6 = {
-		
+	   	val result : MutableList[MutableList[OutputVariable]] = MutableList()
+	   	for( i <- 0 until OutputDesiredVariable.all.length  ) {
+	   	  result += new MutableList()
+	   	}
+		for (output <- OutputVariable.all){
+			val attr = output.key1
+			var query = "select rownum from " + Data.desiredTableName + " where "
+			val attrName = OutputDesiredVariable.all
+			var i = 0
+			val statement = Data.connection.createStatement()
+			val tempList : MutableList[String] = MutableList()
+ 			for( i <- 0 until OutputDesiredVariable.all.length  ) {
+				if (attrName(i).attrType == "INT")
+					tempList += attrName(i).tableName + attrName(i).attrName + " = " + attr(i) + " "
+				else 
+				    tempList += attrName(i).tableName + attrName(i).attrName + " = \'" + attr(i) + "\' "
+			}
+			//println(query + tempList.mkString("and "))
+			val resultSet = statement.executeQuery(query + tempList.mkString("and ") + ";") 
+			if (resultSet.next()){
+				val row = resultSet.getInt("rownum")
+			    println(row + tempList.mkString("and "))
+			}
+			
+
+		}
 	}
 	
 	// list undesired output variables
