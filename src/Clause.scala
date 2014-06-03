@@ -68,16 +68,18 @@ object Clause {
 		for(cv <- ConditionVariable.all) {
 			val matches = Utility.queryToVector(OutputVariable.selectQuery + cv.query)
 			for(m <- matches) {
-//				clauses += new Clause(List((cv, false), (otvMap(m), true)))
+				clauses += new Clause(List((cv, false), (otvMap(m), true)))
 				otvMap(m).matches += cv
 			}
 			
 			//print for debugging
 			if(matches.size > 0) {
 				for(m <- matches) {
+//					println(m.mkString(", ") + "hi")
 					println(otvMap(m))
 				}
-				println("////////////////////////\n")
+				println("////////////////////////")
+				println("")
 			}
 		}
 		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
