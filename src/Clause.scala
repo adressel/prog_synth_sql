@@ -59,23 +59,33 @@ object Clause {
 		for(cv <- ConditionVariable.all) {
 			val matches = Utility.queryToVector(OutputVariable.selectQuery + cv.query)
 			for(m <- matches) {
-				clauses += new Clause(List((cv, false), (otvMap(m), true)))
+//				clauses += new Clause(List((cv, false), (otvMap(m), true)))
 				otvMap(m).matches += cv
 			}
 			
 			//print for debugging
 			if(matches.size > 0) {
 				for(m <- matches) {
-//					println(m.mkString(", ") + "hi")
 					println(otvMap(m))
 				}
-				println("////////////////////////")
-				println("")
+				println("////////////////////////\n")
 			}
 		}
-		for((v, otv) <- otvMap) {
+		
+		
+		for((_, otv) <- otvMap) {
+			// RULE 5
 			val clauseList = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
 			clauses += new Clause(clauseList)
+			
+			
+			// RULE 8
+			// create a set of all condition variables
+			val wSet = ConditionVariable.all.toSet
+			// iterate through the set difference of the matches (all cvs that don't match)
+			for(cv <- wSet -- otv.matches) {
+				clauses += new Clause(List((otv, false), (cv, false)))
+			}
 		}
 	}
 	
