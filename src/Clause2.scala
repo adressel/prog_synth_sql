@@ -1,18 +1,6 @@
 package src
 import scala.collection.mutable._
-class Clause (
-	//Variable.Literal is just a Tuple2[Variable, Boolean]
-	val literals : List[Variable.Literal]
-) {
-	def printString = {
-	  //StringBuilder
-	  for(literal <- literals) {
-	    //if true add - 
-	  }
-	}
-}
-
-object Clause {
+object Clause2 {
 	
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 	
@@ -75,7 +63,7 @@ object Clause {
 				otvMap(m).matches += cv
 			}
 		}
-
+		
 		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
 		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
 		for((_, otv) <- otvMap) {
@@ -120,5 +108,4 @@ object Clause {
 		for (singleRes <- result) tmpClauses += new Clause(singleRes.toList)
 		clauses += ((tmpClauses, 6))
 	}
-
 }

@@ -12,6 +12,6 @@ object main extends App {
 	OutputVariable.populate(Data.tableNames)
 	Clause.populate
 	Printer.printFile
-//	Reader.readFile
+	Reader.printQueryFromResult
 }
 
