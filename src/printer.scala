@@ -2,8 +2,8 @@ package src
 import java.io._
 
 object printer {
-	private	val root = "./" // for Ian
-//	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
+//	private	val root = "./" // for Ian
+	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 	
 	def printFile = {
 		val out = new PrintWriter(s"${root}results.cnf")

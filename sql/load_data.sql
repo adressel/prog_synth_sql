@@ -445,7 +445,14 @@ INSERT INTO OutputAtoC (containpicid, containcaption, albumtitle, albumusername,
 	5
 );
 
-
+INSERT INTO desiredoutput (usrusername, usrfirstname, albumtitle, albumalbumid, rownum) VALUES
+(
+	'spacejunkie',
+	'Bob',
+	'Cool Space Shots',
+	4,
+	1
+);
 
 
 

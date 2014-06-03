@@ -14,25 +14,26 @@ class Clause (
 
 object Clause {
 	
-	val clauses : ArrayBuffer[Clause] = ArrayBuffer()
+	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 	
 	// rule functions create the clauses for each rule
 	// at least one attribute variable is true
 	def rule1 = {
 		val list : MutableList[Variable.Literal] = MutableList()
 		for (attr <- AttributeVariable.all) list += ((attr, true))
-		clauses += new Clause(list.toList)
+		clauses += ((ArrayBuffer(new Clause(list.toList)),1))
 	}
 	
 	// at least one condition variable is true
 	def rule2 = {
 	  	val list : MutableList[Variable.Literal] = MutableList()
 		for (attr <- ConditionVariable.all) list += ((attr, true))
-		clauses += new Clause(list.toList)
+		clauses += ((ArrayBuffer(new Clause(list.toList)),2))
 	}
 	
 	// maps attribute variable (select) to output attributes
 	def rule3 = {
+	  	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
 		for (attr <- AttributeVariable.all){
 			var contain = false
 			for(attrOut <- OutputDesiredVariable.all){
@@ -40,13 +41,14 @@ object Clause {
 				  val list : MutableList[Variable.Literal] = MutableList()
 				  list += new Variable.Literal (attrOut, true)
 				  list += new Variable.Literal (attr, false)
-				  clauses += new Clause (list.toList)
+				  tmpClauses += new Clause (list.toList)
 				  contain = true
 				}
 			}
 			if(!contain)
-				clauses += new Clause (List((attr, false)))// add to list
+				tmpClauses += new Clause (List((attr, false)))// add to list
 		}
+	  	clauses += ((tmpClauses, 3))
 	}
 	
 	// map condition variables to output variables
@@ -80,7 +82,7 @@ object Clause {
 	// map desired output variables to output variables
 	def rule6 = {
 	   	val result : MutableList[MutableList[Variable.Literal]] = MutableList()
-	   	
+	   	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
 	   	for( i <- 0 until OutputDesiredVariable.numForRows  ) {
 	   	  result += new MutableList()
 	   	}
@@ -92,7 +94,7 @@ object Clause {
 			val statement = Data.connection.createStatement()
 			val tempList : MutableList[String] = MutableList()
  			for( i <- 0 until OutputDesiredVariable.all.length  ) {
-				if (attrName(i).attrType == "INT")
+				if (attrName(i).attrType.toUpperCase() == "INT")
 					tempList += attrName(i).tableName + attrName(i).attrName + " = " + attr(i) + " "
 				else 
 				    tempList += attrName(i).tableName + attrName(i).attrName + " = \'" + attr(i) + "\' "
@@ -104,8 +106,10 @@ object Clause {
 				result(row - 1) += ((output,true))
 			    //println(row + tempList.mkString("and "))
 			}
+			else tmpClauses += new Clause(List((output, false)))
 		}
-		for (singleRes <- result) clauses += new Clause(singleRes.toList)
+		for (singleRes <- result) tmpClauses += new Clause(singleRes.toList)
+		clauses += ((tmpClauses, 6))
 	}
 	
 	// list undesired output variables

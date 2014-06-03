@@ -1,3 +1,7 @@
+drop database test;
+create database test;
+use test;
+
 CREATE TABLE Usr (
 	username VARCHAR(20) NOT NULL,
 	firstname VARCHAR(20) NOT NULL,
@@ -43,6 +47,16 @@ CREATE TABLE OutputAtoC (
 	containcaption VARCHAR(255) NOT NULL,
 	albumtitle VARCHAR(50) NOT NULL,
 	albumusername VARCHAR(20) NOT NULL,
+	rownum INTEGER NOT NULL,
+	PRIMARY KEY (rownum)
+);
+
+
+CREATE TABLE desiredoutput (
+	usrusername VARCHAR(40) NOT NULL,
+	usrfirstname VARCHAR(20) NOT NULL,
+	albumtitle VARCHAR(50) NOT NULL,
+	albumalbumid INTEGER NOT NULL,
 	rownum INTEGER NOT NULL,
 	PRIMARY KEY (rownum)
 );
