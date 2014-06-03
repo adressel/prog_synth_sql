@@ -20,7 +20,7 @@ object Clause {
 		rule1
 		rule2
 		rule3
-		rule4
+		//rule4
 		rule5and8
 		rule6
 		rule7
@@ -84,6 +84,7 @@ object Clause {
 			}
 		}
 	}
+	
 	def rule5and8 = {
 		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
 		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
@@ -131,8 +132,10 @@ object Clause {
 		clauses += ((tmpClauses, 6))
 	}
 	
-	// list undesired output variables
-	def rule7 = {
-		
+	
+	def newRule6 = {
+	  
+	  
+	  
 	}
 }
