@@ -6,9 +6,6 @@ class OutputVariable (
 	val key1: Vector[Any]
 ) extends Variable {
 	val matches : ArrayBuffer[ConditionVariable] = ArrayBuffer()
-	override def print() = {
-		println(s"id: $id key1:${key1.mkString(", ")} ")
-	}
 	override def toString() = s"id: $id key1:${key1.mkString(", ")}"
 
 	def keyVector = key1
