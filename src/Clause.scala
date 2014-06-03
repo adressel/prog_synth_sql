@@ -80,12 +80,13 @@ object Clause {
 				println("////////////////////////\n")
 			}
 		}
-		
+		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
+		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
 		
 		for((_, otv) <- otvMap) {
 			// RULE 5
 			val clauseList = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
-			clauses += new Clause(clauseList)
+			tmpClauses5 += new Clause(clauseList)
 			
 			
 			// RULE 8
@@ -93,9 +94,11 @@ object Clause {
 			val wSet = ConditionVariable.all.toSet
 			// iterate through the set difference of the matches (all cvs that don't match)
 			for(cv <- wSet -- otv.matches) {
-				clauses += new Clause(List((otv, false), (cv, false)))
+				tmpClauses8 += new Clause(List((otv, false), (cv, false)))
 			}
 		}
+		clauses += ((tmpClauses5, 5))
+		clauses += ((tmpClauses8, 8))
 	}
 	
 	// map desired output variables to output variables
