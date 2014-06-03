@@ -20,7 +20,6 @@ object Clause {
 		rule1
 		rule2
 		rule3
-		rule4
 		rule5and8
 		rule6
 		rule7
@@ -61,8 +60,7 @@ object Clause {
 	  	clauses += ((tmpClauses, 3))
 	}
 	
-	// map condition variables to output variables
-	def rule4 = {
+	def rule5and8 = {
 		// create a mapping from the OTV vector to the Output Variable
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
@@ -83,11 +81,9 @@ object Clause {
 				println("")
 			}
 		}
-	}
-	def rule5and8 = {
+		
 		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
 		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
-		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		for((_, otv) <- otvMap) {
 			// RULE 5
 			val clauseList = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)

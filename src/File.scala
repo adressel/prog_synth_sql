@@ -30,7 +30,7 @@ object Printer {
 object Reader {
 	private	val root = "./sat/results/" // for Ian
 //	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
-	def readFile = {
+	def printQueryFromResult = {
 		val resultsTxt = Source.fromFile(s"${root}results.txt").mkString
 		val pattern = "(.*)Random Seed Used".r
 		val Some(patternMatch) = pattern.findFirstMatchIn(resultsTxt)
