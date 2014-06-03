@@ -20,7 +20,7 @@ object Clause {
 		rule1
 		rule2
 		rule3
-		//rule4
+		rule4
 		rule5and8
 		rule6
 		rule7
