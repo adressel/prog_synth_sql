@@ -9,7 +9,7 @@ class AttributeVariable (
 	val attrType : String
 ) extends Variable {
 	override def toString() = tableName + "  " + attrName + "  " + constant.mkString(",")
-	def name = s"$tableName.$attrName"
+	override def name = s"$tableName.$attrName"
 	val constVector = constant.toVector
 }
 
@@ -40,7 +40,7 @@ object AttributeVariable {
 		       }
 		       val otherConst = Utility.queryToVector(s"select max($attrname), min($attrname), avg($attrname) from $table;");
 		       constVector ++= otherConst(0).toVector
-		       //println(otherConst(0).toVector)
+		       
 		       x += new AttributeVariable(table, attrname, constVector.toVector, typeStr)
 		       println(constVector.toVector)
 		     }

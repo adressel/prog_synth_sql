@@ -7,7 +7,6 @@ object Printer {
 //	private	val root = "./" // for Ian
 	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 
-	
 	def printFile = {
 		val out = new PrintWriter(s"${root}output.cnf")
 		val header = "c output.enc\nc\np cnf "+ Variable.count +" " + Clause.clauses.length + " \n"
@@ -29,10 +28,17 @@ object Printer {
 }
 
 object Reader {
-//	private	val root = "./sat/cnf_files/" // for Ian
-	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
-		
+	private	val root = "./sat/results/" // for Ian
+//	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 	def readFile = {
-		val in = Source.fromFile(s"${root}output.cnf").mkString
+		val resultsTxt = Source.fromFile(s"${root}results.txt").mkString
+		val pattern = "(.*)Random Seed Used".r
+		val Some(patternMatch) = pattern.findFirstMatchIn(resultsTxt)
+		val clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
+		val conditions = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[ConditionVariable])
+		val attrs = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[AttributeVariable])
+		val selects = attrs.map(x => x.name).mkString(", ")
+		val wheres = conditions.map(x => x.print).mkString(" and \n")
+		println(s"select $selects from ")
 	}
 }

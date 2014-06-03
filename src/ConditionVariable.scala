@@ -25,7 +25,7 @@ extends ConditionVariable(left, op) {
 			case _ => right.toString
 		}
 	}
-	
+	override def print = query
 	override def toString() = s"$left $op $right"
 	override def query = s"${left.name} ${ConditionVariable.opToString(op)} $rightQuery"
 }
@@ -35,6 +35,7 @@ class BinaryCondition(
     op : ConditionVariable.Operator.Value,
     right: AttributeVariable
 ) extends ConditionVariable(left, op) {
+	override def print = query
 	override def toString() = s"$left $op $right"
 	override def query = s"${left.name} ${ConditionVariable.opToString(op)} ${right.name}"
 }

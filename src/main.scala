@@ -11,6 +11,8 @@ object main extends App {
 	OutputDesiredVariable.populate(Vector("album", "usr"), Data.desiredTableName)
 	OutputVariable.populate(Vector("album", "usr"))
 	Clause.populate
-	
+
 	Printer.printFile
+	Reader.readFile
+
 }
