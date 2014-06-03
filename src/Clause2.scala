@@ -1,18 +1,6 @@
 package src
 import scala.collection.mutable._
-class Clause (
-	//Variable.Literal is just a Tuple2[Variable, Boolean]
-	val literals : List[Variable.Literal]
-) {
-	def printString = {
-	  //StringBuilder
-	  for(literal <- literals) {
-	    //if true add - 
-	  }
-	}
-}
-
-object Clause {
+object Clause2 {
 	
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 	
