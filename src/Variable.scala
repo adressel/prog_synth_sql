@@ -12,5 +12,6 @@ object Variable {
 class Variable {
 	val id = Variable.newId
 	Variable.all += this
-	def print() : String = ""
+	def name = ""
+	def print  = ""
 }

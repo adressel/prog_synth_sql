@@ -36,7 +36,9 @@ object Reader {
 		val Some(patternMatch) = pattern.findFirstMatchIn(resultsTxt)
 		val clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
 		val conditions = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[ConditionVariable])
-		val query = conditions.map(x => x.print).mkString(" and \n")
-		println(query)
+		val attrs = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[AttributeVariable])
+		val selects = attrs.map(x => x.name).mkString(", ")
+		val wheres = conditions.map(x => x.print).mkString(" and \n")
+		println(s"select $selects from ")
 	}
 }
