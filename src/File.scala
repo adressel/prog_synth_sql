@@ -8,26 +8,30 @@ object printer {
 	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 
 	
-	def printFile = {
-		val out = new PrintWriter(s"${root}output.cnf")
-		val header = "c output.enc\nc\np cnf "+ Variable.count +" " + Clause.clauses.length + " \n"
-		out.print(header)
-		for (clause <- Clause.clauses){
-		  var cnf = ""
-		  for (attr <- clause.literals){
-			  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1.id + " ")
-		  }
-		  out.print(cnf + "0\n") 
-		}
-		out.close()
-	}
+//	def printFile = {
+//		val out = new PrintWriter(s"${root}output.cnf")
+//		val header = "c output.enc\nc\np cnf "+ Variable.count +" " + Clause.clauses.length + " \n"
+//		out.print(header)
+//		for (clause <- Clause.clauses){
+//		  var cnf = ""
+//		  for (attr <- clause.literals){
+//			  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1.id + " ")
+//		  }
+//		  out.print(cnf + "0\n") 
+//		}
+//		out.close()
+//	}
 }
 
 object Reader {
-	private	val root = "./sat/cnf_files/" // for Ian
+	private	val root = "./sat/results/" // for Ian
 //	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 		
 	def readFile = {
-		val in = Source.fromFile(s"${root}output.cnf").mkString
+		val resultsTxt = Source.fromFile(s"${root}results.txt").mkString
+		val pattern = "(.*)Random Seed Used".r
+		val Some(patternMatch) = pattern.findFirstMatchIn(resultsTxt)
+		val clauses = patternMatch.group(1).split(" ").filter(_(0) != '-')
+		for(c <- clauses) println(Variable.all(c.toInt - 1))
 	}
 }

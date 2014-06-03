@@ -10,6 +10,7 @@ object ian_test extends App {
 	ConditionVariable.populate(AttributeVariable.all)
 	OutputDesiredVariable.populate(Vector("album", "contain"), "OutputAtoC")
 	OutputVariable.populate(Vector("album", "contain"))
-	Clause.populate
-	printer.printFile
+//	Clause.populate
+//	printer.printFile
+	Reader.readFile
 }
