@@ -6,13 +6,13 @@ import scala.collection.mutable.MutableList
 
 object main extends App {
 
-	AttributeVariable.populate(Vector("album", "usr"))
+	AttributeVariable.populate(Data.tableNames)
 	ConditionVariable.populate(AttributeVariable.all)
-	OutputDesiredVariable.populate(Vector("album", "usr"), Data.desiredTableName)
-	OutputVariable.populate(Vector("album", "usr"))
+	OutputDesiredVariable.populate(Data.tableNames, Data.desiredTableName)
+	OutputVariable.populate(Data.tableNames)
 	Clause.populate
 
 	Printer.printFile
-	Reader.readFile
+	//Reader.readFile
 
 }
