@@ -20,7 +20,8 @@ object Clause {
 		rule1
 		rule2
 		rule3
-		rule4and5
+		//rule4
+		rule5and8
 		rule6
 		rule7
 	}
@@ -61,7 +62,7 @@ object Clause {
 	}
 	
 	// map condition variables to output variables
-	def rule4and5 = {
+	def rule4 = {
 		// create a mapping from the OTV vector to the Output Variable
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
@@ -82,9 +83,11 @@ object Clause {
 				println("")
 			}
 		}
+	}
+	def rule5and8 = {
 		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
 		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
-		
+		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		for((_, otv) <- otvMap) {
 			// RULE 5
 			val clauseList = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
@@ -111,25 +114,17 @@ object Clause {
 	   	  result += new MutableList()
 	   	}
 		for (output <- OutputVariable.all){
-			val attr = output.key1
 			var query = "select rownum from " + Data.desiredTableName + " where "
 			val attrName = OutputDesiredVariable.all
-			var i = 0
-			val statement = Data.connection.createStatement()
 			val tempList : MutableList[String] = MutableList()
- 			for( i <- 0 until OutputDesiredVariable.all.length  ) {
-				if (attrName(i).attrType.toUpperCase() == "INT")
-					tempList += attrName(i).tableName + attrName(i).attrName + " = " + attr(i) + " "
-				else 
-				    tempList += attrName(i).tableName + attrName(i).attrName + " = \'" + attr(i) + "\' "
+ 			for( i <- 0 until attrName.length  ) {
+ 			  tempList += attrName(i).tableName + attrName(i).attrName + (
+				if (attrName(i).attrType.toUpperCase() == "INT") " = " + output.key1(i) + " "
+					else " = \'" + output.key1(i) + "\' ")
 			}
-			//println(query + tempList.mkString("and "))
+			val statement = Data.connection.createStatement()
 			val resultSet = statement.executeQuery(query + tempList.mkString("and ") + ";") 
-			if (resultSet.next()){
-				val row = resultSet.getInt("rownum")
-				result(row - 1) += ((output,true))
-			    //println(row + tempList.mkString("and "))
-			}
+			if (resultSet.next()) result(resultSet.getInt("rownum") - 1) += ((output,true))
 			else tmpClauses += new Clause(List((output, false)))
 		}
 		for (singleRes <- result) tmpClauses += new Clause(singleRes.toList)

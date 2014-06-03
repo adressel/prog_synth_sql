@@ -2,7 +2,7 @@ package src
 import java.io._
 import scala.io._
 
-object printer {
+object Printer {
 
 //	private	val root = "./" // for Ian
 	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng

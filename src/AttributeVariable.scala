@@ -21,17 +21,13 @@ object AttributeVariable {
 	//creates the Vector of attributes given two tables
 	def populate(tableName : Vector[String]) = {
 		val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
-		for (table <- tableName)
-		{
+		for (table <- tableName){
 		    val statement = Data.connection.createStatement();
 		    val statement2 = Data.connection.createStatement();
 	      // resultSet gets the result of the SQL query
-	
 		     val  resultSet = statement
 		          .executeQuery("SHOW columns FROM "+ table +";")
-		     
-		     while (resultSet.next())
-		     {
+		     while (resultSet.next()){
 		       val attrname = resultSet.getString("field");
 		       val attrType = resultSet.getString("type");
 		       val index = attrType.indexOf("(");

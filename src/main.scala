@@ -12,5 +12,5 @@ object main extends App {
 	OutputVariable.populate(Vector("album", "usr"))
 	Clause.populate
 	
-	printer.printFile
+	Printer.printFile
 }
