@@ -16,6 +16,15 @@ object Clause {
 	
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 	
+	def populate = {
+		rule1
+		rule2
+		rule3
+		rule4and5
+		rule6
+		rule7
+	}
+	
 	// rule functions create the clauses for each rule
 	// at least one attribute variable is true
 	def rule1 = {
