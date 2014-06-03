@@ -4,8 +4,8 @@ import scala.io._
 
 object Printer {
 
-//	private	val root = "./" // for Ian
-	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
+	private	val root = "./sat/cnf_files/" // for Ian
+//	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 
 	def printFile = {
 		val out = new PrintWriter(s"${root}output.cnf")
@@ -39,6 +39,7 @@ object Reader {
 		val attrs = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[AttributeVariable])
 		val selects = attrs.map(x => x.name).mkString(", ")
 		val wheres = conditions.map(x => x.print).mkString(" and \n")
-		println(s"select $selects from ")
+		println("\n======== QUERY ============")
+		println(s"select $selects from ${Data.tableNames.mkString(", ")} where $wheres")
 	}
 }
