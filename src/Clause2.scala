@@ -6,51 +6,26 @@ object Clause2 {
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 	
 	def populate = {
-		rule1
-		rule2
-		rule3
+//		rule1
+//		rule2
+//		rule3
+		rule4
+		rule6
 		rule58
-//		rule5and8
-//		rule6
 	}
 	
-	def populate2 = {
-		
+	def rule4 = {
+		val tmpClauses6 = ConditionVariable.all.toList.map(x => (x, true))
+		val tmpBuffer6 : ArrayBuffer[Clause] = ArrayBuffer()
+		tmpBuffer6 += new Clause(tmpClauses6)
+		clauses += ((tmpBuffer6, 4))
 	}
 	
-	// rule functions create the clauses for each rule
-	// at least one attribute variable is true
-	def rule1 = {
-		val list : MutableList[Variable.Literal] = MutableList()
-		for (attr <- AttributeVariable.all) list += ((attr, true))
-		clauses += ((ArrayBuffer(new Clause(list.toList)),1))
-	}
-	
-	// at least one condition variable is true
-	def rule2 = {
-	  	val list : MutableList[Variable.Literal] = MutableList()
-		for (attr <- ConditionVariable.all) list += ((attr, true))
-		clauses += ((ArrayBuffer(new Clause(list.toList)),2))
-	}
-	
-	// maps attribute variable (select) to output attributes
-	def rule3 = {
-	  	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
-		for (attr <- AttributeVariable.all){
-			var contain = false
-			for(attrOut <- OutputDesiredVariable.all){
-				if (attr.tableName == attrOut.tableName && attr.attrName == attrOut.attrName){
-				  val list : MutableList[Variable.Literal] = MutableList()
-				  list += new Variable.Literal (attrOut, true)
-				  list += new Variable.Literal (attr, false)
-				  tmpClauses += new Clause (list.toList)
-				  contain = true
-				}
-			}
-			if(!contain)
-				tmpClauses += new Clause (List((attr, false)))// add to list
-		}
-	  	clauses += ((tmpClauses, 3))
+	def rule6 = {
+		val tmpClauses6 = OutputVariable.all.map(x => new Clause(List((x, true))))
+		val tmpBuffer6 : ArrayBuffer[Clause] = ArrayBuffer()
+		tmpBuffer6 ++= tmpClauses6
+		clauses += ((tmpBuffer6, 6))
 	}
 	
 	def rule58 = {
@@ -60,14 +35,28 @@ object Clause2 {
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
 		for(cv <- ConditionVariable.all) {
+			
+			//print all clauses that contain all matches
 			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
-			val contains_all_matches = otvMap.forall({case (k, v) => query_results.contains(k)})
-			if(contains_all_matches) {
-				tmpClauses5 += new Clause(List((cv, true)))
+			val contains_all_matches = OutputVariable.all.forall(
+				otv => query_results.contains(otv.keyVector)
+			)
+			if(contains_all_matches)
 				println(s"${cv.print} and")
+			
+			val (matched_otv, unmatched_otv) = OutputVariable.all.partition(
+				x => query_results.contains(x.keyVector)
+			)
+			
+			
+			for(otv <- matched_otv) {
+				tmpClauses5 += new Clause(List((cv, false), (otv, true)))
 			}
-			else
-				tmpClauses8 += new Clause(List((cv, false)))
+			
+			for(otv <- unmatched_otv) {
+				tmpClauses8 += new Clause(List((cv, false), (otv, false)))
+			}
+				
 		}
 		clauses += ((tmpClauses5, 5))
 		clauses += ((tmpClauses8, 8))

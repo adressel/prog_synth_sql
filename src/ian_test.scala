@@ -8,9 +8,9 @@ object ian_test extends App {
 	
 	AttributeVariable.populate(Data.tableNames)
 	ConditionVariable.populate(AttributeVariable.all)
-	OutputDesiredVariable.populate(Data.tableNames, Data.desiredTableName)
+//	OutputDesiredVariable.populate(Data.tableNames, Data.desiredTableName)
 	OutputVariable.populate
-	Clause.populate
+	Clause2.populate
 	Printer.printFile
-	//Reader.readFile
+	Reader.printQueryFromResult
 }

@@ -17,9 +17,9 @@ object Clause {
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 	
 	def populate = {
-		rule1
-		rule2
-		rule3
+//		rule1
+//		rule2
+//		rule3
 		new_rule_using_new_otv
 //		rule5and8
 //		rule6
@@ -31,39 +31,39 @@ object Clause {
 	
 	// rule functions create the clauses for each rule
 	// at least one attribute variable is true
-	def rule1 = {
-		val list : MutableList[Variable.Literal] = MutableList()
-		for (attr <- AttributeVariable.all) list += ((attr, true))
-		clauses += ((ArrayBuffer(new Clause(list.toList)),1))
-	}
-	
-	// at least one condition variable is true
-	def rule2 = {
-	  	val list : MutableList[Variable.Literal] = MutableList()
-		for (attr <- ConditionVariable.all) list += ((attr, true))
-		clauses += ((ArrayBuffer(new Clause(list.toList)),2))
-	}
-	
-	// maps attribute variable (select) to output attributes
-	def rule3 = {
-	  	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
-		for (attr <- AttributeVariable.all){
-			var contain = false
-			for(attrOut <- OutputDesiredVariable.all){
-				if (attr.tableName == attrOut.tableName && attr.attrName == attrOut.attrName){
-				  val list : MutableList[Variable.Literal] = MutableList()
-				  list += new Variable.Literal (attrOut, true)
-				  list += new Variable.Literal (attr, false)
-				  tmpClauses += new Clause (list.toList)
-				  contain = true
-				}
-			}
-			if(!contain)
-				tmpClauses += new Clause (List((attr, false)))// add to list
-		}
-	  	clauses += ((tmpClauses, 3))
-	}
-	
+//	def rule1 = {
+//		val list : MutableList[Variable.Literal] = MutableList()
+//		for (attr <- AttributeVariable.all) list += ((attr, true))
+//		clauses += ((ArrayBuffer(new Clause(list.toList)),1))
+//	}
+//	
+//	// at least one condition variable is true
+//	def rule2 = {
+//	  	val list : MutableList[Variable.Literal] = MutableList()
+//		for (attr <- ConditionVariable.all) list += ((attr, true))
+//		clauses += ((ArrayBuffer(new Clause(list.toList)),2))
+//	}
+//	
+//	// maps attribute variable (select) to output attributes
+//	def rule3 = {
+//	  	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
+//		for (attr <- AttributeVariable.all){
+//			var contain = false
+//			for(attrOut <- OutputDesiredVariable.all){
+//				if (attr.tableName == attrOut.tableName && attr.attrName == attrOut.attrName){
+//				  val list : MutableList[Variable.Literal] = MutableList()
+//				  list += new Variable.Literal (attrOut, true)
+//				  list += new Variable.Literal (attr, false)
+//				  tmpClauses += new Clause (list.toList)
+//				  contain = true
+//				}
+//			}
+//			if(!contain)
+//				tmpClauses += new Clause (List((attr, false)))// add to list
+//		}
+//	  	clauses += ((tmpClauses, 3))
+//	}
+//	
 	def new_rule_using_new_otv = {
 		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
 		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()

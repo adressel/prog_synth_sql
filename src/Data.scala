@@ -7,7 +7,7 @@ object Data {
 	val driver = "com.mysql.jdbc.Driver"
 	val url = "jdbc:mysql://localhost:3306/" + databaseName
 	val username = "root"
-	val password = "123456"
+	val password = ""
 	val desiredTableName = "desiredoutput"
 	val desired_query = "select album.albumid, usr.username from album, usr"
 	val desired_query_where = " where album.username = usr.username"
