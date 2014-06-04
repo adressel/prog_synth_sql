@@ -88,23 +88,13 @@ object Clause2 {
 	def rule6 = {
 	   	val result : MutableList[MutableList[Variable.Literal]] = MutableList()
 	   	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
-	   	for( i <- 0 until OutputDesiredVariable.numForRows  ) {
-	   	  result += new MutableList()
-	   	}
-		for (output <- OutputVariable.all){
-			var query = "select rownum from " + Data.desiredTableName + " where "
-			val attrName = OutputDesiredVariable.all
-			val tempList : MutableList[String] = MutableList()
- 			for( i <- 0 until attrName.length  ) {
+	   	val attrName = OutputDesiredVariable.all
+	   	for( i <- 0 until attrName.length  ) {
  			  tempList += attrName(i).tableName + attrName(i).attrName + (
 				if (attrName(i).attrType.toUpperCase() == "INT") " = " + output.key1(i) + " "
 					else " = \'" + output.key1(i) + "\' ")
-			}
-			val statement = Data.connection.createStatement()
-			val resultSet = statement.executeQuery(query + tempList.mkString("and ") + ";") 
-			if (resultSet.next()) result(resultSet.getInt("rownum") - 1) += ((output,true))
-			else tmpClauses += new Clause(List((output, false)))
 		}
+	   	
 		for (singleRes <- result) tmpClauses += new Clause(singleRes.toList)
 		clauses += ((tmpClauses, 6))
 	}
