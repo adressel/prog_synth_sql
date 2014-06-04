@@ -24,8 +24,8 @@ object AttributeVariable {
 		for (table <- tableName){
 		    val attr : Vector[Tuple2[String, String]] = Utility.getTableAttrs(table)
 		    for ((attrname,attrType)  <- attr){
-		    val statement2 = Data.connection.createStatement();
-		    val constantSet = statement2.executeQuery(s"select distinct $attrname from $table;");
+		    val statement = Data.connection.createStatement();
+		    val constantSet = statement.executeQuery(s"select distinct $attrname from $table;");
 		       val constVector : ArrayBuffer[Any] = ArrayBuffer()
 		       while (constantSet.next()){
 		        	 constVector += constantSet.getObject(attrname)
