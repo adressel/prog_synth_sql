@@ -47,4 +47,20 @@ object Utility {
 		//println(s"select ${columns.mkString(", ")} from $tableName")
 		statement.executeQuery(s"select ${columns.mkString(", ")} from ${tableName.mkString(", ")} ")
 	}
+	
+	def getTableAttrs (tableName : String) : Vector[Tuple2[String, String]] = {
+			val results : ArrayBuffer[Tuple2[String,String]] = ArrayBuffer()
+			val statement = Data.connection.createStatement()
+			val  resultSet = statement
+		          .executeQuery("SHOW columns FROM "+ tableName +";")
+		     while (resultSet.next()){
+		       val attrname = resultSet.getString("field");
+		       val attrType = resultSet.getString("type");
+		       val index = attrType.indexOf("(");
+		       val typeStr = if (index != -1) attrType.substring(0, index)
+		    		   			else attrType
+		       results += ((attrname, typeStr))
+		     }
+			results.toVector
+	}
 }
