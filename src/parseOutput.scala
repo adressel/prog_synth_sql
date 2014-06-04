@@ -1,5 +1,0 @@
-package src
-
-object parseOutput {
-
-}

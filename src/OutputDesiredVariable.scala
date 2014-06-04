@@ -16,11 +16,10 @@ object OutputDesiredVariable {
 	
 	def all = attrs
 	def numForRows = numOfrow
-	//creates the Vector of attributes given two tables
+	
 	def populate(tableNames : Vector[String], output : String) = {
 		val x : ArrayBuffer[OutputDesiredVariable] = ArrayBuffer()
 		val statement1 = Data.connection.createStatement()
-		    // resultSet gets the result of the SQL query
 		val  resultSet1 = statement1
 		          .executeQuery("select count(*) from " + output)
 		if (resultSet1.next()){

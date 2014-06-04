@@ -9,6 +9,9 @@ object Data {
 	val username = "root"
 	val password = ""
 	val desiredTableName = "desiredoutput"
+	val desired_query = "select album.albumid, usr.username from album, usr"
+	val desired_query_where = " where album.username = usr.username"
+		
 	val tableNames = Vector("album", "usr")
 
 	Class.forName(driver)
@@ -16,4 +19,5 @@ object Data {
 	if(connection == null) println("failed")
 	
 	def closeConnection = connection.close
+	
 }

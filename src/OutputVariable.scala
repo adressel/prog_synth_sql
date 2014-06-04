@@ -27,6 +27,16 @@ object OutputVariable {
 		s"select ${keys.mkString(", ")} from ${tableNames.mkString(", ")} where "
 	}
 	
+	
+	
+	
+	def populate = {
+		otvs = Utility.queryToVector(Data.desired_query + Data.desired_query_where)
+				.map(x => new OutputVariable(x))
+	}
+	
+	/*
+	// OLD VERSION 
 	// return a Vector of condition clauses given two tables
 	def populate(tableNameVec : Vector[String])  = {
 		
@@ -42,4 +52,5 @@ object OutputVariable {
 		
 		otvs = OutputVariables.toVector
 	}
+	*/
 }
