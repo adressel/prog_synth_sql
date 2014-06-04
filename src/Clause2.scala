@@ -1,5 +1,6 @@
 package src
 import scala.collection.mutable._
+
 object Clause2 {
 	
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
@@ -8,8 +9,9 @@ object Clause2 {
 		rule1
 		rule2
 		rule3
-		rule5and8
-		rule6
+		new_rule_using_new_otv
+//		rule5and8
+//		rule6
 	}
 	
 	def populate2 = {
@@ -51,21 +53,45 @@ object Clause2 {
 	  	clauses += ((tmpClauses, 3))
 	}
 	
-	def rule5and8 = {
-		// create a mapping from the OTV vector to the Output Variable
+	def new_rule_using_new_otv = {
+		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
+		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
+		
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
 		for(cv <- ConditionVariable.all) {
-			val matches = Utility.queryToVector(OutputVariable.selectQuery + cv.query)
-			for(m <- matches) {
+			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
+			val contains_all_matches = otvMap.forall({case (k, v) => query_results.contains(k)})
+			if(contains_all_matches) {
+				tmpClauses5 += new Clause(List((cv, true)))
+				println(s"${cv.print} and")
+			}
+			else
+				tmpClauses8 += new Clause(List((cv, false)))
+		}
+		clauses += ((tmpClauses5, 5))
+		clauses += ((tmpClauses8, 8))
+	}
+	
+	def rule5and8 = {
+		// create a mapping from the OTV vector to the Output Variable
+		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
+		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
+		
+		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
+		
+		for(cv <- ConditionVariable.all) {
+			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}")
+				
+			
+			// OLD STUFF
+			for(result <- query_results) {
 				//old rule 5
 				// clauses += new Clause(List((cv, false), (otvMap(m), true)))
-				otvMap(m).matches += cv
+				otvMap(result).matches += cv
 			}
 		}
 		
-		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
-		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
 		for((_, otv) <- otvMap) {
 			// RULE 5
 			val clauseList = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
@@ -108,4 +134,5 @@ object Clause2 {
 		for (singleRes <- result) tmpClauses += new Clause(singleRes.toList)
 		clauses += ((tmpClauses, 6))
 	}
+
 }

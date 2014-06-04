@@ -4,8 +4,8 @@ import scala.io._
 
 object Printer {
 
-	private	val root = "./sat/cnf_files/" // for Ian
-//	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
+//	private	val root = "./sat/cnf_files/" // for Ian
+	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 
 	def printFile = {
 		val out = new PrintWriter(s"${root}output.cnf")
@@ -28,6 +28,7 @@ object Printer {
 }
 
 object Reader {
+
 	private	val root = "./sat/results/" // for Ian
 //	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
 	def printQueryFromResult = {

@@ -145,4 +145,5 @@ object Clause {
 		for (singleRes <- result) tmpClauses += new Clause(singleRes.toList)
 		clauses += ((tmpClauses, 6))
 	}
+
 }
