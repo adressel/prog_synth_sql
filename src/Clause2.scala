@@ -90,11 +90,8 @@ object Clause2 {
 	   	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
 	   	val attrName = OutputDesiredVariable.all
 	   	for( i <- 0 until attrName.length  ) {
- 			  tempList += attrName(i).tableName + attrName(i).attrName + (
-				if (attrName(i).attrType.toUpperCase() == "INT") " = " + output.key1(i) + " "
-					else " = \'" + output.key1(i) + "\' ")
+ 			 result += MutableList( (attrName(i), true))
 		}
-	   	
 		for (singleRes <- result) tmpClauses += new Clause(singleRes.toList)
 		clauses += ((tmpClauses, 6))
 	}
