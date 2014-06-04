@@ -48,9 +48,8 @@ object Clause2 {
 				x => query_results.contains(x.keyVector)
 			)
 			
-			
-			for(otv <- matched_otv) {
-				tmpClauses5 += new Clause(List((cv, false), (otv, true)))
+			if(matched_otv.size > 0) {
+				tmpClauses5 += new Clause(List((cv, false)) ::: matched_otv.toList.map(x => (x, true)))
 			}
 			
 			for(otv <- unmatched_otv) {
