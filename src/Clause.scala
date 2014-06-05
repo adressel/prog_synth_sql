@@ -106,6 +106,7 @@ object Clause {
 		for((_, otv) <- otvMap) {
 			// RULE 5
 			val clauseList = List((otv, false)) ::: (otv.matches.map(cv => (cv, true)).toList)
+			println(clauseList)
 			tmpClauses5 += new Clause(clauseList)
 			
 			
