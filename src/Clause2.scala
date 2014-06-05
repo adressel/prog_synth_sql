@@ -6,10 +6,6 @@ object Clause2 {
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 	
 	def populate = {
-//		rule1
-//		rule2
-//		rule3
-//		rule4
 		rule6
 		rule58
 	}
@@ -51,10 +47,6 @@ object Clause2 {
 			for(otv <- matched_otv) {
 				otv.matches += cv
 			}
-//			
-//			if(matched_otv.size > 0) {
-//				tmpClauses5 += new Clause(List((cv, false)) ::: matched_otv.toList.map(x => (x, true)))
-//			}
 			
 			for(otv <- unmatched_otv) {
 				tmpClauses8 += new Clause(List((otv, false), (cv, false)))
