@@ -10,13 +10,6 @@ object Clause2 {
 		rule58
 	}
 	
-	def rule4 = {
-		val tmpClauses6 = ConditionVariable.all.toList.map(x => (x, true))
-		val tmpBuffer6 : ArrayBuffer[Clause] = ArrayBuffer()
-		tmpBuffer6 += new Clause(tmpClauses6)
-		clauses += ((tmpBuffer6, 4))
-	}
-	
 	def rule6 = {
 		val tmpClauses6 = OutputVariable.all.map(x => new Clause(List((x, true))))
 		val tmpBuffer6 : ArrayBuffer[Clause] = ArrayBuffer()

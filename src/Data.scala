@@ -5,7 +5,7 @@ import java.sql.Connection
 object Data {
 	val databaseName = "test"
 	val driver = "com.mysql.jdbc.Driver"
-	val url = "jdbc:mysql://localhost:3306/" + databaseName
+	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
 	val password = ""
 	val desiredTableName = "desiredoutput"
