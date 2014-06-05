@@ -20,8 +20,8 @@ object Clause {
 		rule1
 		rule2
 		rule3
-		new_rule_using_new_otv
-//		rule5and8
+//		new_rule_using_new_otv
+		rule5and8
 //		rule6
 	}
 	
@@ -91,17 +91,17 @@ object Clause {
 		
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
-		for(cv <- ConditionVariable.all) {
-			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}")
-				
-			
-			// OLD STUFF
-			for(result <- query_results) {
-				//old rule 5
-				// clauses += new Clause(List((cv, false), (otvMap(m), true)))
-				otvMap(result).matches += cv
-			}
-		}
+//		for(cv <- ConditionVariable.all) {
+//			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}")
+//				
+//			
+//			// OLD STUFF
+//			for(result <- query_results) {
+//				//old rule 5
+//				// clauses += new Clause(List((cv, false), (otvMap(m), true)))
+//				otvMap(result).matches += cv
+//			}
+//		}
 		
 		for((_, otv) <- otvMap) {
 			// RULE 5

@@ -11,7 +11,7 @@ object Clause2 {
 		rule3
 		rule58
 //		rule5and8
-//		rule6
+		rule6
 	}
 	
 	def populate2 = {
@@ -64,13 +64,20 @@ object Clause2 {
 			val contains_all_matches = otvMap.forall({case (k, v) => query_results.contains(k)})
 			if(contains_all_matches) {
 				tmpClauses5 += new Clause(List((cv, true)))
-				println(s"${cv.print} and")
+				//println(s"${cv.print} and")
 			}
 			else
 				tmpClauses8 += new Clause(List((cv, false)))
 		}
 		clauses += ((tmpClauses5, 5))
 		clauses += ((tmpClauses8, 8))
+	}
+	
+	def rule6 = {
+	   	val tmpClauses : ArrayBuffer[Clause]= ArrayBuffer()
+	    val tmpVector = OutputVariable.all
+	    for (variable <- tmpVector) tmpClauses += new Clause(List((variable, true)))
+		clauses += ((tmpClauses, 6))
 	}
 	
 
