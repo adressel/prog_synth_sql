@@ -38,11 +38,10 @@ object Clause {
 			
 			//print all clauses that contain all matches
 			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
-			
+
 			val (matched_otv, unmatched_otv) = OutputVariable.all.partition(
 				x => query_results.contains(x.keyVector)
 			)
-			
 			for(otv <- matched_otv) {
 				otv.matches += cv
 			}
