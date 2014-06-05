@@ -3,16 +3,16 @@ import java.sql.DriverManager
 import java.sql.Connection
 
 object Data {
-	val databaseName = "test"
+	val databaseName = "test3"
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
 	val password = ""
 	val desiredTableName = "desiredoutput"
-	val desired_query = "select album.albumid, usr.username from album, usr"
-	val desired_query_where = " where album.username = usr.username"
+	val tableNames = Vector("item", "stock")
+	val desired_query = s"select item.I_ID from ${tableNames.mkString(", ")}"
+	val desired_query_where = " where item.I_ID < 200000"
 		
-	val tableNames = Vector("album", "usr")
 
 	Class.forName(driver)
 	val connection = DriverManager.getConnection(url, username, password)

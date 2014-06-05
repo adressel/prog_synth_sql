@@ -31,5 +31,8 @@ object main extends App {
 	println(s"# qry_clauses : ${CNF.wheres.size}")
 	println("########### CORRECTNESS #############")
 	CNF.evaluate_correctness
+	
+	println("")
+	println(CNF.query)
 }
 
