@@ -9,7 +9,7 @@ object Printer {
 
 	def printFile = {
 		val out = new PrintWriter(s"${root}output.cnf")
-		val header = "c output.enc\nc\np cnf "+ Variable.count +" " + Clause.clauses.length + " \n"
+		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.clauses.length} \n"
 		out.print(header)
 		for (clause <- Clause.clauses){
 		  val ruleNum : Int = clause._2 
@@ -20,8 +20,7 @@ object Printer {
 				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1.id + " ")
 			  }
 			  out.print(cnf + "0\n") 
-		  }
-		  
+		  } 
 		}
 		out.close()
 	}

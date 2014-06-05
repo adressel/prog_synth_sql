@@ -22,9 +22,7 @@ object OutputDesiredVariable {
 		val statement1 = Data.connection.createStatement()
 		val  resultSet1 = statement1
 		          .executeQuery("select count(*) from " + output)
-		if (resultSet1.next()){
-		  numOfrow = resultSet1.getInt("count(*)")
-		}
+		if (resultSet1.next()) numOfrow = resultSet1.getInt("count(*)")
 		for (table <- tableNames)
 		{
 		    val statement = Data.connection.createStatement()
