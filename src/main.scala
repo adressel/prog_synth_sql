@@ -8,7 +8,7 @@ object main extends App {
 	AttributeVariable.populate
 	ConditionVariable.populate
 	OutputVariable.populate
-	Clause.populate
+	Clause2.populate
 	Printer.printFile
 	CNF.solve
 }
