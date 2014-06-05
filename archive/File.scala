@@ -11,7 +11,7 @@ object Printer {
 		val out = new PrintWriter(s"${root}output.cnf")
 		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.clauses.length} \n"
 		out.print(header)
-		for (clause <- Clause.clauses){
+		for (clause <- Clause2.clauses){
 		  val ruleNum : Int = clause._2 
 		  out.print(s"c =========  rule $ruleNum  ============\n") 
 		  for (rules <- clause._1){
