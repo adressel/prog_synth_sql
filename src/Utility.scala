@@ -5,6 +5,17 @@ import java.sql.DatabaseMetaData
 import java.sql.ResultSet
 
 object Utility {
+	
+	def total_queries = query_count
+	var query_count = 0
+	
+	def time(func: () => Unit) : Double = {
+		val now = System.nanoTime
+		func()
+		val elapse = (System.nanoTime - now) / 1000000000.0
+		elapse
+	}
+	
 	//returns a list of primary keys for a table
 	def getPrimaryKeys(tableName: String) : Vector[String] = {
 		var primaryKeys : ArrayBuffer[String] = ArrayBuffer()
@@ -30,6 +41,7 @@ object Utility {
 	//takes query string and returns vector of vector of results
 	def queryToVector(query : String) : Vector[Vector[Any]] = {
 //		println(query)
+		query_count += 1
 		val rs = Data.connection.createStatement().executeQuery(query)
 		val results : ArrayBuffer[Vector[Any]] = ArrayBuffer()
 		while(rs.next) {

@@ -13,6 +13,8 @@ class Clause (
 }
 
 object Clause {
+	def all = clauses
+	def size = clauses.map(x => x._1.size).sum
 	
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 

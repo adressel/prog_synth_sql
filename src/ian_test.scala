@@ -4,10 +4,28 @@ import java.sql.Connection
 import com.mysql.jdbc
 
 object ian_test extends App {
-	AttributeVariable.populate
-	ConditionVariable.populate
-	OutputVariable.populate
-	Clause.populate
-	Printer.printFile
-	CNF.solve
+	val attr_pop_time = Utility.time(AttributeVariable.populate _)
+	val cond_pop_time = Utility.time(ConditionVariable.populate _)
+	val otvs_pop_time = Utility.time(OutputVariable.populate _)
+	val rule_pop_time = Utility.time(Clause.populate _)
+	val print_time = Utility.time(Printer.printFile _)
+	val solve_time = Utility.time(CNF.solve _)
+
+	println("########### TIME PROFILE #############")
+	println(f"attr_pop_time : $attr_pop_time%2.3f")
+	println(f"cond_pop_time : $cond_pop_time%2.3f")
+	println(f"otvs_pop_time : $otvs_pop_time%2.3f")
+	println(f"rule_pop_time : $rule_pop_time%2.3f")
+	println(f"print_time    : $print_time%2.3f")
+	println(f"solve_time    : $solve_time%2.3f")
+	
+	println("\n############## OTHER STATS ############")
+	println(s"# variables   : ${Variable.all.size}")
+	println(s"# sat_clauses : ${Clause.size}")
+	println(s"# queries     : ${Utility.total_queries}")
+	println(s"# qry_clauses : ${CNF.wheres.size}")
+	
+	CNF.evaluate_correctness
+
+
 }
