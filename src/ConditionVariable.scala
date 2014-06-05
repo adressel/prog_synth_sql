@@ -62,7 +62,8 @@ object ConditionVariable {
 	}
   
 	// return a Vector of condition clauses given two tables
-	def populate(attrVector : Vector[AttributeVariable]) = {
+	def populate = {
+		val attrVector = AttributeVariable.all
 		val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
 		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
 		for (attr <- attrVector) { 

@@ -19,7 +19,8 @@ object AttributeVariable {
 	def all = attrs
 	
 	//creates the Vector of attributes given two tables
-	def populate(tableName : Vector[String]) = {
+	def populate = {
+		val tableName = Data.tableNames
 		val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
 		for (table <- tableName){
 		    val attr : Vector[Tuple2[String, String]] = Utility.getTableAttrs(table)

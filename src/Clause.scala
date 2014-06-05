@@ -2,7 +2,7 @@ package src
 import scala.collection.mutable._
 class Clause (
 	//Variable.Literal is just a Tuple2[Variable, Boolean]
-	val literals : List[Variable.Literal]
+	val literals : Vector[Variable.Literal]
 ) {
 	def printString = {
 	  //StringBuilder
@@ -22,7 +22,7 @@ object Clause {
 	}
 	
 	def rule6 = {
-		val tmpClauses6 = OutputVariable.all.map(x => new Clause(List((x, true))))
+		val tmpClauses6 = OutputVariable.all.map(x => new Clause(Vector((x, true))))
 		val tmpBuffer6 : ArrayBuffer[Clause] = ArrayBuffer()
 		tmpBuffer6 ++= tmpClauses6
 		clauses += ((tmpBuffer6, 6))
@@ -47,13 +47,13 @@ object Clause {
 			}
 			
 			for(otv <- unmatched_otv) {
-				tmpClauses8 += new Clause(List((otv, false), (cv, false)))
+				tmpClauses8 += new Clause(Vector((otv, false), (cv, false)))
 			}
 				
 		}
 		
 		for(otv <- OutputVariable.all) {
-			tmpClauses5 += new Clause(List((otv, false)) ::: otv.matches.toList.map(x => (x, true)))
+			tmpClauses5 += new Clause(Vector((otv, false)) ++ otv.matches.map(x => (x, true)))
 		}
 		
 		clauses += ((tmpClauses5, 5))

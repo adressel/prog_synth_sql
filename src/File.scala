@@ -27,15 +27,14 @@ object Printer {
 }
 
 object Reader {
-
 	private	val root = "./sat/results/" // for Ian
 //	private val root = "/Users/Stephen/Desktop/FeatureCreature" // for Sheng
-	def printQueryFromResult = {
-		val resultsTxt = Source.fromFile(s"${root}results.txt").mkString
+	def process_cnf = {
+		val result = Source.fromFile(s"${root}results.txt").mkString
 		val pattern = "(.*)Random Seed Used".r
-		val Some(patternMatch) = pattern.findFirstMatchIn(resultsTxt)
+		val Some(patternMatch) = pattern.findFirstMatchIn(result)
 		val clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
-		println(clauses.mkString(", "))
+//		println(clauses.mkString(", "))
 		val conditions = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[ConditionVariable])
 //		val attrs = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[AttributeVariable])
 //		val selects = attrs.map(x => x.name).mkString(", ")
