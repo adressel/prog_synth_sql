@@ -9,7 +9,7 @@ object Clause2 {
 //		rule1
 //		rule2
 //		rule3
-		rule4
+//		rule4
 		rule6
 		rule58
 	}
@@ -48,15 +48,24 @@ object Clause2 {
 				x => query_results.contains(x.keyVector)
 			)
 			
-			if(matched_otv.size > 0) {
-				tmpClauses5 += new Clause(List((cv, false)) ::: matched_otv.toList.map(x => (x, true)))
+			for(otv <- matched_otv) {
+				otv.matches += cv
 			}
+//			
+//			if(matched_otv.size > 0) {
+//				tmpClauses5 += new Clause(List((cv, false)) ::: matched_otv.toList.map(x => (x, true)))
+//			}
 			
 			for(otv <- unmatched_otv) {
-				tmpClauses8 += new Clause(List((cv, false), (otv, false)))
+				tmpClauses8 += new Clause(List((otv, false), (cv, false)))
 			}
 				
 		}
+		
+		for(otv <- OutputVariable.all) {
+			tmpClauses5 += new Clause(List((otv, false)) ::: otv.matches.toList.map(x => (x, true)))
+		}
+		
 		clauses += ((tmpClauses5, 5))
 		clauses += ((tmpClauses8, 8))
 	}
