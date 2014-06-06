@@ -51,10 +51,12 @@ object ConditionVariable {
 	def populate_binary(op : String) = {
 		val attrVector = AttributeVariable.all
 		val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
-		for (attr <- attrVector) { 
-			for (attr2 <- attrVector) {
-				if (attr.attrType == attr2.attrType)
-					binaryVector += new BinaryCondition(attr, op, attr2)  
+		var i = 0
+		var j = 0
+		for (i <- 0 until attrVector.length){
+			for (j <- (i+1) until attrVector.length){
+				if (attrVector(i).attrType == attrVector(j).attrType)
+					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j))  
 		  }
 		}
 		cvs = cvs ++ (binaryVector.toVector)
