@@ -34,5 +34,6 @@ object main extends App {
 	
 	println("")
 	println(CNF.query)
+	Clause.printQuery
 }
 

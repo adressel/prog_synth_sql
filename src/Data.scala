@@ -3,6 +3,7 @@ import java.sql.DriverManager
 import java.sql.Connection
 
 object Data {
+
 	//	val root = "./sat/" // for Ian
     val root = "/Users/Stephen/Desktop/prog_synth_sql/sat/" // for Sheng
   
@@ -10,11 +11,11 @@ object Data {
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
-	val password = "123456"
+	val password = ""
 	val desiredTableName = "desiredoutput"
-	val tableNames = Vector("item", "stock")
-	val desired_query = s"select item.I_ID from ${tableNames.mkString(", ")}"
-	val desired_query_where = " where item.I_ID < 200000"
+	val tableNames = Vector("album", "usr")
+	val desired_query = s"select usr.username, album.albumid from ${tableNames.mkString(", ")}"
+	val desired_query_where = " where usr.username = \"spacejunkie\""
 		
 
 	Class.forName(driver)

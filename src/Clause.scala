@@ -4,12 +4,6 @@ class Clause (
 	//Variable.Literal is just a Tuple2[Variable, Boolean]
 	val literals : Vector[Variable.Literal]
 ) {
-	def printString = {
-	  //StringBuilder
-	  for(literal <- literals) {
-	    //if true add - 
-	  }
-	}
 }
 
 object Clause {
@@ -37,14 +31,12 @@ object Clause {
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
 		for(cv <- ConditionVariable.all) {
-			
-			//print all clauses that contain all matches
-//		  println(s"${Data.desired_query} where ${cv.query}")
 			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
 
 			val (matched_otv, unmatched_otv) = OutputVariable.all.partition(
 				x => query_results.contains(x.keyVector)
 			)
+			
 			for(otv <- matched_otv) {
 				otv.matches += cv
 			}
@@ -64,16 +56,16 @@ object Clause {
 	}
 	
 	def printQuery = {
-		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
+		
+		println("")
+		println("")
+		val otvSet = OutputVariable.all.map(x => x.keyVector).toSet
 		
 		for(cv <- ConditionVariable.all) {
 			//print all clauses that contain all matches
 			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
-			val contains_all_matches = OutputVariable.all.forall(
-				otv => query_results.contains(otv.keyVector)
-			)
-			if(contains_all_matches) {
-//				println(s"${cv.print} and")
+			if((otvSet -- query_results).size == 0) {
+				println(s"${cv.query} and")
 			}
 		}
 	}

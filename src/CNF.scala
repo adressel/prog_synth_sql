@@ -18,7 +18,7 @@ object CNF {
 	def post_process = {
 		val conditions = clauses.map(x => Variable.all(x-1)).filter(_.isInstanceOf[ConditionVariable])
 		wheres = conditions.map(x => x.print)
-		query = s"${Data.desired_query} where ${wheres.mkString(" and ")}"
+		query = s"${Data.desired_query} where ${wheres.mkString(" and \n")}"
 	}
 	
 	def evaluate_correctness = {
