@@ -3,54 +3,26 @@ import scala.collection.mutable._
 import java.sql.Connection
 
 class OutputVariable (
-	val key1: Vector[Any]
+	val key: Vector[Any]
 ) extends Variable {
 	val matches : ArrayBuffer[ConditionVariable] = ArrayBuffer()
+	
 	override def print() = {
-		s"id: $id key1:${key1.mkString(", ")} "
+		s"id: $id key1:${key.mkString(", ")} "
 	}
-	override def toString() = s"id: $id key1:${key1.mkString(", ")}"
 
-	def keyVector = key1
+	def keyVector = key
 }
 
 object OutputVariable {
-	var tableNames : Vector[String] = Vector()
 	var keys : Vector[String] = Vector()
 	private var otvs : Vector[OutputVariable] = Vector()
 	
 	def all = otvs
 	def getKey = keys
 	
-	/*** Functions ***/
-	def selectQuery : String = {
-		s"select ${keys.mkString(", ")} from ${tableNames.mkString(", ")} where "
-	}
-	
-	
-	
-	
 	def populate = {
-		otvs = Utility.queryToVector(Data.desired_query + Data.desired_query_where)
+		otvs = Utility.query_to_vector(Data.desired_query + Data.desired_where)
 				.map(x => new OutputVariable(x))
 	}
-	
-	/*
-	// OLD VERSION 
-	// return a Vector of condition clauses given two tables
-	def populate(tableNameVec : Vector[String])  = {
-		
-		tableNames = tableNameVec
-		keys = for (attr <- OutputDesiredVariable.all) yield {
-			attr.tableName + "." + attr.attrName // Temporarily using
-		}
-	
-		val OutputVariables : ArrayBuffer[OutputVariable] = ArrayBuffer()
-		val results = Utility.queryToVector(selectQuery + "true")
-		for(result <- results)
-		  OutputVariables += new OutputVariable(result) 
-		
-		otvs = OutputVariables.toVector
-	}
-	*/
 }

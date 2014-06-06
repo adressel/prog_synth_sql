@@ -17,7 +17,7 @@ object Utility {
 	}
 	
 	//returns a list of primary keys for a table
-	def getPrimaryKeys(tableName: String) : Vector[String] = {
+	def get_primary_keys(tableName: String) : Vector[String] = {
 		var primaryKeys : ArrayBuffer[String] = ArrayBuffer()
 		val keys = Data.connection.getMetaData().getPrimaryKeys(null, null, tableName)
 		while(keys.next()) {
@@ -27,7 +27,7 @@ object Utility {
 	}
 	
 	//converts a resultSet (that is assumed to be valid) to a List[Any]
-	def resultToVector(result : ResultSet) : Vector[Any] = {
+	def result_to_vector(result : ResultSet) : Vector[Any] = {
 		val resultList : ArrayBuffer[Any] = ArrayBuffer()
 		
 		val columnCount = result.getMetaData().getColumnCount()
@@ -39,40 +39,29 @@ object Utility {
 	}
 	
 	//takes query string and returns vector of vector of results
-	def queryToVector(query : String) : Vector[Vector[Any]] = {
-//		println(query)
+	def query_to_vector(query : String) : Vector[Vector[Any]] = {
 		query_count += 1
 		val rs = Data.connection.createStatement().executeQuery(query)
 		val results : ArrayBuffer[Vector[Any]] = ArrayBuffer()
 		while(rs.next) {
-			results += resultToVector(rs)
+			results += result_to_vector(rs)
 		}
 		results.toVector
 	}
 	
-	//creates a resultSet from select (columns) from tableName
-	//for instance, with tableName = "album" and columns = List("id", "location")
-	//it would return the resultSet from select id, location from album
-	def selectAllColumns(tableName: Vector[String], 
-			columns: Vector[String]) : ResultSet = {
-		val statement = Data.connection.createStatement()
-		//println(s"select ${columns.mkString(", ")} from $tableName")
-		statement.executeQuery(s"select ${columns.mkString(", ")} from ${tableName.mkString(", ")} ")
-	}
-	
 	def getTableAttrs (tableName : String) : Vector[Tuple2[String, String]] = {
-			val results : ArrayBuffer[Tuple2[String,String]] = ArrayBuffer()
-			val statement = Data.connection.createStatement()
-			val  resultSet = statement
-		          .executeQuery("SHOW columns FROM "+ tableName +";")
-		     while (resultSet.next()){
-		       val attrname = resultSet.getString("field");
-		       val attrType = resultSet.getString("type");
-		       val index = attrType.indexOf("(");
-		       val typeStr = if (index != -1) attrType.substring(0, index)
-		    		   			else attrType
-		       results += ((attrname, typeStr))
-		     }
-			results.toVector
+		val results : ArrayBuffer[Tuple2[String,String]] = ArrayBuffer()
+		val statement = Data.connection.createStatement()
+		val  resultSet = statement
+	          .executeQuery("SHOW columns FROM "+ tableName +";")
+	    while (resultSet.next()){
+	       val attrname = resultSet.getString("field");
+	       val attrType = resultSet.getString("type");
+	       val index = attrType.indexOf("(");
+	       val typeStr = if (index != -1) attrType.substring(0, index)
+	    		   		 else attrType
+	       results += ((attrname, typeStr))
+	    }
+		results.toVector
 	}
 }

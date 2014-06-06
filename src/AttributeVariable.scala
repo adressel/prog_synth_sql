@@ -20,7 +20,7 @@ object AttributeVariable {
 	
 	//creates the Vector of attributes given two tables
 	def populate = {
-		val tableName = Data.tableNames
+		val tableName = Data.table_names
 		val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
 		for (table <- tableName){
 		    val attr : Vector[Tuple2[String, String]] = Utility.getTableAttrs(table)
@@ -31,11 +31,6 @@ object AttributeVariable {
 		       while (constantSet.next()){
 		        	 constVector += constantSet.getObject(attrname)
 		       }
-		       /*
-			    *  //val otherConst = Utility.queryToVector(s"select max($attrname), min($attrname), avg($attrname) from $table;");
-			    * //constVector ++= otherConst(0).toVector
-		        * this part is for other const such as max, min, avg
-		        * */
 		       x += new AttributeVariable(table, attrname, constVector.toVector, attrType)
 		     }
 		}

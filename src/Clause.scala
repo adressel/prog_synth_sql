@@ -31,7 +31,7 @@ object Clause {
 		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
 		
 		for(cv <- ConditionVariable.all) {
-			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
+			val query_results = Utility.query_to_vector(s"${Data.desired_query} where ${cv.query}").toSet
 
 			val (matched_otv, unmatched_otv) = OutputVariable.all.partition(
 				x => query_results.contains(x.keyVector)
@@ -63,7 +63,7 @@ object Clause {
 		
 		for(cv <- ConditionVariable.all) {
 			//print all clauses that contain all matches
-			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
+			val query_results = Utility.query_to_vector(s"${Data.desired_query} where ${cv.query}").toSet
 			if((otvSet -- query_results).size == 0) {
 				println(s"${cv.query} and")
 			}

@@ -22,8 +22,8 @@ object CNF {
 	}
 	
 	def evaluate_correctness = {
-		val original = Utility.queryToVector(Data.desired_query + Data.desired_query_where).toSet
-		val derived = Utility.queryToVector(query).toSet
+		val original = Utility.query_to_vector(Data.desired_query + Data.desired_where).toSet
+		val derived = Utility.query_to_vector(query).toSet
 		
 		val missed = (original -- derived).size
 		val extras = (derived -- original).size

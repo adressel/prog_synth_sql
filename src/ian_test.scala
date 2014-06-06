@@ -25,7 +25,7 @@ object ian_test extends App {
 	println(f"process_time  : $process_time%2.3f")
 	
 	println("\n############## OTHER STATS ############")
-	println(s"# variables   : ${Variable.all.size}")
+	println(s"# variables   : ${ConditionVariable.all.size}")
 	println(s"# sat_clauses : ${Clause.size}")
 	println(s"# queries     : ${Utility.total_queries}")
 	println(s"# qry_clauses : ${CNF.wheres.size}")
