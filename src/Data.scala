@@ -3,6 +3,9 @@ import java.sql.DriverManager
 import java.sql.Connection
 
 object Data {
+	//	val root = "./sat/" // for Ian
+    val root = "/Users/Stephen/Desktop/prog_synth_sql/sat/" // for Sheng
+  
 	val databaseName = "test3"
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
