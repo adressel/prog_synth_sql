@@ -39,6 +39,7 @@ object Clause {
 		for(cv <- ConditionVariable.all) {
 			
 			//print all clauses that contain all matches
+//		  println(s"${Data.desired_query} where ${cv.query}")
 			val query_results = Utility.queryToVector(s"${Data.desired_query} where ${cv.query}").toSet
 
 			val (matched_otv, unmatched_otv) = OutputVariable.all.partition(

@@ -7,7 +7,7 @@ object Data {
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
-	val password = ""
+	val password = "123456"
 	val desiredTableName = "desiredoutput"
 	val tableNames = Vector("item", "stock")
 	val desired_query = s"select item.I_ID from ${tableNames.mkString(", ")}"
