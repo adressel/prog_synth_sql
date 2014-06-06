@@ -6,7 +6,7 @@ import scala.collection.mutable.MutableList
 
 object main extends App {
 	val attr_pop_time = Utility.time(AttributeVariable.populate _)
-	val cond_pop_time = Utility.time(ConditionVariable.populate _)
+//	val cond_pop_time = Utility.time(ConditionVariable.populate _)
 	val otvs_pop_time = Utility.time(OutputVariable.populate _)
 	val rule_pop_time = Utility.time(Clause.populate _)
 	val print_time = Utility.time(Printer.printFile _)
@@ -14,9 +14,9 @@ object main extends App {
 	val process_time = Utility.time(CNF.post_process _)
 
 	
-	val encode_time = attr_pop_time + cond_pop_time + otvs_pop_time + rule_pop_time
+//	val encode_time = attr_pop_time + cond_pop_time + otvs_pop_time + rule_pop_time
 	println("########### TIME PROFILE #############")
-	println(f"encode_time   : $encode_time%2.3f")
+//	println(f"encode_time   : $encode_time%2.3f")
 	println(f"print_time    : $print_time%2.3f")
 	println(f"solve_time    : $solve_time%2.3f")
 	println(f"process_time  : $process_time%2.3f")

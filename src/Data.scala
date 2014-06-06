@@ -16,7 +16,8 @@ object Data {
 	
 	def desired_query = s"$desired_selects$desired_where"
 	
-	val desired_selects = s"select usr.username from ${table_names.mkString(", ")}"
+	val desired_attr_names = Vector("album.albumid", "usr.username")
+	val desired_selects = s"select ${desired_attr_names.mkString(", ")} from ${table_names.mkString(", ")}"
 	val desired_where = " where usr.username = album.username"
 		
 
