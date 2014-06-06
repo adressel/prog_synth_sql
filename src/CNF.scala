@@ -9,7 +9,7 @@ object CNF {
 	var clauses : Array[Int] = Array()
 		
 	def solve = {
-		val result = s"${Data.root}zchaff ${Data.root}cnf_files/output.cnf" !!
+		val result = s"zchaff ${Data.root}cnf_files/output.cnf" !!
 		val pattern = "(.*)Random Seed Used".r
 		val Some(patternMatch) = pattern.findFirstMatchIn(result)
 		clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
@@ -22,7 +22,7 @@ object CNF {
 	}
 	
 	def evaluate_correctness = {
-		val original = Utility.query_to_vector(Data.desired_query + Data.desired_where).toSet
+		val original = Utility.query_to_vector(Data.desired_query).toSet
 		val derived = Utility.query_to_vector(query).toSet
 		
 		val missed = (original -- derived).size

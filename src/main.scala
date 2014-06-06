@@ -16,10 +16,6 @@ object main extends App {
 	
 	val encode_time = attr_pop_time + cond_pop_time + otvs_pop_time + rule_pop_time
 	println("########### TIME PROFILE #############")
-//	println(f"attr_pop_time : $attr_pop_time%2.3f")
-//	println(f"cond_pop_time : $cond_pop_time%2.3f")
-//	println(f"otvs_pop_time : $otvs_pop_time%2.3f")
-//	println(f"rule_pop_time : $rule_pop_time%2.3f")
 	println(f"encode_time   : $encode_time%2.3f")
 	println(f"print_time    : $print_time%2.3f")
 	println(f"solve_time    : $solve_time%2.3f")
@@ -32,8 +28,8 @@ object main extends App {
 	println("########### CORRECTNESS #############")
 	CNF.evaluate_correctness
 	
-	println("")
-	println(CNF.query)
-	Clause.printQuery
+//	println("")
+//	println(CNF.query)
+//	Clause.printQuery
 }
 
