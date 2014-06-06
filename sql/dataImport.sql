@@ -1,7 +1,7 @@
 -- ================ HISTORY ===================
 -- use tpcc
 -- select * from history where H_C_W_ID > 4 
--- into outfile 'C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/HISTORY.csv' fields terminated by ',';
+-- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/HISTORY.csv' fields terminated by ',';
 
 use test3
 -- drop table HISTORY;
@@ -18,7 +18,7 @@ create table HISTORY (
 );
 
 
-LOAD DATA LOCAL INFILE "C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/HISTORY.csv" INTO TABLE HISTORY
+LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/HISTORY.csv" INTO TABLE HISTORY
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 ignore 9980 lines
@@ -28,7 +28,7 @@ ignore 9980 lines
 -- ================ item ===================
 -- use tpcc
 -- select * from item where I_IM_ID< 1000
--- into outfile 'C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/item.csv' fields terminated by ',';
+-- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/item.csv' fields terminated by ',';
 
 use test3
 -- drop table item;
@@ -42,7 +42,7 @@ create table item (
 );
 
 
-LOAD DATA LOCAL INFILE "C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/item.csv" INTO TABLE item
+LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/item.csv" INTO TABLE item
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 ignore 9980 lines
@@ -52,7 +52,7 @@ ignore 9980 lines
 -- ================ STOCK ===================
 -- use tpcc
 -- SELECT S_W_ID, S_I_ID, S_DATA, S_REMOTE_CNT FROM STOCK WHERE S_ORDER_CNT = 2 AND S_I_ID < 23000
--- into outfile 'C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/STOCK.csv' fields terminated by ',';
+-- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/STOCK.csv' fields terminated by ',';
 
 
 use test3
@@ -65,7 +65,7 @@ create table STOCK (
 );
 
 
-LOAD DATA LOCAL INFILE "C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/STOCK.csv" INTO TABLE STOCK
+LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/STOCK.csv" INTO TABLE STOCK
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 ignore 9980 lines
@@ -75,7 +75,7 @@ ignore 9980 lines
 -- ================ OORDER ===================
 -- use tpcc
 -- SELECT * FROM OORDER WHERE O_C_ID < 36
--- into outfile 'C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/OORDER.csv' fields terminated by ',';
+-- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/OORDER.csv' fields terminated by ',';
 
 use test3
 -- drop table OORDER;
@@ -92,7 +92,7 @@ create table OORDER (
 );
 
 
-LOAD DATA LOCAL INFILE "C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/OORDER.csv" INTO TABLE OORDER
+LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/OORDER.csv" INTO TABLE OORDER
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 ignore 9980 lines
@@ -103,7 +103,7 @@ ignore 9980 lines
 -- ================ NEW_ORDER ===================
 -- use tpcc
 -- SELECT * FROM NEW_ORDER WHERE NO_W_ID < 5
--- into outfile 'C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/NEW_ORDER.csv' fields terminated by ',';
+-- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/NEW_ORDER.csv' fields terminated by ',';
 
 use test3
 -- drop table NEW_ORDER;
@@ -115,7 +115,7 @@ create table NEW_ORDER (
 );
 
 
-LOAD DATA LOCAL INFILE "C:/Users/laian_000/Documents/GitHub/prog_synth_sql/sql/NEW_ORDER.csv" INTO TABLE NEW_ORDER
+LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/NEW_ORDER.csv" INTO TABLE NEW_ORDER
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
 ignore 9980 lines
