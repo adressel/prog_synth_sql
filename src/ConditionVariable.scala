@@ -47,55 +47,28 @@ object ConditionVariable {
 	private var cvs : Vector[ConditionVariable] = Vector()
 	def all = cvs
 	
-//	object Operator extends Enumeration {
-//		type Operator = Value
-//		val Equal, NotEqual, LessEq, GreatEq = Value
-//	}
-//	
-//	def opToString(op : Operator.Value) = {
-//		op match {
-//			case Operator.Equal => "="
-//			case Operator.NotEqual => "!="
-//			case Operator.LessEq => "<="
-//			case Operator.GreatEq => ">="
-//			case _ => "null"
-//		}
-//	}
-//  
-//	object OperatorString extends Enumeration {
-//		type OperatorString = Value
-//		val Equal, NotEqual = Value
-//	}
-//	
-//	def opToString(op : OperatorString.Value) = {
-//		op match {
-//			case OperatorString.Equal => "="
-//			case OperatorString.NotEqual => "!="
-//			case _ => "null"
-//		}
-//	}
-	  
-	private val ops = List("=","!=", "<=",">=")
-	
 	// return a Vector of condition clauses given two tables
-	def populate = {
+	def populate_binary(op : String) = {
 		val attrVector = AttributeVariable.all
 		val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
-		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
 		for (attr <- attrVector) { 
-		  val opNum = if (attr.attrType == "int") {4} else {2}
-		  var num = 0;
-		  for (num <- 0 until opNum){
 			for (attr2 <- attrVector) {
 				if (attr.attrType == attr2.attrType)
-					binaryVector += new BinaryCondition(attr, ops(num), attr2)  
-			}
-			for (const <- attr.constant) {
-			  unaryVector += new UnaryCondition(attr, ops(num), const)
-			}
+					binaryVector += new BinaryCondition(attr, op, attr2)  
 		  }
 		}
-		cvs = (binaryVector.toVector) ++ (unaryVector.toVector)
+		cvs = cvs ++ (binaryVector.toVector)
+	}
+	
+	def populate_unary(op : String) = {
+		val attrVector = AttributeVariable.all
+		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
+		for (attr <- attrVector) { 
+			for (const <- attr.constant) {
+			  unaryVector += new UnaryCondition(attr, op, const)
+		  }
+		}
+		cvs = cvs ++ (unaryVector.toVector)
 	}
 }
 
