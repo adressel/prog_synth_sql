@@ -11,7 +11,7 @@ object ian_test extends App {
 	val print_time = Utility.time(Printer.printFile _)
 	val solve_time = Utility.time(CNF.solve _)
 	val process_time = Utility.time(CNF.post_process _)
-
+//	Reader.process_cnf
 	
 	val encode_time = attr_pop_time + cond_pop_time + otvs_pop_time + rule_pop_time
 	println("########### TIME PROFILE #############")
