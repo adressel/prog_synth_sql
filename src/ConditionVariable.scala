@@ -10,6 +10,7 @@ abstract class ConditionVariable(
     op : String
 ) extends Variable 
 {
+	def clause: String
 	def query : String
 }
 
@@ -30,7 +31,7 @@ extends ConditionVariable(left, op) {
 	}
 	override def print = query
 	override def toString() = s"$left $op $right\n"
-	def clause = s"${left.name} $op $rightQuery"
+	override def clause = s"${left.name} $op $rightQuery"
 	def query = s"select * from ${Data.desired_tables} where ${clause}"
 }
 
@@ -41,7 +42,7 @@ class BinaryCondition(
 ) extends ConditionVariable(left, op) {
 	override def print = query
 	override def toString() = s"$left $op $right"
-	def clause = s"${left.name} $op ${right.name}"
+	override def clause = s"${left.name} $op ${right.name}"
 	def query = s"select * from ${Data.desired_tables} where ${clause}"
 }
 

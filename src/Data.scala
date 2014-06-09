@@ -12,14 +12,14 @@ object Data {
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
 	val password = ""
-	val table_names = Vector("album", "contain")
+	val table_names = Vector("album", "photo", "contain")
 	
 	def desired_query = s"$desired_selects$desired_where"
 	
-	val desired_attr_names = Vector("album.albumid", "contain.picid")
+	val desired_attr_names = Vector("album.albumid", "photo.picid")
 	val desired_tables = table_names.mkString(", ")
 	val desired_selects = s"select ${desired_attr_names.mkString(", ")} from $desired_tables"
-	val desired_where = " where album.albumid = contain.albumid"
+	val desired_where = " where album.albumid = contain.albumid and contain.picid = photo.picid"
 	println(desired_selects + desired_where)
 
 	Class.forName(driver)

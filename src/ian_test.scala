@@ -4,15 +4,27 @@ import java.sql.Connection
 import com.mysql.jdbc
 
 object ian_test extends App {
-	OutputVariable.populate
-	AttributeVariable.populate
-	println(AttributeVariable.all)
-	ConditionVariable.populate_binary("=")
-	Clause.populate
-	Printer.print_file
-	CNF.solve
-	CNF.post_process
+	
+	val encode_time = Utility.time {
+		() =>
+		OutputVariable.populate
+		AttributeVariable.populate
+		ConditionVariable.populate_binary("=")
+		Clause.populate
+		Printer.print_file
+	}
+	
+	val solve_time = Utility.time {
+		CNF.solve _
+	}
+	
+	val process_time = Utility.time {
+		CNF.post_process _
+	}
 	
 	println(CNF.query)
-//	OutputVariable.get_types
+	
+	println(s"encode time: $encode_time")
+	println(s"solve_time: $solve_time")
+	println(s"process_time: $process_time")
 }
