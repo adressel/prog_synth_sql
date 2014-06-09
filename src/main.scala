@@ -8,7 +8,7 @@ object main extends App {
 	OutputVariable.populate
 	AttributeVariable.populate
 	ConditionVariable.populate_binary("=")
-//	println(ConditionVariable.all)
+//	println(ConditionVariable.all.map(x => x.query + "\n"))
 	Clause.populate
 	Printer.print_file
 //	println(OutputVariable.get_otv.mkString(", "))
