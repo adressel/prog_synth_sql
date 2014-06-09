@@ -5,7 +5,6 @@ import java.sql.Connection
 class OutputVariable (
 	val tuple: Vector[Any]
 ) extends Variable {
-	val matches : mutable.Set[ConditionVariable] = mutable.Set()
 }
 
 object OutputVariable {
@@ -29,9 +28,11 @@ object OutputVariable {
 			for(result_tuple <- result_tuples) yield new OutputVariable(result_tuple)
 		}
 		
+		val clause_buffer : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		for(otv_group <- otv_groups) {
-			// RULE 1 SOON
+			clause_buffer += new Clause(otv_group.map(x => (x, true)))
 		}
+		Clause.clauses += ((clause_buffer, 1))
 		
 		otvs = otv_groups.flatten.toSet
 	}

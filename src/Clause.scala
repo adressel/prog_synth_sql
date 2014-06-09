@@ -2,6 +2,7 @@ package src
 import scala.collection.mutable._
 class Clause (
 	//Variable.Literal is just a Tuple2[Variable, Boolean]
+	// val literals: Vector[Tuple2[Int, Boolean]]
 	val literals : Vector[Variable.Literal]
 ) {
 }
@@ -14,77 +15,61 @@ object Clause {
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 
 	def populate = {
-		
 	}
 	
-	def rule23 = {
-		val combinations_seq_seq = for(i <- 1 to max_clause_length) yield {
-			ConditionVariable.all.toSet.subsets(i).toIndexedSeq
-		}
-		val combinations_seq = combinations_seq_seq.flatten
-		
-		for(combination <- combinations_seq) {
-			for(clause <- combination) yield {
-				
+	def rule2 {
+		val otv_cv_map = OutputVariable.all.map(x => (x.tuple, (x, Set[ConditionVariable]()))).toMap
+		for(cv <- ConditionVariable.all) {
+			val result_set = Utility.query_to_vector(cv.query)
+			for(result <- result_set) {
+				otv_cv_map(result)._2 += cv
 			}
 		}
+		
+		val clause_buffer : ArrayBuffer[Clause] = ArrayBuffer()
+		for ((_, otv_pair) <- otv_cv_map) {
+			val rule_vector = Vector((otv_pair._1, false)) ++ otv_pair._2.map(x => (x, true)).toVector
+			clause_buffer += new Clause(rule_vector)
+		}
+		
+		clauses += ((clause_buffer, 2))
 	}
 	
-	def otvs_from_clause(cv : ConditionVariable) = {
-		val query_results = Utility.query_to_vector(cv.query).toSet
+	def rule3 {
+		val clause_buffer : ArrayBuffer[Clause] = ArrayBuffer()
+		
+		val cv_set = ConditionVariable.all.toSet
+		val combinations_seq_seq = for(i <- 1 to max_clause_length) yield 
+			cv_set.subsets(i).toIndexedSeq
+		// a sequence of all combinations of queries with < max_clause_length clauses
+		val combinations_seq = combinations_seq_seq.flatten
+		
+		// otv_tuple_set and otv_map are for otv lookup
+		val otv_tuple_set = OutputVariable.all.map(x => x.tuple)
+		val otv_map = OutputVariable.all.map(x => (x.tuple, x)).toMap
+		
+		for(combination <- combinations_seq) {
+			val result_sets = for(clause <- combination) yield 
+								Utility.query_to_vector(clause.query).toSet
+			val intersection = result_sets.reduceLeft(_&_)
+			
+			val query_clauses = combination.map(x => (x, true)).toVector
+			val other_clauses = (cv_set -- combination).map(x => (x, false)).toVector
+			val rule_prefix = query_clauses ++ other_clauses
+			
+			//if intersection contains any non-otv tuples, it's a bad query
+			if((intersection -- otv_tuple_set).size > 0)
+				clause_buffer += new Clause(rule_prefix)
+			
+			// this is a good query, fill in all of the results.
+			// generate the rule using the prefix and all of the otvs
+			else {
+				val otv_clause_set = otv_tuple_set.map(x => (otv_map(x), intersection.contains(x)))
+				for(otv_clause <- otv_clause_set) 
+					clause_buffer += new Clause(rule_prefix :+ otv_clause)
+			} // end else
+		} // end for combination
+		
+		clauses += ((clause_buffer, 3))
 	}
-	
-	def rule6 = {
-		val tmpClauses6 = OutputVariable.all.map(x => new Clause(Vector((x, true))))
-		val tmpBuffer6 : ArrayBuffer[Clause] = ArrayBuffer()
-		tmpBuffer6 ++= tmpClauses6
-		clauses += ((tmpBuffer6, 6))
-	}
-	
-//	def rule58 = {
-//		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
-//		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()
-//		
-//		val otvMap = OutputVariable.all.map(x => (x.keyVector, x)).toMap
-//		
-//		for(cv <- ConditionVariable.all) {
-//			val query_results = Utility.query_to_vector(cv.query).toSet
-//
-//			val (matched_otv, unmatched_otv) = OutputVariable.all.partition(
-//				x => query_results.contains(x.keyVector)
-//			)
-//			
-//			for(otv <- matched_otv) {
-//				otv.matches += cv
-//			}
-//			
-//			for(otv <- unmatched_otv) {
-//				tmpClauses8 += new Clause(Vector((otv, false), (cv, false)))
-//			}
-//				
-//		}
-//		
-//		for(otv <- OutputVariable.all) {
-//			tmpClauses5 += new Clause(Vector((otv, false)) ++ otv.matches.map(x => (x, true)))
-//		}
-//		
-//		clauses += ((tmpClauses5, 5))
-//		clauses += ((tmpClauses8, 8))
-//	}
-//	
-//	def printQuery = {
-//		
-//		println("")
-//		println("")
-//		val otvSet = OutputVariable.all.map(x => x.keyVector).toSet
-//		
-//		for(cv <- ConditionVariable.all) {
-//			//print all clauses that contain all matches
-//			val query_results = Utility.query_to_vector(s"${Data.desired_selects} where ${cv.query}").toSet
-//			if((otvSet -- query_results).size == 0) {
-//				println(s"${cv.query} and")
-//			}
-//		}
-//	}
-
 }
