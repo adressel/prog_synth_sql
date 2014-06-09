@@ -3,7 +3,7 @@ import java.io._
 import scala.io._
 
 object Printer {
-	def printFile = {
+	def print_file = {
 		val out = new PrintWriter(s"${Data.root}cnf_files/output.cnf")
 		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.clauses.length} \n"
 		out.print(header)

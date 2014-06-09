@@ -10,7 +10,7 @@ object main extends App {
 	ConditionVariable.populate_unaryConst
 //	println(ConditionVariable.all)
 	println(OutputVariable.all)
-	println(OutputVariable.get_otv.mkString(", "))
+//	println(OutputVariable.get_otv.mkString(", "))
 //	val otvs_pop_time = Utility.time(OutputVariable.populate _)
 //	val rule_pop_time = Utility.time(Clause.populate _)
 //	val print_time = Utility.time(Printer.printFile _)
