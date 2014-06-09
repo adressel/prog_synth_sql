@@ -5,11 +5,12 @@ import com.mysql.jdbc
 import scala.collection.mutable.MutableList
 
 object main extends App {
-	val attr_pop_time = Utility.time(AttributeVariable.populate _)
-	ConditionVariable.populate_unaryConst
-	//println(ConditionVariable.all)
 	OutputVariable.populate
-	println(OutputVariable.table.mkString(" \n"))
+	AttributeVariable.populate
+	ConditionVariable.populate_unaryConst
+//	println(ConditionVariable.all)
+	println(OutputVariable.all)
+	println(OutputVariable.get_otv.mkString(", "))
 //	val otvs_pop_time = Utility.time(OutputVariable.populate _)
 //	val rule_pop_time = Utility.time(Clause.populate _)
 //	val print_time = Utility.time(Printer.printFile _)

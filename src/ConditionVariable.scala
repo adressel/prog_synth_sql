@@ -79,11 +79,8 @@ object ConditionVariable {
 		val attrVector = AttributeVariable.all
 		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
 		for (attr <- attrVector) { 
-			  val constantSet = Data.connection.createStatement().executeQuery(s"select Max(${attr.attrName}), Min(${attr.attrName}) from ${attr.tableName};");
-			  while (constantSet.next()){
-				  unaryVector += new UnaryCondition(attr, "<=", constantSet.getObject(s"Max(${attr.attrName})"))
-				  unaryVector += new UnaryCondition(attr, ">=", constantSet.getObject(s"Min(${attr.attrName})"))
-			  }  
+			unaryVector += new UnaryCondition(attr, "<=", attr.max)
+			unaryVector += new UnaryCondition(attr, ">=", attr.min)
 		}
 		cvs = cvs ++ (unaryVector.toVector)
 	}

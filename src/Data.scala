@@ -20,7 +20,7 @@ object Data {
 	val desired_tables = table_names.mkString(", ")
 	val desired_selects = s"select ${desired_attr_names.mkString(", ")} from $desired_tables"
 	val desired_where = " where usr.username = album.username"
-		
+	println(desired_selects + desired_where)
 
 	Class.forName(driver)
 	val connection = DriverManager.getConnection(url, username, password)

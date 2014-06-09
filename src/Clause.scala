@@ -41,6 +41,11 @@ object Clause {
 		clauses += ((tmpBuffer6, 6))
 	}
 	
+	def rule1 = {
+	  val otvs = OutputVariable.get_otv
+	  
+	}
+	
 //	def rule58 = {
 //		val tmpClauses5 : ArrayBuffer[Clause]= ArrayBuffer()
 //		val tmpClauses8 : ArrayBuffer[Clause]= ArrayBuffer()

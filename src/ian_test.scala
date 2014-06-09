@@ -5,5 +5,5 @@ import com.mysql.jdbc
 
 object ian_test extends App {
 	OutputVariable.populate
-	OutputVariable.get_types
+//	OutputVariable.get_types
 }
