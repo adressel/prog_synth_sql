@@ -8,9 +8,10 @@ object main extends App {
 	OutputVariable.populate
 	AttributeVariable.populate
 	ConditionVariable.populate_binary("=")
-//	println(ConditionVariable.all)
+//	println(ConditionVariable.all.map(x => x.query + "\n"))
 	Clause.populate
 	Printer.print_file
+	CNF.solve
 //	println(OutputVariable.get_otv.mkString(", "))
 //	val otvs_pop_time = Utility.time(OutputVariable.populate _)
 //	val rule_pop_time = Utility.time(Clause.populate _)

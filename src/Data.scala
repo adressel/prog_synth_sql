@@ -4,8 +4,8 @@ import java.sql.Connection
 
 object Data {
 
-	val root = "./sat/" // for Ian
-//    val root = "/Users/Stephen/Desktop/prog_synth_sql/sat/" // for Sheng
+//	val root = "./sat/" // for Ian
+    val root = "/Users/Stephen/Desktop/prog_synth_sql/sat/" // for Sheng
   
 	val databaseName = "test"
 	val driver = "com.mysql.jdbc.Driver"

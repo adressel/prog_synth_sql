@@ -22,12 +22,16 @@ object AttributeVariable {
 	
 	//creates the Vector of attributes given two tables
 	def populate = {
-		val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
+	val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
 		var i = 0
 		val output_var = OutputVariable.all
+		output_var.map(x => println(x.tuple))
+		var columnNum = 0
+		
 		for (table <- Data.table_names)
 		{
 		   val attributes = Utility.getTableAttrs(table)
+		   
 		   for (i <- 0 until attributes.length)
 		   {
 			    val constantSet = Data.connection.createStatement().executeQuery(s"select distinct ${attributes(i)._1} from $table;");
@@ -36,17 +40,16 @@ object AttributeVariable {
 			    	constVector += constantSet.getObject(attributes(i)._1)
 			    }
 		     if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date"){
-		    	  println(attributes(i)._2 +  attributes(i)._1)
-		    	var tmpattr : Set[String] = output_var.map(x => x.tuple(i).toString).toSet
+
+		    	var tmpattr : Set[String] = output_var.map(x => x.tuple(i + columnNum).toString).toSet
 		    	x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }
 		     else {
-		    	 println(attributes(i)._2 +  attributes(i)._1)
-		    	 (output_var.map(x => println(x.tuple(i).toString)))
-		        //var tmpattr : Set[Double] = output_var.map(x => (x.tuple(i).toString).toDouble).toSet
-		       // x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
+		        var tmpattr : Set[Double] = output_var.map(x => (x.tuple(i + columnNum).toString).toDouble).toSet
+		        x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }
 		   }
+		   columnNum += attributes.length
 		}
 	    attrs = x.toVector
 	}
