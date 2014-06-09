@@ -54,7 +54,7 @@ object ConditionVariable {
 		val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
 		var i = 0
 		var j = 0
-		for (i <- 0 until attrVector.length){
+		for (i <- 0 until (attrVector.length - 1)){
 			for (j <- (i+1) until attrVector.length){
 				if (attrVector(i).attrType == attrVector(j).attrType)
 					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j)) 

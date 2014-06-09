@@ -7,10 +7,12 @@ import scala.collection.mutable.MutableList
 object main extends App {
 	OutputVariable.populate
 	AttributeVariable.populate
-	ConditionVariable.populate_unaryConst
+	ConditionVariable.populate_binary("=")
 //	println(ConditionVariable.all)
-	println(OutputVariable.all)
-	println(OutputVariable.get_otv.mkString(", "))
+	Clause.populate
+	Printer.printFile
+//	println(OutputVariable.all)
+//	println(OutputVariable.get_otv.mkString(", "))
 //	val otvs_pop_time = Utility.time(OutputVariable.populate _)
 //	val rule_pop_time = Utility.time(Clause.populate _)
 //	val print_time = Utility.time(Printer.printFile _)
