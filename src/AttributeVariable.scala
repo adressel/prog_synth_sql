@@ -11,7 +11,7 @@ class AttributeVariable (
 	val attrType : String
 ) extends Variable {
 	override def toString() = s"$tableName $attrName $attrType ${constant.mkString(",")} max: $max and min: $min\n"
-	def names = s"$tableName.$attrName"
+	override def name = s"$tableName.$attrName"
 	val constVector = constant.toVector
 }
 
