@@ -15,6 +15,8 @@ object Clause {
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 
 	def populate = {
+		rule2
+		rule3
 	}
 	
 	def rule2 {
