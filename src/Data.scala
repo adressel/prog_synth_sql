@@ -11,7 +11,7 @@ object Data {
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
-	val password = ""
+	val password = "123456"
 	val table_names = Vector("album", "photo", "contain")
 	
 	def desired_query = s"$desired_selects$desired_where"

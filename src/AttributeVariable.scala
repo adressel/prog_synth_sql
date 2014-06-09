@@ -39,7 +39,7 @@ object AttributeVariable {
 			    while (constantSet.next()){
 			    	constVector += constantSet.getObject(attributes(i)._1)
 			    }
-		     if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date"){
+		     if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date" ||attributes(i)._2 == "char"){
 //		    	  println(attributes(i + columnNum)._2 +  attributes(i + columnNum)._1)
 		    	var tmpattr : Set[String] = output_var.map(x => x.tuple(i + columnNum).toString).toSet
 		    	x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
