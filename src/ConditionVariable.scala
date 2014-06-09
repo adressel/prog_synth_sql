@@ -29,7 +29,7 @@ extends ConditionVariable(left, op) {
 		}
 	}
 	override def print = query
-	override def toString() = s"$left $op $right"
+	override def toString() = s"$left $op $right\n"
 	override def query = s"${left.name} $op $rightQuery"
 }
 
@@ -39,7 +39,7 @@ class BinaryCondition(
     right: AttributeVariable
 ) extends ConditionVariable(left, op) {
 	override def print = query
-	override def toString() = s"$left $op $right"
+	override def toString() = s"$left $op $right\n"
 	override def query = s"${left.name} $op ${right.name}"
 }
 
@@ -56,7 +56,7 @@ object ConditionVariable {
 		for (i <- 0 until attrVector.length){
 			for (j <- (i+1) until attrVector.length){
 				if (attrVector(i).attrType == attrVector(j).attrType)
-					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j))  
+					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j)) 
 		  }
 		}
 		cvs = cvs ++ (binaryVector.toVector)
@@ -72,6 +72,21 @@ object ConditionVariable {
 		}
 		cvs = cvs ++ (unaryVector.toVector)
 	}
+	
+	
+	def populate_unaryConst() = {
+		val attrVector = AttributeVariable.all
+		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
+		for (attr <- attrVector) { 
+			  val constantSet = Data.connection.createStatement().executeQuery(s"select Max(${attr.attrName}), Min(${attr.attrName}) from ${attr.tableName};");
+			  while (constantSet.next()){
+				  unaryVector += new UnaryCondition(attr, "<=", constantSet.getObject(s"Max(${attr.attrName})"))
+				  unaryVector += new UnaryCondition(attr, ">=", constantSet.getObject(s"Min(${attr.attrName})"))
+			  }  
+		}
+		cvs = cvs ++ (unaryVector.toVector)
+	}
+	
 }
 
 
