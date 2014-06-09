@@ -5,7 +5,7 @@ import scala.io._
 object Printer {
 	def print_file = {
 		val out = new PrintWriter(s"${Data.root}cnf_files/output.cnf")
-		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.clauses.length} \n"
+		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
 		out.print(header)
 		for (clause <- Clause.clauses){
 		  val ruleNum : Int = clause._2 
@@ -13,7 +13,7 @@ object Printer {
 		  for (rules <- clause._1){
 			  var cnf = ""
 			  for (attr <- rules.literals){
-				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1.id + " ")
+				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
 			  }
 			  out.print(cnf + "0\n") 
 		  } 

@@ -31,7 +31,6 @@ object AttributeVariable {
 		for (table <- Data.table_names)
 		{
 		   val attributes = Utility.getTableAttrs(table)
-		   
 		   for (i <- 0 until attributes.length)
 		   {
 			    val constantSet = Data.connection.createStatement().executeQuery(s"select distinct ${attributes(i)._1} from $table;");
@@ -40,14 +39,10 @@ object AttributeVariable {
 			    	constVector += constantSet.getObject(attributes(i)._1)
 			    }
 		     if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date" ||attributes(i)._2 == "char"){
-//		    	  println(attributes(i + columnNum)._2 +  attributes(i + columnNum)._1)
 		    	var tmpattr : Set[String] = output_var.map(x => x.tuple(i + columnNum).toString).toSet
 		    	x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }
 		     else {
-		    	println("column+   " + i)
-		    	println(attributes(i )._2 + "  "+ attributes(i)._1)
-		    	 (output_var.map(x => println(x.tuple(i + columnNum).toString)))
 		        var tmpattr : Set[Double] = output_var.map(x => (x.tuple(i + columnNum).toString).toDouble).toSet
 		        x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }

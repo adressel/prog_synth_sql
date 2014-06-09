@@ -42,7 +42,7 @@ object OutputVariable {
 		// RULE 1
 		val clause_buffer : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		for(otv_group <- otv_groups) {
-			clause_buffer += new Clause(otv_group.map(x => (x, true)))
+			clause_buffer += new Clause(otv_group.map(x => (x.id, true)))
 		}
 		Clause.clauses += ((clause_buffer, 1))
 		
