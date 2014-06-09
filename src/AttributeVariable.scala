@@ -36,12 +36,15 @@ object AttributeVariable {
 			    	constVector += constantSet.getObject(attributes(i)._1)
 			    }
 		     if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date"){
+		    	  println(attributes(i)._2 +  attributes(i)._1)
 		    	var tmpattr : Set[String] = output_var.map(x => x.tuple(i).toString).toSet
 		    	x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }
 		     else {
-		        var tmpattr : Set[Double] = output_var.map(x => (x.tuple(i).toString).toDouble).toSet
-		        x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
+		    	 println(attributes(i)._2 +  attributes(i)._1)
+		    	 (output_var.map(x => println(x.tuple(i).toString)))
+		        //var tmpattr : Set[Double] = output_var.map(x => (x.tuple(i).toString).toDouble).toSet
+		       // x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }
 		   }
 		}

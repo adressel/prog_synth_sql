@@ -34,7 +34,8 @@ object OutputVariable {
 				}
 			}
 			val tuple_match_query = tuple_conditions.mkString(" and ")
-			val result_tuples = Utility.query_to_vector(s"select * from album, usr where $tuple_match_query")
+			val query = s"select * from ${Data.desired_tables} where $tuple_match_query"
+			val result_tuples = Utility.query_to_vector(query)
 			for(result_tuple <- result_tuples) yield new OutputVariable(result_tuple)
 		}
 		

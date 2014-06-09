@@ -22,7 +22,7 @@ object Clause {
 	def rule2 {
 		val otv_cv_map = OutputVariable.all.map(x => (x.tuple, (x, Set[ConditionVariable]()))).toMap
 		for(cv <- ConditionVariable.all) {
-			val result_set = Utility.query_to_vector(cv.query)
+			val result_set = Utility.query_to_vector(cv.query).filter(otv_cv_map.contains(_))
 			for(result <- result_set) {
 				otv_cv_map(result)._2 += cv
 			}
@@ -37,10 +37,16 @@ object Clause {
 		clauses += ((clause_buffer, 2))
 	}
 	
+	def cv_tuples_pair(cv : ConditionVariable) = {
+		(cv, Utility.query_to_vector(cv.query).toSet)
+	}
+	
 	def rule3 {
 		val clause_buffer : ArrayBuffer[Clause] = ArrayBuffer()
 		
 		val cv_set = ConditionVariable.all.toSet
+		val cv_tuples_map = ConditionVariable.all.map(cv_tuples_pair).toMap
+		
 		val combinations_seq_seq = for(i <- 1 to max_clause_length) yield 
 			cv_set.subsets(i).toIndexedSeq
 		// a sequence of all combinations of queries with < max_clause_length clauses
@@ -51,9 +57,8 @@ object Clause {
 		val otv_map = OutputVariable.all.map(x => (x.tuple, x)).toMap
 		
 		for(combination <- combinations_seq) {
-			val result_sets = for(clause <- combination) yield 
-								Utility.query_to_vector(clause.query).toSet
-			val intersection = result_sets.reduceLeft(_&_)
+			val result_sets = for(cv <- combination) yield cv_tuples_map(cv)
+			val intersection = result_sets.reduceLeft(_ intersect _)
 			
 			val query_clauses = combination.map(x => (x, true)).toVector
 			val other_clauses = (cv_set -- combination).map(x => (x, false)).toVector
