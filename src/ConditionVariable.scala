@@ -40,7 +40,8 @@ class BinaryCondition(
 ) extends ConditionVariable(left, op) {
 	override def print = query
 	override def toString() = s"$left $op $right"
-	override def query = s"${left.name} $op ${right.name}"
+	def clause = s"${left.name} $op ${right.name}"
+	def query = s"${Data.desired_selects} where ${clause}"
 }
 
 object ConditionVariable {
