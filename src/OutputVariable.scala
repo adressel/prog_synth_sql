@@ -7,6 +7,17 @@ class OutputVariable (
 ) extends Variable {
 }
 
+class OutputVariableConst (
+	val table_name : String,
+	val attr_name : String,
+	val Max : Any,
+	val Min : Any
+) extends Variable {
+	override def toString() = {
+		s"$table_name\.attr_name have max: $Max and min: $Min"
+	}
+}
+
 object OutputVariable {
 	private var otvs : Set[OutputVariable] = Set()
 	
@@ -15,7 +26,6 @@ object OutputVariable {
 	def populate = {
 		val desired_tuples_vector = Utility.query_to_vector(Data.desired_query)
 		val desired_table = desired_tuples_vector.map(x => (x.zip(Data.desired_attr_names)))
-		
 		val otv_groups = for(tuple <- desired_table) yield {
 			val tuple_conditions = for(attr <- tuple) yield {
 				attr._1 match {
@@ -28,6 +38,7 @@ object OutputVariable {
 			for(result_tuple <- result_tuples) yield new OutputVariable(result_tuple)
 		}
 		
+		// RULE 1
 		val clause_buffer : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		for(otv_group <- otv_groups) {
 			clause_buffer += new Clause(otv_group.map(x => (x, true)))

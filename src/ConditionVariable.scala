@@ -29,7 +29,7 @@ extends ConditionVariable(left, op) {
 		}
 	}
 	override def print = query
-	override def toString() = s"$left $op $right"
+	override def toString() = s"$left $op $right\n"
 	override def query = s"${left.name} $op $rightQuery"
 }
 
@@ -57,7 +57,7 @@ object ConditionVariable {
 		for (i <- 0 until attrVector.length){
 			for (j <- (i+1) until attrVector.length){
 				if (attrVector(i).attrType == attrVector(j).attrType)
-					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j))  
+					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j)) 
 		  }
 		}
 		cvs = cvs ++ (binaryVector.toVector)
@@ -73,6 +73,18 @@ object ConditionVariable {
 		}
 		cvs = cvs ++ (unaryVector.toVector)
 	}
+	
+	
+	def populate_unaryConst() = {
+		val attrVector = AttributeVariable.all
+		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
+		for (attr <- attrVector) { 
+			unaryVector += new UnaryCondition(attr, "<=", attr.max)
+			unaryVector += new UnaryCondition(attr, ">=", attr.min)
+		}
+		cvs = cvs ++ (unaryVector.toVector)
+	}
+	
 }
 
 
