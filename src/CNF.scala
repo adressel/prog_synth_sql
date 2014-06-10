@@ -14,6 +14,7 @@ object CNF {
 		println(result)
 		val Some(patternMatch) = pattern.findFirstMatchIn(result)
 		clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
+		println(result)
 	}
 	
 	def post_process = {
@@ -23,6 +24,7 @@ object CNF {
 	}
 	
 	def evaluate_correctness = {
+	    println(query)
 		val original = Utility.query_to_vector(Data.desired_query).toSet
 		val derived = Utility.query_to_vector(query).toSet
 		
