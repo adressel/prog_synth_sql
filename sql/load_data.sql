@@ -52,15 +52,15 @@ INSERT INTO Photo (picid, url, format, datetaken) VALUES (
 	'2011-08-20 21:30:00'
 ),
 (
-	'football_s2',
+	'special2',
 	'http://lcqgzj9/images/football_s2.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
-	'football_s3',
+	'special2',
 	'http://lcqgzj9/images/football_s3.jpg',
-	'jpg',
+	'pic',
 	'2011-08-20 21:30:00'
 ),
 (
@@ -106,10 +106,10 @@ INSERT INTO Photo (picid, url, format, datetaken) VALUES (
 	'2011-08-20 21:30:00'
 ),
 (
-	'sports_s2',
-	'http://lcqgzj9/images/sports_s2.jpg',
-	'jpg',
-	'2011-08-20 21:32:00'
+	'sports_s1',
+	'http://lcqgzj9/images/sports_s1.jpg',
+	'ppp',
+	'2011-08-20 21:30:00'
 ),
 (
 	'sports_s3',
@@ -349,6 +349,60 @@ INSERT INTO Photo (picid, url, format, datetaken) VALUES (
 INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 (
 	20,
+	'special1',
+	'sports_s1 caption',
+	1
+),
+(
+	20,
+	'special1',
+	'sports_s1 caption',
+	2
+),
+(
+	20,
+	'special1',
+	'sports_s1 caption',
+	3
+),
+(
+	20,
+	'special1',
+	'sports_s1 caption',
+	4
+),
+(
+	20,
+	'special1',
+	'sports_s1 caption',
+	0
+),
+(
+	30,
+	'special1',
+	'sports_s1 caption',
+	1
+),
+(
+	30,
+	'special1',
+	'sports_s1 caption',
+	2
+),
+(
+	30,
+	'special1',
+	'sports_s1 caption',
+	3
+),
+(
+	30,
+	'special1',
+	'sports_s1 caption',
+	4
+),
+(
+	30,
 	'special1',
 	'sports_s1 caption',
 	0
@@ -622,30 +676,6 @@ INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 	'world_Istanbul',
 	'world_Isfahan caption',
 	9
-),
-(
-	9,
-	'world_Persepolis',
-	'world_Isfahan caption',
-	4
-),
-(
-	9,
-	'world_Reykjavik',
-	'world_Reykjavik caption',
-	5
-),
-(
-	9,
-	'world_Seoul',
-	'world_Seoul caption',
-	6
-),
-(
-	9,
-	'world_Stonehenge',
-	'world_Stonehenge caption',
-	7
 );
 
 
