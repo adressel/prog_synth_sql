@@ -77,7 +77,7 @@ object ConditionVariable {
 	}
 	
 	
-	def populate_unaryConst() = {
+	def populate_unary_max_min = {
 		val attrVector = AttributeVariable.all
 		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
 		for (attr <- attrVector) { 

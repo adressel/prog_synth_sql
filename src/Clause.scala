@@ -8,7 +8,7 @@ class Clause (
 }
 
 object Clause {
-	val max_clause_length = 4
+	val max_clause_length = 3
 	
 	def size = clauses.map(x => x._1.size).sum
 	
