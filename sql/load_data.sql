@@ -41,187 +41,308 @@ INSERT INTO Album (title, created, lastupdated, username)  VALUES (
 (
 	'Cool Space Shots',
 	'2011-08-15 21:30:00',
-	'2011-08-20 21:30:00',
+	'2011-08-20 21:32:20',
 	'spacejunkie'
 );
+
 INSERT INTO Photo (picid, url, format, datetaken) VALUES (
 	'football_s1',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/football_s1.jpg',
+	'http://lcqgzj9/images/football_s1.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'football_s2',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/football_s2.jpg',
+	'http://lcqgzj9/images/football_s2.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'football_s3',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/football_s3.jpg',
+	'http://lcqgzj9/images/football_s3.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'football_s4',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/football_s4.jpg',
+	'http://lcqgzj9/images/football_s4.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'space_EagleNebula',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/space_EagleNebula.jpg',
+	'http://lcqgzj9/images/space_EagleNebula.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'space_GalaxyCollision',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/space_GalaxyCollision.jpg',
+	'http://lcqgzj9/images/space_GalaxyCollision.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'space_HelixNebula',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/space_HelixNebula.jpg',
+	'http://lcqgzj9/images/space_HelixNebula.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'space_MilkyWay',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/space_MilkyWay.jpg',
+	'http://lcqgzj9/images/space_MilkyWay.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'space_OrionNebula',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/space_OrionNebula.jpg',
+	'http://lcqgzj9/images/space_OrionNebula.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'sports_s1',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s1.jpg',
+	'http://lcqgzj9/images/sports_s1.jpg',
 	'jpg',
 	'2011-08-20 21:30:00'
 ),
 (
 	'sports_s2',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s2.jpg',
+	'http://lcqgzj9/images/sports_s2.jpg',
 	'jpg',
 	'2011-08-20 21:32:00'
 ),
 (
 	'sports_s3',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s3.jpg',
+	'http://lcqgzj9/images/sports_s3.jpg',
 	'jpg',
 	'2011-08-20 21:33:00'
 ),
 (
 	'sports_s4',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s4.jpg',
+	'http://lcqgzj9/images/sports_s4.jpg',
 	'jpg',
 	'2011-08-20 21:34:00'
 ),
 (
 	'sports_s5',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s5.jpg',
+	'http://lcqgzj9/images/sports_s5.jpg',
 	'jpg',
 	'2011-08-20 21:35:00'
 ),
 (
 	'sports_s6',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s6.jpg',
+	'http://lcqgzj9/images/sports_s6.jpg',
 	'jpg',
 	'2011-08-20 21:36:00'
 ),
 (
 	'sports_s7',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s7.jpg',
+	'http://lcqgzj9/images/sports_s7.jpg',
 	'jpg',
 	'2011-08-20 21:37:00'
 ),
 (
 	'sports_s8',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/sports_s8.jpg',
+	'http://lcqgzj9/images/sports_s8.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_EiffelTower',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_EiffelTower.jpg',
+	'http://lcqgzj9/images/world_EiffelTower.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_GreatWall',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_GreatWall.jpg',
+	'http://lcqgzj9/images/world_GreatWall.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_Isfahan',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_Isfahan.jpg',
+	'http://lcqgzj9/images/world_Isfahan.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_Istanbul',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_Istanbul.jpg',
+	'http://lcqgzj9/images/world_Istanbul.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_Persepolis',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_Persepolis.jpg',
+	'http://lcqgzj9/images/world_Persepolis.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_Reykjavik',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_Reykjavik.jpg',
+	'http://lcqgzj9/images/world_Reykjavik.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_Seoul',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_Seoul.jpg',
+	'http://lcqgzj9/images/world_Seoul.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_Stonehenge',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_Stonehenge.jpg',
+	'http://lcqgzj9/images/world_Stonehenge.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_TajMahal',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_TajMaha.jpgl',
+	'http://lcqgzj9/images/world_TajMaha.jpgl',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_TelAviv',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_TelAviv.jpg',
+	'http://lcqgzj9/images/world_TelAviv.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_WashingtonDC',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_WashingtonDC.jpg',
+	'http://lcqgzj9/images/world_WashingtonDC.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_firenze',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_firenze.jpg',
+	'http://lcqgzj9/images/world_firenze.jpg',
 	'jpg',
 	'2011-08-20 21:38:00'
 ),
 (
 	'world_tokyo',
-	'http://eecs485-07.eecs.umich.edu:4535/lcqgzj9/images/world_tokyo.jpg',
+	'http://lcqgzj9/images/world_tokyo.jpg',
 	'jpg',
+	'2011-08-20 21:38:00'
+),
+(
+	'world_Isfahanworld_Isfahan',
+	'http://lcqgzj9/images/football_s2.jpg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'football_s3',
+	'http://lcqgzj9/images/football_s3.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'football_s4',
+	'http://lcqgzj9/images/football_s4.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'space_EagleNebula',
+	'http://lcqgzj9/images/space_EagleNebula.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'space_GalaxyCollision',
+	'http://lcqgzj9/images/space_GalaxyCollision.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'space_HelixNebula',
+	'http://lcqgzj9/images/space_HelixNebula.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'space_MilkyWay',
+	'http://lcqgzj9/images/space_MilkyWay.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'space_OrionNebula',
+	'http://lcqgzj9/images/space_OrionNebula.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'sports_s1',
+	'http://lcqgzj9/images/sports_s1.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:20'
+),
+(
+	'sports_s2',
+	'http://lcqgzj9/images/sports_s2.mpeg',
+	'mpeg',
+	'2011-08-20 21:32:00'
+),
+(
+	'sports_s3',
+	'http://lcqgzj9/images/sports_s3.mpeg',
+	'mpeg',
+	'2011-08-20 21:33:00'
+),
+(
+	'sports_s4',
+	'http://lcqgzj9/images/sports_s4.mpeg',
+	'mpeg',
+	'2011-08-20 21:34:00'
+),
+(
+	'sports_s5',
+	'http://lcqgzj9/images/sports_s5.mpeg',
+	'mpeg',
+	'2011-08-20 21:35:00'
+),
+(
+	'sports_s6',
+	'http://lcqgzj9/images/sports_s6.mpeg',
+	'mpeg',
+	'2011-08-20 21:36:00'
+),
+(
+	'sports_s7',
+	'http://lcqgzj9/images/sports_s7.mpeg',
+	'mpeg',
+	'2011-08-20 21:37:00'
+),
+(
+	'sports_s8',
+	'http://lcqgzj9/images/sports_s8.mpeg',
+	'mpeg',
+	'2011-08-20 21:38:00'
+),
+(
+	'world_EiffelTower',
+	'http://lcqgzj9/images/world_EiffelTower.mpeg',
+	'mpeg',
+	'2011-08-20 21:38:00'
+),
+(
+	'world_GreatWall',
+	'http://lcqgzj9/images/world_GreatWall.mpeg',
+	'mpeg',
+	'2011-08-20 21:38:00'
+),
+(
+	'world_Isfahan',
+	'http://lcqgzj9/images/world_Isfahan.mpeg',
+	'mpeg',
+	'2011-08-20 21:38:00'
+),
+(
+	'world_Istanbul',
+	'http://lcqgzj9/images/world_Istanbul.mpeg',
+	'mpeg',
 	'2011-08-20 21:38:00'
 );
 
@@ -405,6 +526,126 @@ INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 	'space_OrionNebula',
 	'space_OrionNebula caption',
 	4
+),
+(
+	5,
+	'football_s5',
+	'football_s5 cap',
+	0
+),
+(
+	5,
+	'football_s5',
+	'football_s5 cap',
+	1
+),
+(
+	5,
+	'football_s5',
+	'football_s5 cap',
+	2
+),
+(
+	5,
+	'football_s5',
+	'football_s5 cap',
+	3
+),
+(
+	10,
+	'sports_s1',
+	'sports_s1 cap',
+	0
+),
+(
+	10,
+	'sports_s2',
+	'sports_s2 cap',
+	1
+),
+(
+	10,
+	'sports_s3',
+	'sports_s3 cap',
+	2
+),
+(
+	10,
+	'sports_s4',
+	'sports_s4 cap',
+	3
+),
+(
+	10,
+	'sports_s5',
+	'sports_s5 cap',
+	4
+),
+(
+	10,
+	'sports_s6',
+	'sports_s6 cap',
+	5
+),
+(
+	10,
+	'sports_s7',
+	'sports_s7 cap',
+	6
+),
+(
+	10,
+	'sports_s8',
+	'sports_s8 cap',
+	7
+),
+(
+	9,
+	'world_EiffelTower',
+	'world_EiffelTower caption',
+	0
+),
+(
+	9,
+	'world_GreatWall',
+	'world_GreatWall caption',
+	1
+),
+(
+	9,
+	'world_Isfahan',
+	'world_Isfahan caption',
+	2
+),
+(
+	9,
+	'world_Istanbul',
+	'world_Isfahan caption',
+	9
+),
+(
+	9,
+	'world_Persepolis',
+	'world_Isfahan caption',
+	4
+),
+(
+	9,
+	'world_Reykjavik',
+	'world_Reykjavik caption',
+	5
+),
+(
+	9,
+	'world_Seoul',
+	'world_Seoul caption',
+	6
+),
+(
+	9,
+	'world_Stonehenge',
+	'world_Stonehenge caption',
+	7
 );
 
 

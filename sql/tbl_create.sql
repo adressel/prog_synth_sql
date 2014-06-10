@@ -25,9 +25,9 @@ CREATE TABLE Album (
 CREATE TABLE Photo (
 	picid VARCHAR(40) NOT NULL,
 	url VARCHAR(255) NOT NULL,
-	format CHAR(3) NOT NULL,
+	format CHAR(4) NOT NULL,
 	datetaken DATE NOT NULL,
-	PRIMARY KEY (picid)
+	PRIMARY KEY (picid, format)
 );
 
 CREATE TABLE Contain (
@@ -35,11 +35,7 @@ CREATE TABLE Contain (
 	picid VARCHAR(40) NOT NULL,
 	caption VARCHAR(255) NOT NULL,
 	sequencenum INTEGER NOT NULL,
-	PRIMARY KEY (albumid, picid),
-	FOREIGN KEY (albumid) REFERENCES Album(albumid)
-		ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (picid) REFERENCES Photo(picid)
-		ON DELETE CASCADE ON UPDATE CASCADE
+	PRIMARY KEY (albumid, caption,picid, sequencenum)
 );
 
 CREATE TABLE OutputAtoC (
