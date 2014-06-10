@@ -2,7 +2,7 @@ package src
 import scala.collection.mutable._
 class Clause (
 	//Variable.Literal is just a Tuple2[Variable, Boolean]
-	// val literals: Vector[Tuple2[Int, Boolean]]
+//	 val literals: Vector[Tuple2[Int, Boolean]]
 	val literals : Vector[Variable.Literal]
 ) {
 }
@@ -30,7 +30,7 @@ object Clause {
 		
 		val clause_buffer : ArrayBuffer[Clause] = ArrayBuffer()
 		for ((_, otv_pair) <- otv_cv_map) {
-			val rule_vector = Vector((otv_pair._1, false)) ++ otv_pair._2.map(x => (x, true)).toVector
+			val rule_vector = Vector((otv_pair._1.id, false)) ++ otv_pair._2.map(x => (x.id, true)).toVector
 			clause_buffer += new Clause(rule_vector)
 		}
 		
@@ -60,8 +60,8 @@ object Clause {
 			val result_sets = for(cv <- combination) yield cv_tuples_map(cv)
 			val intersection = result_sets.reduceLeft(_ intersect _)
 			
-			val query_clauses = combination.map(x => (x, true)).toVector
-			val other_clauses = (cv_set -- combination).map(x => (x, false)).toVector
+			val query_clauses = combination.map(x => (x.id, true)).toVector
+			val other_clauses = (cv_set -- combination).map(x => (x.id, false)).toVector
 			val rule_prefix = query_clauses ++ other_clauses
 			
 			//if intersection contains any non-otv tuples, it's a bad query
@@ -71,7 +71,7 @@ object Clause {
 			// this is a good query, fill in all of the results.
 			// generate the rule using the prefix and all of the otvs
 			else {
-				val otv_clause_set = otv_tuple_set.map(x => (otv_map(x), intersection.contains(x)))
+				val otv_clause_set = otv_tuple_set.map(x => (otv_map(x).id, intersection.contains(x)))
 				for(otv_clause <- otv_clause_set) 
 					clause_buffer += new Clause(rule_prefix :+ otv_clause)
 			} // end else

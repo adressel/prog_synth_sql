@@ -13,7 +13,7 @@ object Printer {
 		  for (rules <- clause._1){
 			  var cnf = ""
 			  for (attr <- rules.literals){
-				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1.id + " ")
+				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
 			  }
 			  out.print(cnf + "0\n") 
 		  } 

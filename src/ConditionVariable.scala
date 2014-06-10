@@ -47,8 +47,11 @@ class BinaryCondition(
 }
 
 object ConditionVariable {
-	private var cvs : Vector[ConditionVariable] = Vector()
-	def all = cvs
+	private var cv_binary : Vector[ConditionVariable] = Vector()
+	private var cv_unary : Vector[ConditionVariable] = Vector()
+	def all = cv_unary ++ cv_binary
+	def get_binary = cv_binary
+	def get_unary = cv_unary
 	
 	// return a Vector of condition clauses given two tables
 	def populate_binary(op : String) = {
@@ -62,7 +65,7 @@ object ConditionVariable {
 					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j)) 
 		  }
 		}
-		cvs = cvs ++ (binaryVector.toVector)
+		cv_binary = cv_binary ++ (binaryVector.toVector)
 	}
 	
 	def populate_unary(op : String) = {
@@ -73,7 +76,7 @@ object ConditionVariable {
 			  unaryVector += new UnaryCondition(attr, op, const)
 		  }
 		}
-		cvs = cvs ++ (unaryVector.toVector)
+		cv_unary = cv_unary ++ (unaryVector.toVector)
 	}
 	
 	
@@ -84,7 +87,7 @@ object ConditionVariable {
 			unaryVector += new UnaryCondition(attr, "<=", attr.max)
 			unaryVector += new UnaryCondition(attr, ">=", attr.min)
 		}
-		cvs = cvs ++ (unaryVector.toVector)
+		cv_unary = cv_unary ++ (unaryVector.toVector)
 	}
 	
 }

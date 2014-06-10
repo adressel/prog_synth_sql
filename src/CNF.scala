@@ -9,7 +9,7 @@ object CNF {
 	var clauses : Array[Int] = Array()
 		
 	def solve = {
-		val result = s"zchaff ${Data.root}cnf_files/output.cnf" !!
+		val result = s"${Data.root}zchaff ${Data.root}cnf_files/output.cnf" !!
 		val pattern = "(.*)Random Seed Used".r
 		println(result)
 		val Some(patternMatch) = pattern.findFirstMatchIn(result)

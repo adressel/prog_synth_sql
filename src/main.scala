@@ -11,7 +11,11 @@ object main extends App {
 //	println(ConditionVariable.all.map(x => x.query + "\n"))
 	Clause.populate
 	Printer.print_file
+	println("solve cnf")
 	CNF.solve
+	println("done cnf")
+	CNF.post_process
+	CNF.evaluate_correctness
 //	println(OutputVariable.get_otv.mkString(", "))
 //	val otvs_pop_time = Utility.time(OutputVariable.populate _)
 //	val rule_pop_time = Utility.time(Clause.populate _)
