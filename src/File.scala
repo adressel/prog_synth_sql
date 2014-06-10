@@ -1,24 +1,29 @@
 package src
 import java.io._
 import scala.io._
+import scala.collection.mutable.ArrayBuffer
 
 object Printer {
-	def print_file = {
-		val out = new PrintWriter(s"${Data.root}cnf_files/output.cnf")
-		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
+   private val out = new PrintWriter(s"${Data.root}cnf_files/output.cnf")
+   
+	def print_head = {
+	  val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
 		out.print(header)
-		for (clause <- Clause.clauses){
-		  val ruleNum : Int = clause._2 
+	}
+   
+	def print_file (ruleNum : Int, clause : ArrayBuffer[Clause])= {
 		  out.print(s"c =========  rule $ruleNum  ============\n") 
-		  for (rules <- clause._1){
+		  for (rules <- clause){
 			  var cnf = ""
 			  for (attr <- rules.literals){
 				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
 			  }
 			  out.print(cnf + "0\n") 
 		  } 
-		}
-		out.close()
+	}
+	
+	def print_close = {
+	   out.close()
 	}
 }
 
