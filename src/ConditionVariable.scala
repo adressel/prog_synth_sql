@@ -68,12 +68,12 @@ object ConditionVariable {
 		cv_binary = cv_binary ++ (binaryVector.toVector)
 	}
 	
-	def populate_unary(op : String) = {
+	def populate_unary(op : String, accept_type : Vector[String]) = {
 		val attrVector = AttributeVariable.all
 		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
 		for (attr <- attrVector) { 
-			for (const <- attr.constant) {
-			  unaryVector += new UnaryCondition(attr, op, const)
+		  if (accept_type.contains(attr.attrType)){
+			for (const <- attr.constant)  unaryVector += new UnaryCondition(attr, op, const)
 		  }
 		}
 		cv_unary = cv_unary ++ (unaryVector.toVector)

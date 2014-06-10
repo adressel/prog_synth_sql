@@ -46,9 +46,9 @@ INSERT INTO Album (title, created, lastupdated, username)  VALUES (
 );
 
 INSERT INTO Photo (picid, url, format, datetaken) VALUES (
-	'football_s1',
+	'special1',
 	'http://lcqgzj9/images/football_s1.jpg',
-	'jpg',
+	'pic',
 	'2011-08-20 21:30:00'
 ),
 (
@@ -348,8 +348,8 @@ INSERT INTO Photo (picid, url, format, datetaken) VALUES (
 
 INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 (
-	1,
-	'sports_s1',
+	20,
+	'special1',
 	'sports_s1 caption',
 	0
 ),
