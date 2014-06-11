@@ -4,32 +4,28 @@ import scala.io._
 import scala.collection.mutable.ArrayBuffer
 
 object Printer {
-   private val out = new PrintWriter(s"${Data.root}cnf_files/output.cnf")
-   
-	def print_head = {
-	  val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
+   def print_file = {
+		val out = new PrintWriter(s"${Data.root}sat/cnf_files/output.cnf")
+		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
 		out.print(header)
-	}
-   
-	def print_file (ruleNum : Int, clause : ArrayBuffer[Clause])= {
+		for (clause <- Clause.clauses){
+		  val ruleNum : Int = clause._2 
 		  out.print(s"c =========  rule $ruleNum  ============\n") 
-		  for (rules <- clause){
+		  for (rules <- clause._1){
 			  var cnf = ""
 			  for (attr <- rules.literals){
 				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
 			  }
 			  out.print(cnf + "0\n") 
 		  } 
-	}
-	
-	def print_close = {
-	   out.close()
+		}
+		out.close()
 	}
 }
 
 object Reader {
 	def process_cnf = {
-		val result = Source.fromFile(s"${Data.root}results/results.txt").mkString
+		val result = Source.fromFile(s"${Data.root}sat/results/results.txt").mkString
 		val pattern = "(.*)Random Seed Used".r
 		val Some(patternMatch) = pattern.findFirstMatchIn(result)
 		val clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)

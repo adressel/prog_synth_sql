@@ -4,8 +4,8 @@ import java.sql.Connection
 
 object Data {
 
-//	val root = "./sat/" // for Ian
-    val root = "/Users/Stephen/Desktop/prog_synth_sql/sat/" // for Sheng
+//	val root = "./" // for Ian
+    val root = "/Users/Stephen/Desktop/prog_synth_sql/" // for Sheng
   
 	val databaseName = "test"
 	val driver = "com.mysql.jdbc.Driver"
@@ -28,8 +28,13 @@ object Data {
 	
 	def closeConnection = connection.close
 	
+	def prepareDatabase (num : Int) = {
+	  val result1 = s"mysql -u${Data.username} -p${Data.password} test <${Data.root}/sql/tbl_create.sql" !!
+	  val result2 = s"mysql -u${Data.username} -p${Data.password} test <${Data.root}/sql/load_data.sql$num" !!
+	}
+	
 }
 
-class Table {
+class Data {
 	
 }

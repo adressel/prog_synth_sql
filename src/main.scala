@@ -5,6 +5,7 @@ import com.mysql.jdbc
 import scala.collection.mutable.MutableList
 
 object main extends App {
+	Data.prepareDatabase(50)
 	OutputVariable.populate
 	AttributeVariable.populate
 	ConditionVariable.populate_binary("=")
