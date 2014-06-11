@@ -19,14 +19,22 @@ class OutputVariableConst (
 }
 
 object OutputVariable {
-	private var otvs : Set[OutputVariable] = Set()
-	
-	def all = otvs
+	private var good_otvs : Map[Vector[Any], Int] = Map()
+	private var bad_otvs : Map[Vector[Any], Int] = Map()
+	def good = good_otvs
+	def bad = bad_otvs
+	def all = good_otvs ++ bad_otvs
 	
 	def populate = {
+		val select_all_query = s"select * from ${Data.desired_tables}"
+		val all_tuples = Utility.query_to_vector(select_all_query)
+		val new_otvs = all_tuples.map(new OutputVariable(_))
+		val otv_map = new_otvs.map(x => (x.tuple, x.id)).toMap
+		
 		val desired_tuples_vector = Utility.query_to_vector(Data.desired_query)
 		val desired_table = desired_tuples_vector.map(x => (x.zip(Data.desired_attr_names)))
-		val otv_groups = for(tuple <- desired_table) yield {
+		 
+		for(tuple <- desired_table){
 			val tuple_conditions = for(attr <- tuple) yield {
 				attr._1 match {
 					case x : String => s"${attr._2} = " + "\"" + x + "\""
@@ -36,16 +44,12 @@ object OutputVariable {
 			val tuple_match_query = tuple_conditions.mkString(" and ")
 			val query = s"select * from ${Data.desired_tables} where $tuple_match_query"
 			val result_tuples = Utility.query_to_vector(query)
-			for(result_tuple <- result_tuples) yield new OutputVariable(result_tuple)
+			for (desired_otv <- result_tuples)
+			{
+				if (otv_map.contains(desired_otv))
+					good_otvs += ((desired_otv, otv_map(desired_otv)))
+			}
 		}
-		
-		// RULE 1
-		val clause_buffer : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
-		for(otv_group <- otv_groups) {
-			clause_buffer += new Clause(otv_group.map(x => (x.id, true)))
-		}
-		Clause.clauses += ((clause_buffer, 1))
-		
-		otvs = otv_groups.flatten.toSet
+		bad_otvs = otv_map.filter(x => !good_otvs.contains(x._1))
 	}
 }

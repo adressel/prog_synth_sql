@@ -1,10 +1,11 @@
 package src
 import java.io._
 import scala.io._
+import scala.collection.mutable.ArrayBuffer
 
 object Printer {
-	def print_file = {
-		val out = new PrintWriter(s"${Data.root}cnf_files/output.cnf")
+   def print_file = {
+		val out = new PrintWriter(s"${Data.root}sat/cnf_files/output.cnf")
 		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
 		out.print(header)
 		for (clause <- Clause.clauses){
@@ -24,7 +25,7 @@ object Printer {
 
 object Reader {
 	def process_cnf = {
-		val result = Source.fromFile(s"${Data.root}results/results.txt").mkString
+		val result = Source.fromFile(s"${Data.root}sat/results/results.txt").mkString
 		val pattern = "(.*)Random Seed Used".r
 		val Some(patternMatch) = pattern.findFirstMatchIn(result)
 		val clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)

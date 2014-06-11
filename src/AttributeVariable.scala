@@ -24,7 +24,7 @@ object AttributeVariable {
 	def populate = {
 	val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
 		var i = 0
-		val output_var = OutputVariable.all
+		val output_var = OutputVariable.good
 //		output_var.map(x => println(x.tuple))
 		var columnNum = 0
 		
@@ -40,11 +40,11 @@ object AttributeVariable {
 			    }
 		     if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date" 
 		    	 ||attributes(i)._2 == "char"||attributes(i)._2 == "timestamp"){
-		    	var tmpattr : Set[String] = output_var.map(x => x.tuple(i + columnNum).toString).toSet
+		    	var tmpattr : Set[String] = output_var.map(x => x._1(i + columnNum).toString).toSet
 		    	x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }
 		     else {
-		        var tmpattr : Set[Double] = output_var.map(x => (x.tuple(i + columnNum).toString).toDouble).toSet
+		        var tmpattr : Set[Double] = output_var.map(x => (x._1(i + columnNum).toString).toDouble).toSet
 		        x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
 		     }
 		   }

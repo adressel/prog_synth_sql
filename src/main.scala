@@ -11,8 +11,7 @@ object main extends App {
 		OutputVariable.populate
 		AttributeVariable.populate
 		ConditionVariable.populate_binary("=")
-		println(ConditionVariable.all.size)
-//		ConditionVariable.populate_unary_max_min
+		ConditionVariable.populate_unary_max_min
 		Clause.populate
 		println("printing")
 		Printer.print_file
@@ -29,6 +28,17 @@ object main extends App {
 	val encoder_memory = Runtime.getRuntime.totalMemory - Runtime.getRuntime.freeMemory
 	
 	println(s"query: ${CNF.query}")
+//	Data.prepareDatabase(50)
+	OutputVariable.populate
+	AttributeVariable.populate
+	ConditionVariable.populate_binary("=")
+//	println(ConditionVariable.all.map(x => x.query + "\n"))
+	Clause.populate
+	Printer.print_file
+	println("solve cnf")
+	CNF.solve
+	println("done cnf")
+	CNF.post_process
 	CNF.evaluate_correctness
 	
 	println(s"encode time: $encode_time")

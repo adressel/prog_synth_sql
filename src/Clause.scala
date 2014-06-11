@@ -13,102 +13,61 @@ object Clause {
 	val clauses : ArrayBuffer[Tuple2[ArrayBuffer[Clause], Int]] = ArrayBuffer()
 
 	def populate = {
-		rule2
-		rule3
+		rule1234
 	}
 	
-	def rule2 {
-		val otv_cv_map = OutputVariable.all.map(x => (x.tuple, (x, mutable.Set[Int]()))).toMap
+	def rule1234 {
+		val clause_buffer_1 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
+		val clause_buffer_2 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
+		val clause_buffer_3 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
+		val clause_buffer_4 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
+		
+		val desired_tuples_vector = Utility.query_to_vector(Data.desired_query)
+		val desired_table = desired_tuples_vector.map(x => (x.zip(Data.desired_attr_names)))
+		val desired_otv_groups = for(tuple <- desired_table) yield {
+			val tuple_conditions = for(attr <- tuple) yield {
+				attr._1 match {
+					case x : String => s"${attr._2} = " + "\"" + x + "\""
+					case x : Any => s"${attr._2} = $x"
+				}
+			}
+			val tuple_match_query = tuple_conditions.mkString(" and ")
+			val query = s"select * from ${Data.desired_tables} where $tuple_match_query"
+			val result_tuples = Utility.query_to_vector(query)
+			clause_buffer_1 += new Clause(result_tuples.map(x => (OutputVariable.all(x), true)))
+			result_tuples
+		}
+		
+		// RULE 2
+		val desired_otvs = OutputVariable.good.map(x => x._1).toSet
+		val bad_otvs = OutputVariable.all -- desired_otvs
+		for(otv <- bad_otvs)
+			clause_buffer_2 += new Clause(Vector((otv._2, false)))
+
+		
+		// bad_otv_cv_map maps query tuples to Tuple2[Int, mutable.Set[Int] ]
+		// which contains the otv id, and the cv id that maps to it.
+		val otv_cv_map = OutputVariable.all.map(x => (x._1, (x._2, mutable.Set[Int]() )))
 		for(cv <- ConditionVariable.all) {
-			val result_set = Utility.query_to_vector(cv.query).filter(otv_cv_map.contains(_))
-			for(result <- result_set) {
-				otv_cv_map(result)._2 += cv.id
+			val result_set = Utility.query_to_vector(cv.query).toSet
+			for(otv <- OutputVariable.all -- result_set) {
+				otv_cv_map(otv._1)._2 += cv.id
+				// RULE 4
+				clause_buffer_4 += new Clause(Vector((cv.id, false), (otv._2, false)))
 			}
 		}
 		
-		val clause_buffer : ArrayBuffer[Clause] = ArrayBuffer()
-		for ((_, otv_pair) <- otv_cv_map) {
-			val rule_vector = Vector((otv_pair._1.id, false)) ++ otv_pair._2.map(x => (x, true)).toVector
-			clause_buffer += new Clause(rule_vector)
+		// RULE 3
+		for(otv <- otv_cv_map -- desired_otvs) {
+			val cv_literals = otv._2._2.map(x => (x, true))
+			clause_buffer_3 += new Clause(Vector((otv._2._1, true)) ++ cv_literals)
 		}
 		
-		clauses += ((clause_buffer, 2))
+		
+		Clause.clauses += ((clause_buffer_1, 1))
+		Clause.clauses += ((clause_buffer_2, 2))
+		Clause.clauses += ((clause_buffer_3, 3))
+		Clause.clauses += ((clause_buffer_4, 4))
 	}
 	
-	def cv_tuples_pair(cv : ConditionVariable) = {
-		(cv.id, Utility.query_to_vector(cv.query).toSet)
-	}
-	
-	def make_prefix(combination : Set[ConditionVariable], cv_set : Set[ConditionVariable]) = {
-		val query_clauses = combination.map(x => (x.id, false)).toVector
-		val other_clauses = (ConditionVariable.all.toSet -- combination).
-							map(x => (x.id, true)).toVector
-		query_clauses ++ other_clauses
-	}
-	
-	val max_clause_length = 4
-	val max_binary_clause = 2
-	val max_unary_clause = 2
-	
-	def combination_legal(combination : Set[ConditionVariable]) = {
-		val binary_clause_count = combination.filter(_.isInstanceOf[BinaryCondition]).size
-		val unary_clause_count = combination.filter(_.isInstanceOf[UnaryCondition]).size
-		unary_clause_count <= max_unary_clause && binary_clause_count <= max_binary_clause
-	}
-	
-	def legal_combinations(cv_set : Set[ConditionVariable]) = {
-		val clause_buffer : ArrayBuffer[Clause] = ArrayBuffer()
-		
-		val legal_combinations = (1 to max_clause_length).
-			        map(i => cv_set.subsets(i).toIndexedSeq).
-			        flatten.
-			        filter(combination_legal(_)).
-			        toSet
-		val all_combinations = cv_set.subsets
-		
-		for(combination <- all_combinations) {
-			if(!legal_combinations.contains(combination))
-				clause_buffer += new Clause(make_prefix(combination, cv_set))
-		}
-		clauses += ((clause_buffer, 4))
-		legal_combinations
-	}
-	
-	def rule3 {
-		val clause_buffer : ArrayBuffer[Clause] = ArrayBuffer()
-		
-		val cv_set = ConditionVariable.all.toSet
-		
-		val cv_tuples_map = ConditionVariable.all.map(cv_tuples_pair).toMap
-		
-		// a sequence of all combinations of queries with < max_clause_length clauses
-		val combinations = legal_combinations(cv_set)
-							   
-		
-		// otv_tuple_set and otv_map are for otv lookup
-		val otv_tuple_set = OutputVariable.all.map(x => x.tuple)
-		val otv_map = OutputVariable.all.map(x => (x.tuple, x.id)).toMap
-		
-		for(combination <- combinations) {
-			val rule_prefix = make_prefix(combination, cv_set)
-			val intersection = combination.
-							   map(cv => cv_tuples_map(cv.id)).
-							   reduceLeft(_ intersect _)
-			
-			//if intersection contains any non-otv tuples, it's a bad query
-			if((intersection -- otv_tuple_set).size > 0)
-				clause_buffer += new Clause(rule_prefix)
-			
-			// this is a good query, fill in all of the results.
-			// generate the rule using the prefix and all of the otvs
-			else {
-				val otv_clause_set = otv_tuple_set.map(x => (otv_map(x), intersection.contains(x)))
-				for(otv_clause <- otv_clause_set) 
-					clause_buffer += new Clause(rule_prefix :+ otv_clause)
-			} 
-			
-		} // end for combination
-		
-		clauses += ((clause_buffer, 3))
-	}
 }
