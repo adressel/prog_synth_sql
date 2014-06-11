@@ -4,7 +4,7 @@
 -- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/HISTORY.csv' fields terminated by ',';
 
 use test3
--- drop table HISTORY;
+drop table HISTORY;
 
 create table HISTORY (
 	H_C_ID  int(11),
@@ -21,7 +21,7 @@ create table HISTORY (
 LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/HISTORY.csv" INTO TABLE HISTORY
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-ignore 9980 lines
+ignore 9800 lines
 (H_C_ID, H_C_D_ID, H_C_W_ID, H_D_ID, H_W_ID, H_DATE, H_AMOUNT, H_DATA);
 
 
@@ -31,7 +31,7 @@ ignore 9980 lines
 -- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/item.csv' fields terminated by ',';
 
 use test3
--- drop table item;
+drop table item;
 
 create table item (
 	I_ID int(11),
@@ -45,7 +45,7 @@ create table item (
 LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/item.csv" INTO TABLE item
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-ignore 9980 lines
+ignore 9800 lines
 (I_ID, I_NAME,  I_PRICE, I_DATA,  I_IM_ID);
 
 
@@ -56,7 +56,7 @@ ignore 9980 lines
 
 
 use test3
--- drop table STOCK;
+drop table STOCK;
 create table STOCK (
 	S_W_ID int(11),
 	S_I_ID int(11),
@@ -68,7 +68,7 @@ create table STOCK (
 LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/STOCK.csv" INTO TABLE STOCK
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-ignore 9980 lines
+ignore 9800 lines
 (S_W_ID, S_I_ID, S_DATA, S_REMOTE_CNT);
 
 
@@ -78,7 +78,7 @@ ignore 9980 lines
 -- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/OORDER.csv' fields terminated by ',';
 
 use test3
--- drop table OORDER;
+drop table OORDER;
 
 create table OORDER (
 	O_W_ID   int(11),             
@@ -95,7 +95,7 @@ create table OORDER (
 LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/OORDER.csv" INTO TABLE OORDER
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-ignore 9980 lines
+ignore 9800 lines
 (O_W_ID,O_D_ID ,O_ID, O_C_ID ,O_CARRIER_ID, O_OL_CNT, O_ALL_LOCAL,O_ENTRY_Dtimestamp);
 
 
@@ -106,7 +106,7 @@ ignore 9980 lines
 -- into outfile '/Users/Stephen/Desktop/prog_synth_sql/sql/NEW_ORDER.csv' fields terminated by ',';
 
 use test3
--- drop table NEW_ORDER;
+drop table NEW_ORDER;
 
 create table NEW_ORDER (
 	NO_W_ID   int(11),             
@@ -118,6 +118,6 @@ create table NEW_ORDER (
 LOAD DATA LOCAL INFILE "/Users/Stephen/Desktop/prog_synth_sql/sql/NEW_ORDER.csv" INTO TABLE NEW_ORDER
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-ignore 9980 lines
+ignore 9800 lines
 (NO_W_ID,NO_D_ID,NO_O_ID);
 

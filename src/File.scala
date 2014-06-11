@@ -1,4 +1,5 @@
 package src
+import scala.io.Source
 import java.io._
 import scala.io._
 import scala.collection.mutable.ArrayBuffer
@@ -22,6 +23,9 @@ object Printer {
 		out.close()
 	}
 }
+
+
+
 
 object Reader {
 	def process_cnf = {

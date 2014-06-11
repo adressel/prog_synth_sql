@@ -4,22 +4,22 @@ import java.sql.Connection
 
 object Data {
 
-	val root = "./" // for Ian
-//    val root = "/Users/Stephen/Desktop/prog_synth_sql/" // for Sheng
+//	val root = "./" // for Ian
+    val root = "/Users/Stephen/Desktop/prog_synth_sql/" // for Sheng
   
-	val databaseName = "test"
+	val databaseName = "test3"
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
-	val password = ""
-	val table_names = Vector("photo", "contain")
+	val password = "123456"
+	val table_names = Vector("item", "history")
 	
 	def desired_query = s"$desired_selects$desired_where"
 	
-	val desired_attr_names = Vector("photo.picid", "albumid")
+	val desired_attr_names = Vector("I_DATA", "I_NAME","H_DATA", "H_C_ID")
 	val desired_tables = table_names.mkString(", ")
 	val desired_selects = s"select ${desired_attr_names.mkString(", ")} from $desired_tables"
-	val desired_where = " where contain.picid = photo.picid and albumid > 20"
+	val desired_where = " where H_C_ID = I_IM_ID and I_ID > 99000"
 	println(desired_selects + desired_where)
 
 	Class.forName(driver)

@@ -350,13 +350,13 @@ INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 (
 	20,
 	'special1',
-	'sports_s1 caption',
+	'sports_s3 caption',
 	1
 ),
 (
 	20,
 	'special1',
-	'sports_s1 caption',
+	'sports_s2 caption',
 	2
 ),
 (
@@ -368,13 +368,13 @@ INSERT INTO Contain (albumid, picid, caption, sequencenum) VALUES
 (
 	20,
 	'special1',
-	'sports_s1 caption',
+	'sports_s4 caption',
 	4
 ),
 (
 	20,
 	'special1',
-	'sports_s1 caption',
+	'sports_s5 caption',
 	0
 ),
 (

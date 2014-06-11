@@ -84,12 +84,15 @@ object ConditionVariable {
 		val attrVector = AttributeVariable.all
 		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
 		for (attr <- attrVector) { 
+		   if (attr.max == attr.min)
+		     unaryVector += new UnaryCondition(attr, "=", attr.max)
+		   else {
 			unaryVector += new UnaryCondition(attr, "<=", attr.max)
 			unaryVector += new UnaryCondition(attr, ">=", attr.min)
+		   }
 		}
 		cv_unary = cv_unary ++ (unaryVector.toVector)
 	}
-	
 }
 
 

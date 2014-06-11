@@ -22,25 +22,12 @@ object Clause {
 		val clause_buffer_3 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		val clause_buffer_4 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		
-		val desired_tuples_vector = Utility.query_to_vector(Data.desired_query)
-		val desired_table = desired_tuples_vector.map(x => (x.zip(Data.desired_attr_names)))
-		val desired_otv_groups = for(tuple <- desired_table) yield {
-			val tuple_conditions = for(attr <- tuple) yield {
-				attr._1 match {
-					case x : String => s"${attr._2} = " + "\"" + x + "\""
-					case x : Any => s"${attr._2} = $x"
-				}
-			}
-			val tuple_match_query = tuple_conditions.mkString(" and ")
-			val query = s"select * from ${Data.desired_tables} where $tuple_match_query"
-			val result_tuples = Utility.query_to_vector(query)
-			clause_buffer_1 += new Clause(result_tuples.map(x => (OutputVariable.all(x), true)))
-			result_tuples
-		}
+		// RULE 1
+		clause_buffer_1 += new Clause(OutputVariable.good.map(x => (x._2, true)).toVector)
 		
 		// RULE 2
 		val desired_otvs = OutputVariable.good.map(x => x._1).toSet
-		val bad_otvs = OutputVariable.all -- desired_otvs
+		val bad_otvs = OutputVariable.bad
 		for(otv <- bad_otvs)
 			clause_buffer_2 += new Clause(Vector((otv._2, false)))
 
