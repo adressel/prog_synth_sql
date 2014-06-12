@@ -7,7 +7,7 @@ object SQL {
   
   val root = s"${Data.root}sql"
   
-  val num_users = 100
+  val num_users = 200
   val num_albums = 100
   val num_photos = 100
   val num_contains = 100
@@ -64,7 +64,7 @@ object SQL {
 
 class User {
   val username : String = User.get_id
-  val age : Int = SQL.i(100)
+  val age : Int = SQL.i(5)
   val firstname: String = SQL.s(10)
   val lastname: String = SQL.s(10)
   val height: Int = SQL.i(100)

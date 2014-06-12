@@ -26,6 +26,8 @@ object OutputVariable {
 	def all = good_otvs ++ bad_otvs
 	
 	def populate = {
+		val clause_buffer_1 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
+	  
 		val select_all_query = s"select * from ${Data.desired_tables}"
 		val all_tuples = Utility.query_to_vector(select_all_query)
 		val new_otvs = all_tuples.map(new OutputVariable(_))
@@ -44,12 +46,11 @@ object OutputVariable {
 			val tuple_match_query = tuple_conditions.mkString(" and ")
 			val query = s"select * from ${Data.desired_tables} where $tuple_match_query"
 			val result_tuples = Utility.query_to_vector(query)
-			for (desired_otv <- result_tuples)
-			{
-				if (otv_map.contains(desired_otv))
-					good_otvs += ((desired_otv, otv_map(desired_otv)))
-			}
+			
+			good_otvs ++= result_tuples.map(x => (x, otv_map(x)))
+			clause_buffer_1 += new Clause(result_tuples.map(x => (otv_map(x), true)))
 		}
-		bad_otvs = otv_map.filter(x => !good_otvs.contains(x._1))
+		bad_otvs = otv_map -- good_otvs.map(x => x._1)
+		Clause.clauses += ((clause_buffer_1, 1))
 	}
 }

@@ -23,7 +23,6 @@ object Clause {
 		val clause_buffer_4 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		
 		// RULE 1
-		clause_buffer_1 += new Clause(OutputVariable.good.map(x => (x._2, true)).toVector)
 		
 		// RULE 2
 		val desired_otvs = OutputVariable.good.map(x => x._1).toSet
@@ -47,7 +46,8 @@ object Clause {
 		// RULE 3
 		for(otv <- otv_cv_map -- desired_otvs) {
 			val cv_literals = otv._2._2.map(x => (x, true))
-			clause_buffer_3 += new Clause(Vector((otv._2._1, true)) ++ cv_literals)
+			if(cv_literals.size > 0) clause_buffer_3 += new Clause(cv_literals.toVector)
+//			clause_buffer_3 += new Clause(Vector((otv._2._1, true)) ++ cv_literals)
 		}
 		
 		
