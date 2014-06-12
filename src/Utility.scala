@@ -50,6 +50,10 @@ object Utility {
 		results.toVector
 	}
 	
+	def execute(statement : String) {
+	  Data.connection.createStatement.execute(statement)
+	}
+	
 	def getTableAttrs (tableName : String) : Vector[Tuple2[String, String]] = {
 		val results : ArrayBuffer[Tuple2[String,String]] = ArrayBuffer()
 		val statement = Data.connection.createStatement()
