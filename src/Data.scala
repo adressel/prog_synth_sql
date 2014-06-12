@@ -7,19 +7,19 @@ object Data {
 //	val root = "./" // for Ian
     val root = "/Users/Stephen/Desktop/prog_synth_sql/" // for Sheng
   
-	val databaseName = "test3"
+	val databaseName = "test"
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
 	val password = "123456"
-	val table_names = Vector("item", "history")
+	val table_names = Vector("album", "user")
 	
 	def desired_query = s"$desired_selects$desired_where"
 	
-	val desired_attr_names = Vector("I_DATA", "I_NAME","H_DATA", "H_C_ID")
+	val desired_attr_names = Vector("albumname", "age")
 	val desired_tables = table_names.mkString(", ")
 	val desired_selects = s"select ${desired_attr_names.mkString(", ")} from $desired_tables"
-	val desired_where = " where H_C_ID = I_IM_ID and I_ID > 99000"
+	val desired_where = " where owner = username and age < 50"
 	println(desired_selects + desired_where)
 
 	Class.forName(driver)
