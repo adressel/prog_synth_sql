@@ -8,20 +8,15 @@ object CNF {
 	var wheres : Array[String] = Array()
 	var query : String = ""
 	var clauses : Array[Int] = Array()
+	var runtime = 0.0
 		
 	def solve = {
 		val result = s"${Data.root}zchaff ${Data.root}sat/cnf_files/output.cnf" !!
-		val pattern = "(.*)Random Seed Used".r
-		val Some(patternMatch) = pattern.findFirstMatchIn(result)
-		clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
-		println(result)
+		val Some(clause_list) = "(.*)Random Seed Used".r.findFirstMatchIn(result)
+		clauses = clause_list.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
+		val Some(runtime_match) = """Total Run Time\s*(\d+.?\d*)""".r.findFirstMatchIn(result)
+		runtime = runtime_match.group(1).toDouble
 	}
-	
-//	def post_process = {
-//		val conditions = clauses.map(x => Variable.all(x-1)).collect{case x: ConditionVariable => x}
-//		val wheres = conditions.map(x => x.clause)
-//		query = s"${Data.desired_selects} where ${wheres.mkString(" and \n")}"
-//	}
 	
 	def evaluate_correctness = {
 		val original = Utility.query_to_vector(Data.desired_query).toSet
