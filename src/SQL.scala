@@ -7,8 +7,8 @@ object SQL {
   
   val root = s"${Data.root}sql"
   
-  val num_users = 200
-  val num_albums = 300
+  val num_users = 50
+  val num_albums = 50
   val num_photos = 100
   val num_contains = 100
 
