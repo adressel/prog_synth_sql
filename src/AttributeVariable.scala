@@ -41,11 +41,13 @@ object AttributeVariable {
 		     if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date" 
 		    	 ||attributes(i)._2 == "char"||attributes(i)._2 == "timestamp"){
 		    	var tmpattr : Set[String] = output_var.map(x => x._1(i + columnNum).toString).toSet
-		    	x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
+//		    	println(attributes(i)._1 + s" ${ tmpattr.reduceLeft((x,y) => if (x < y) x else y)}  " + tmpattr)
+		    	x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.min, attributes(i)._2)
 		     }
 		     else {
 		        var tmpattr : Set[Double] = output_var.map(x => (x._1(i + columnNum).toString).toDouble).toSet
-		        x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.last, attributes(i)._2)
+//		        println(attributes(i)._1 + s" ${ tmpattr.reduceLeft((x,y) => if (x > y) x else y)}  " + tmpattr)
+		        x += new AttributeVariable(table, attributes(i)._1, constVector.toVector,tmpattr.max, tmpattr.min, attributes(i)._2)
 		     }
 		   }
 		   columnNum += attributes.length
