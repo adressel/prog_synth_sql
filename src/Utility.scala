@@ -8,6 +8,7 @@ object Utility {
 	
 	def total_queries = query_count
 	var query_count = 0
+	var query_time = 0.0
 	
 	def time(func: () => Unit) : Double = {
 		val now = System.nanoTime
@@ -42,12 +43,15 @@ object Utility {
 	def query_to_vector(query : String) : Vector[Vector[Any]] = {
 //		println(query)
 		query_count += 1
+		val now = System.nanoTime
 		val rs = Data.connection.createStatement().executeQuery(query)
+		query_time += (System.nanoTime - now) / 1000000000.0
 		val results : ArrayBuffer[Vector[Any]] = ArrayBuffer()
 		while(rs.next) {
 			results += result_to_vector(rs)
 		}
 		results.toVector
+		
 	}
 	
 	def execute(statement : String) {

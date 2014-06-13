@@ -12,8 +12,15 @@ object CNF {
 		
 	def solve = {
 		val result = s"${Data.root}zchaff ${Data.root}sat/cnf_files/output.cnf" !!
+		
 		val Some(clause_list) = "(.*)Random Seed Used".r.findFirstMatchIn(result)
-		clauses = clause_list.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
+		clauses = clause_list.group(1).split(" ").filter(x => x.length > 0 && x(0) != '-').map(x => x.toInt)
+		if(clauses.size == 0) {
+		  println("No solution found!  Printing WHERE clauses:")
+		  println("")
+		  ConditionVariable.all.map(_.clause).foreach(println)
+		}
+		
 		val Some(runtime_match) = """Total Run Time\s*(\d+.?\d*)""".r.findFirstMatchIn(result)
 		runtime = runtime_match.group(1).toDouble
 	}
