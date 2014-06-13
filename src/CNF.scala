@@ -11,7 +11,9 @@ object CNF {
 		
 	def solve = {
 		val result = s"${Data.root}zchaff ${Data.root}sat/cnf_files/output.cnf" !!
+		
 		val pattern = "(.*)Random Seed Used".r
+		println(result)
 		val Some(patternMatch) = pattern.findFirstMatchIn(result)
 		clauses = patternMatch.group(1).split(" ").filter(_(0) != '-').map(x => x.toInt)
 		println(result)

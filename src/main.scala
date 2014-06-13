@@ -23,6 +23,8 @@ object main extends App {
 		CNF.solve _
 	}
 	println("expected")
+	println(OutputVariable.good.size)
+	println(OutputVariable.bad.size)
 	println(CNF.post_process) 
 	println("expected")
 //	val process_time = Utility.time {

@@ -17,13 +17,11 @@ object Clause {
 	}
 	
 	def rule1234 {
-		val clause_buffer_1 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		val clause_buffer_2 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		val clause_buffer_3 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		val clause_buffer_4 : mutable.ArrayBuffer[Clause] = mutable.ArrayBuffer()
 		
-		// RULE 1
-		clause_buffer_1 += new Clause(OutputVariable.good.map(x => (x._2, true)).toVector)
+	
 		
 		// RULE 2
 		val desired_otvs = OutputVariable.good.map(x => x._1).toSet
@@ -51,7 +49,6 @@ object Clause {
 		}
 		
 		
-		Clause.clauses += ((clause_buffer_1, 1))
 		Clause.clauses += ((clause_buffer_2, 2))
 		Clause.clauses += ((clause_buffer_3, 3))
 		Clause.clauses += ((clause_buffer_4, 4))
