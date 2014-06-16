@@ -57,7 +57,7 @@ object CNF {
 		}
 		
 		val crucial_wheres = crucial_clauses.map(x => x.clause)
-		query = s"${Data.desired_selects}" + (if (!crucial_wheres.isEmpty) s"where ${crucial_wheres.mkString(" and \n")}" else "")
+		query = s"${Data.desired_selects}" + (if (!crucial_wheres.isEmpty) s" where ${crucial_wheres.mkString(" and \n")}" else "")
 		if ((Utility.query_to_vector(query).toSet -- original).size != 0){
 		   //conditions.filter(x => !crucial_clauses.contains(x)).map(x => println(x.clause))
 		   for (combination <- conditions.filter(x => !crucial_clauses.contains(x)).

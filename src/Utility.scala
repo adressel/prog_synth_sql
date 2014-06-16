@@ -41,7 +41,7 @@ object Utility {
 	
 	//takes query string and returns vector of vector of results
 	def query_to_vector(query : String) : Vector[Vector[Any]] = {
-		println(query)
+//		println(query)
 		query_count += 1
 		val now = System.nanoTime
 		val rs = Data.connection.createStatement().executeQuery(query)
