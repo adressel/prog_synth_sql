@@ -44,6 +44,26 @@ object Printer {
 //		}
 //		out.close()
 //	}
+  
+	def print_file = {
+	    val outputFile = new File(s"${Data.root}sat/cnf_files/output.cnf")
+	    val out = new BufferedWriter(new FileWriter(outputFile))
+		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
+		out.write(header)
+		for (clause <- Clause.clauses){
+		  val ruleNum : Int = clause._2 
+		  out.write(s"c =========  rule $ruleNum  ============\n") 
+		  for (rules <- clause._1){
+			  for (attr <- rules.literals){
+				  out.write((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
+			  }
+			  out.write("0\n")
+		  } 
+		  out.flush()
+		}
+		out.close()
+	}
+  
 }
 
 
