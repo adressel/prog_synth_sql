@@ -62,6 +62,7 @@ object SQL extends App {
   }
   
   load_data
+  println("Done")
 }
 
 class User {
