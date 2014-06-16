@@ -16,8 +16,13 @@ object main extends App {
 //		ConditionVariable.all.map(x => println(x.query))
 		Clause.populate
 		println("printing")
-		Printer.print_file
+
 	}
+	
+	val print_time = Utility.time{
+	  () => Printer.print_file
+	}
+	
 	println("solving")
 	val solve_time = Utility.time {
 		CNF.solve _
@@ -27,6 +32,7 @@ object main extends App {
 	println(OutputVariable.bad.size)
 	println(CNF.post_process) 
 	println("expected")
+	println("print time : " + print_time)
 //	val process_time = Utility.time {
 //		CNF.post_process _
 //	}

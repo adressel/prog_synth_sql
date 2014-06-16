@@ -5,23 +5,45 @@ import scala.io._
 import scala.collection.mutable.ArrayBuffer
 
 object Printer {
-   def print_file = {
-		val out = new PrintWriter(s"${Data.root}sat/cnf_files/output.cnf")
-		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
-		out.print(header)
-		for (clause <- Clause.clauses){
-		  val ruleNum : Int = clause._2 
-		  out.print(s"c =========  rule $ruleNum  ============\n") 
-		  for (rules <- clause._1){
-			  var cnf = ""
-			  for (attr <- rules.literals){
-				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
-			  }
-			  out.print(cnf + "0\n") 
-		  } 
-		}
-		out.close()
-	}
+//   def print_file = {
+//		val out = new PrintWriter(s"${Data.root}sat/cnf_files/output.cnf")
+//		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
+//		out.print(header)
+//		for (clause <- Clause.clauses){
+//		  val ruleNum : Int = clause._2 
+//		  out.print(s"c =========  rule $ruleNum  ============\n") 
+//		  var cnf = ""
+//		  for (rules <- clause._1){
+//			  for (attr <- rules.literals){
+//				  cnf += ((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
+//			  }
+//			  cnf += "0\n"
+//		  } 
+//		  out.print(cnf)
+//		}
+//		out.close()
+//	}
+  
+//  def print_file = {
+//	    val outputFile = new File(s"${Data.root}sat/cnf_files/output.cnf")
+//	    val out = new BufferedWriter(new FileWriter(outputFile))
+//		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
+//		out.write(header)
+//		for (clause <- Clause.clauses){
+//		  val ruleNum : Int = clause._2 
+//		  out.write(s"c =========  rule $ruleNum  ============\n") 
+//		  var cnf = new StringBuffer
+//		  for (rules <- clause._1){
+//			  for (attr <- rules.literals){
+//				  cnf.append((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
+//			  }
+//			  cnf.append("0\n")
+//		  } 
+//		  out.write(cnf.toString)
+//		  out.flush()
+//		}
+//		out.close()
+//	}
 }
 
 
