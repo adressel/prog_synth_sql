@@ -3,7 +3,7 @@ import scala.util.Random
 import java.io.PrintWriter
 import scala.sys.process._
 
-object SQL {
+object SQL extends App {
   
   val root = s"${Data.root}sql"
   
@@ -60,11 +60,13 @@ object SQL {
   def s(len: Int) = {
     gen.alphanumeric.take(len).mkString
   }
+  
+  load_data
 }
 
 class User {
   val username : String = User.get_id
-  val age : Int = SQL.i(100)
+  val age : Int = SQL.i(5)
   val firstname: String = SQL.s(10)
   val lastname: String = SQL.s(10)
   val height: Int = SQL.i(100)

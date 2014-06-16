@@ -24,9 +24,19 @@ object main extends App {
 	}
 	
 	println("solving")
-	val solve_time = Utility.time {
-		CNF.solve _
+	CNF.solve 
+	
+	var process_time = 0
+	if(CNF.clauses.size > 0) {
+		println("processing")
+		val process_time = Utility.time {
+			CNF.post_process _
+		}
+		println(s"query: ${CNF.query}\n")
+
+		CNF.evaluate_correctness
 	}
+
 	println("expected")
 	println(OutputVariable.good.size)
 	println(OutputVariable.bad.size)
@@ -54,5 +64,6 @@ object main extends App {
 //	println("")
 //	println(s"unary clauses: ${ConditionVariable.get_unary.size}")
 //	println(s"binary clauses: ${ConditionVariable.get_binary.size}")
+
 }
 
