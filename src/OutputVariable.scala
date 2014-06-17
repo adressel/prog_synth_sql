@@ -45,12 +45,15 @@ object OutputVariable {
 			}
 			val tuple_match_query = tuple_conditions.mkString(" and ")
 			val query = s"select * from ${Data.desired_tables} where $tuple_match_query"
+			println(query)
 			val result_tuples = Utility.query_to_vector(query)
 			
 			good_otvs ++= result_tuples.map(x => (x, otv_map(x)))
-			clause_buffer_1 += new Clause(result_tuples.map(x => (otv_map(x), true)))
+			clause_buffer_1 += new Clause(result_tuples.map(x => otv_map(x)).mkString(" "))
+//			clause_buffer_1 += new Clause(result_tuples.map(x => (otv_map(x), true)))
 		}
 		bad_otvs = otv_map -- good_otvs.map(x => x._1)
 		Clause.clauses += ((clause_buffer_1, 1))
 	}
+	
 }

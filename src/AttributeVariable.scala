@@ -25,7 +25,7 @@ object AttributeVariable {
 	val x : ArrayBuffer[AttributeVariable] = ArrayBuffer()
 		var i = 0
 		val output_var = OutputVariable.good
-		output_var.map(x => println(x._1))
+		//output_var.map(x => println(x._1))
 		var columnNum = 0
 		
 		for (table <- Data.table_names)

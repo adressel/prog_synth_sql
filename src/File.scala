@@ -5,28 +5,24 @@ import scala.io._
 import scala.collection.mutable.ArrayBuffer
 
 object Printer {
+	
 	def print_file = {
 	    val outputFile = new File(s"${Data.root}sat/cnf_files/output.cnf")
-	    val out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)))
-//	    val out = new BufferedWriter(new FileWriter(outputFile))
+
+	    val out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream( outputFile) ), 8000000 )
 		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
 		out.write(header)
 		for (clause <- Clause.clauses){
 		  val ruleNum : Int = clause._2 
-		  out.write(s"c =========  rule $ruleNum  ============\n") 
+		  out.write(s"c =========  rule $ruleNum  ============\n")
 		  for (rules <- clause._1){
-			  for (attr <- rules.literals){
-				  val sign = if(!attr._2) "-" else ""
-				  out.write(s"$sign${attr._1} ")
-//				  out.write((if(!attr._2) {"-"} else {""}) +  attr._1 + " ")
-			  }
-			  out.write("0\n")
+		      out.write(rules.literals)
+			  out.write(" 0\n")
 		  } 
 		  out.flush()
 		}
 		out.close()
 	}
-  
 }
 
 

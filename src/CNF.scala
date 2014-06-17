@@ -14,10 +14,11 @@ object CNF {
 		val result = s"${Data.root}zchaff ${Data.root}sat/cnf_files/output.cnf" !!
 		val Some(clause_list) = "(.*)Random Seed Used".r.findFirstMatchIn(result)
 		clauses = clause_list.group(1).split(" ").filter(x => x.length > 0 && x(0) != '-').map(x => x.toInt)
+		println(result)
 		if(clauses.size == 0) {
 		  println("No solution found!  Printing WHERE clauses:")
-		  println("")
-		  ConditionVariable.all.map(_.clause).foreach(println)
+		  println(s"${Data.desired_selects} where ")
+		  ConditionVariable.all.map(_.clause).foreach(x => println(x+ " and "))
 		}
 		
 		val Some(runtime_match) = """Total Run Time\s*(\d+.?\d*)""".r.findFirstMatchIn(result)
@@ -39,7 +40,10 @@ object CNF {
 		val original = Utility.query_to_vector(Data.desired_query).toSet
 		val conditions = clauses.map(x => Variable.all(x-1)).collect{case x: ConditionVariable => x}
 		val wheres = conditions.map(x => x.clause)
-		query = s"${Data.desired_selects} where ${wheres.mkString(" and \n")}"
+		if (!wheres.isEmpty)
+			query = s"${Data.desired_selects} where ${wheres.mkString(" and \n")}"
+		else
+			return "nothing in the where clauses!"
 		if ((original -- Utility.query_to_vector(query).toSet).size != 0 
 		    || (Utility.query_to_vector(query).toSet -- original).size != 0)
 			return "The derived query we get is wrong! \n" + query //to check whether the derived query is right
