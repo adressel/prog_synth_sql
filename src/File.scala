@@ -27,8 +27,9 @@ object Printer {
 	
 	def print_file = {
 	    val outputFile = new File(s"${Data.root}sat/cnf_files/output.cnf")
-	   // val out = new BufferedWriter(new FileWriter(outputFile), 8000000)
+
 	    val out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream( outputFile) ), 8000000 )
+
 		val header = s"c output.enc\nc\np cnf ${Variable.count} ${Clause.size} \n"
 		out.write(header)
 		for (clause <- Clause.clauses){
