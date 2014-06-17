@@ -4,14 +4,14 @@ import java.sql.Connection
 
 object Data {
 
-//	val root = "./" // for Ian
-    val root = "/Users/Stephen/Desktop/prog_synth_sql/" // for Sheng
+	val root = "./" // for Ian
+//    val root = "/Users/Stephen/Desktop/prog_synth_sql/" // for Sheng
   
 	val databaseName = "test"
 	val driver = "com.mysql.jdbc.Driver"
 	val url = s"jdbc:mysql://localhost:3306/$databaseName"
 	val username = "root"
-	val password = "123456"
+	val password = ""
 	val table_names = Vector("user", "album")
 	
 	def desired_query = s"$desired_selects$desired_where"
