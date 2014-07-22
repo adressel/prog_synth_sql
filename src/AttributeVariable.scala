@@ -2,6 +2,8 @@ package src
 import java.sql.Connection
 import scala.collection.mutable.ArrayBuffer
 
+// AttributeVariable is responsible for 
+
 class AttributeVariable (
 	val tableName: String, 
 	val attrName: String, 
