@@ -4,6 +4,8 @@ import java.sql.Connection
 import com.mysql.jdbc
 import scala.collection.mutable.MutableList
 
+// I recommend reading Data.scala
+
 object main extends App {
 	
 	val encode_time = Utility.time {
