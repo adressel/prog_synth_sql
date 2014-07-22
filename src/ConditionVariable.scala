@@ -1,182 +1,136 @@
-//package src
-//import java.sql.Connection
-//import scala.collection.mutable.ArrayBuffer
 package src
 import java.sql.Connection
 import scala.collection.mutable.ArrayBuffer
 
+// A condition variable represents a select query
+
 abstract class ConditionVariable(
-    left : AttributeVariable, 
-    op : String
-) extends Variable 
-{
-	def clause: String
-	def query : String
+  left: AttributeVariable,
+  op: String) extends Variable {
+  //
+  def clause: String
+
+  // query represents the string associated with the cv
+  def query: String
 }
 
+// a UnaryCondition is a class that inherits from ConditionVariable.  It
+// represents a single attribute compared (=, <=, >=) with a literal.
 class UnaryCondition(
-    left : AttributeVariable, 
-    op : String,
-    right: Any
-)
-extends ConditionVariable(left, op) {
-	
-	// wraps string literals in quotes so that SQL can understand
-	def rightQuery = {
-		right match {
-			case x: String => "\"" + x + "\""
-			case x: Vector[Any] => println("nooooo"); System.exit(1)
-			case _ => right.toString
-		}
-	}
-	override def print = query
-	override def toString() = s"$left $op $right\n"
-	override def clause = s"${left.name} $op $rightQuery"
-	def query = s"select * from ${Data.desired_tables} where ${clause}"
+  left: AttributeVariable,
+  op: String,
+  right: Any)
+  extends ConditionVariable(left, op) {
+  // wraps string literals in quotes so that SQL can understand.  
+  // ex: user.name = "Bob" vs. user.name = Bob
+  def rightQuery = {
+    right match {
+      case x: String => "\"" + x + "\""
+      case x: Vector[Any] =>
+        println(""); System.exit(1)
+      case _ => right.toString
+    }
+  }
+
+  override def print = query
+
+  // toString() overridden for debugging purposes
+
+  override def toString() = s"$left $op $right\n"
+  override def clause = s"${left.name} $op $rightQuery"
+  def query = s"select * from ${Data.desired_tables} where ${clause}"
 }
 
+// A binary condition specifically deals with comparisons between two attributes
 class BinaryCondition(
-    left : AttributeVariable, 
-    op : String,
-    right: AttributeVariable
-) extends ConditionVariable(left, op) {
-	override def print = query
-	override def toString() = s"$left $op $right"
-	override def clause = s"${left.name} $op ${right.name}"
-	def query = s"select * from ${Data.desired_tables} where ${clause}"
+  left: AttributeVariable,
+  op: String,
+  right: AttributeVariable) extends ConditionVariable(left, op) {
+
+  override def print = query
+
+  override def toString() = s"$left $op $right"
+
+  override def clause = s"${left.name} $op ${right.name}"
+
+  def query = s"select * from ${Data.desired_tables} where ${clause}"
 }
 
 object ConditionVariable {
-	private var cv_binary : Vector[ConditionVariable] = Vector()
-	private var cv_unary : Vector[ConditionVariable] = Vector()
-	def all = cv_unary ++ cv_binary
-	def get_binary = cv_binary
-	def get_unary = cv_unary
-	
-	// return a Vector of condition clauses given two tables
-	def populate_binary(op : String) = {
-		val attrVector = AttributeVariable.all
-		val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
-		var i = 0
-		var j = 0
-		for (i <- 0 until (attrVector.length - 1)){
-			for (j <- (i+1) until attrVector.length){
-				if (attrVector(i).attrType == attrVector(j).attrType)
-					binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j)) 
-		  }
-		}
-		cv_binary = cv_binary ++ (binaryVector.toVector)
-	}
-	
-	def populate_unary(op : String, accept_type : Vector[String]) = {
-		val attrVector = AttributeVariable.all
-		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
-		for (attr <- attrVector) { 
-		  if (!accept_type.contains(attr.attrType)){
-			for (const <- attr.constant)  unaryVector += new UnaryCondition(attr, op, const)
-		  }
-		}
-		cv_unary = cv_unary ++ (unaryVector.toVector)
-	}
-	
-	
-	def populate_unary_max_min = {
-		val attrVector = AttributeVariable.all
-		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
-		for (attr <- attrVector) { 
-		   if (attr.max == attr.min)
-		     unaryVector += new UnaryCondition(attr, "=", attr.max)
-		   else {
-			unaryVector += new UnaryCondition(attr, "<=", attr.max)
-			unaryVector += new UnaryCondition(attr, ">=", attr.min)
-		   }
-		}
-		cv_unary = cv_unary ++ (unaryVector.toVector)
-	}
+  // A vector of binary conditions
+  private var cv_binary: Vector[ConditionVariable] = Vector()
+
+  // A vector of unary conditions
+  private var cv_unary: Vector[ConditionVariable] = Vector()
+
+  // A method to get "all" condition variables
+  def all = cv_unary ++ cv_binary
+  def get_binary = cv_binary
+  def get_unary = cv_unary
+
+  // creates and adds binary condition variables to cv_binary given an "op" string.
+  // If op was "=", then binary cvs like "user.username = album.owner" would be created.
+  // If op was "<", then binary cvs like "user.username < album.owner" would be created.
+  def populate_binary(op: String) = {
+    val attrVector = AttributeVariable.all
+
+    // a temporary ArrayBuffer of binary cvs to build up
+    val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
+
+    var i = 0
+    var j = 0
+    // iterate through every attribute
+    for (i <- 0 until (attrVector.length - 1)) {
+      // a second loop to guarantee every combination of attributes will be considered
+      for (j <- (i + 1) until attrVector.length) {
+        // only create a binary cv is the two attributes are the same type
+        if (attrVector(i).attrType == attrVector(j).attrType)
+          binaryVector += new BinaryCondition(attrVector(i), op, attrVector(j))
+      }
+    }
+    // add the generated cvs to cv_binary
+    cv_binary = cv_binary ++ (binaryVector.toVector)
+  }
+
+  // populate unary cvs. 
+  // ARGUMENTS:
+  //	op - a string such as "=" or "<=" that indicates what sort of variables will be created
+  //	accept-type - a string that indicates what type of attributes will be genereated 
+  //		e.g. "String" or "Integer"
+  def populate_unary(op: String, accept_type: Vector[String]) = {
+    val attrVector = AttributeVariable.all
+    // temporary ArrayBuffer to build up Unary Conditions
+    val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
+
+    // iterate each attributeVariable
+    for (attr <- attrVector) {
+      // only create unary conditions if it is the accepted attribute type
+      if (!accept_type.contains(attr.attrType)) {
+        // create a unary cv for EVERY constant associated with this attribute
+        for (const <- attr.constant)
+          unaryVector += new UnaryCondition(attr, op, const)
+      }
+    }
+    cv_unary = cv_unary ++ (unaryVector.toVector)
+  }
+
+  // creates unary variables with ONLY the max/min of each table
+  // max will be compared with <=, while min will be compared with >=
+  def populate_unary_max_min = {
+    val attrVector = AttributeVariable.all
+
+    // temp ArrayBuffer for populating
+    val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
+    // iterate every attribute variable
+    for (attr <- attrVector) {
+    	// if this attributes max = min, then there is only ONE possible value for this variable
+      if (attr.max == attr.min)
+        unaryVector += new UnaryCondition(attr, "=", attr.max)
+      else {
+        unaryVector += new UnaryCondition(attr, "<=", attr.max)
+        unaryVector += new UnaryCondition(attr, ">=", attr.min)
+      }
+    }
+    cv_unary = cv_unary ++ (unaryVector.toVector)
+  }
 }
-
-
-
-
-
-//
-//abstract class ConditionVariable(
-//    left : AttributeVariable, 
-//    op : ConditionVariable.Operator.Value
-//) extends Variable 
-//{
-//	def query : String
-//}
-//
-//class UnaryCondition(
-//    left : AttributeVariable, 
-//    op : ConditionVariable.Operator.Value,
-//    right: Any
-//)
-//extends ConditionVariable(left, op) {
-//	
-//	// wraps string literals in quotes so that SQL can understand
-//	def rightQuery = {
-//		right match {
-//			case x: String => "\"" + x + "\""
-//			case x: Vector[Any] => println("nooooo"); System.exit(1)
-//			case _ => right.toString
-//		}
-//	}
-//	override def print = query
-//	override def toString() = s"$left $op $right"
-//	override def query = s"${left.name} ${ConditionVariable.opToString(op)} $rightQuery"
-//}
-//
-//class BinaryCondition(
-//    left : AttributeVariable, 
-//    op : ConditionVariable.Operator.Value,
-//    right: AttributeVariable
-//) extends ConditionVariable(left, op) {
-//	override def print = query
-//	override def toString() = s"$left $op $right"
-//	override def query = s"${left.name} ${ConditionVariable.opToString(op)} ${right.name}"
-//}
-//
-//object ConditionVariable {
-//	private var cvs : Vector[ConditionVariable] = Vector()
-//	def all = cvs
-//	
-//	object Operator extends Enumeration {
-//		type Operator = Value
-//		val Equal, NotEqual, Less, Greater, LessEq, GreatEq = Value
-//	}
-//	
-//	def opToString(op : Operator.Value) = {
-//		op match {
-//			case Operator.Equal => "="
-//			case Operator.NotEqual => "!="
-//			case Operator.Less => "<"
-//			case Operator.Greater => ">"
-//			case Operator.LessEq => "<="
-//			case Operator.GreatEq => ">="
-//			case _ => "null"
-//		}
-//	}
-//  
-//	// return a Vector of condition clauses given two tables
-//	def populate = {
-//		val attrVector = AttributeVariable.all
-//		val binaryVector: ArrayBuffer[BinaryCondition] = ArrayBuffer()
-//		val unaryVector: ArrayBuffer[UnaryCondition] = ArrayBuffer()
-//		for (attr <- attrVector) { 
-//		  for (op <- ConditionVariable.Operator.values){
-//			for (attr2 <- attrVector) {
-//				if (attr.attrType == attr2.attrType)
-//					binaryVector += new BinaryCondition(attr, op, attr2)  
-//			}
-//			for (const <- attr.constant) {
-//			  unaryVector += new UnaryCondition(attr, op, const)
-//			}
-//		  }
-//		}
-//		cvs = (binaryVector.toVector) ++ (unaryVector.toVector)
-//	}
-//}
-//
-//
