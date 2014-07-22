@@ -45,7 +45,6 @@ object OutputVariable {
 			}
 			val tuple_match_query = tuple_conditions.mkString(" and ")
 			val query = s"select * from ${Data.desired_tables} where $tuple_match_query"
-			println(query)
 			val result_tuples = Utility.query_to_vector(query)
 			
 			good_otvs ++= result_tuples.map(x => (x, otv_map(x)))

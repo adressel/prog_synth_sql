@@ -24,7 +24,7 @@ object CNF {
     // populate clauses as a Array of Integers of true variables in the string clause_list
     // true variables do not have a preceding '-'
     clauses = clause_list.group(1).split(" ").filter(x => x.length > 0 && x(0) != '-').map(x => x.toInt)
-    println(result)
+//    println(result)
 
     // if clauses is empty, then zchaff could not find a solution
     if (clauses.size == 0) {
