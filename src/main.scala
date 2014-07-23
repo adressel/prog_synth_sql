@@ -4,49 +4,52 @@ import java.sql.Connection
 import com.mysql.jdbc
 import scala.collection.mutable.MutableList
 
+// Skim over Main.scala.
+
+// read Data.scala and Utility.scala and Variable.scala before reading other files
+// Then, you can read the files in the order they appear in main.
+
 object main extends App {
-	
+
+	// encoding
 	val encode_time = Utility.time {
 		() =>
 		OutputVariable.populate
 		AttributeVariable.populate
 		ConditionVariable.populate_binary("=")
 		ConditionVariable.populate_unary_max_min
+		// uncomment the lines below to add extra condition variables
 //		ConditionVariable.populate_unary("!=", Vector("timestamp"))
 //		ConditionVariable.all.map(x => println(x.query))
 		Clause.populate
 		println("printing")
-
 	}
 	
 	val print_time = Utility.time{
 	  () => Printer.print_file
 	}
 	
-	println("solving")
-	CNF.solve 
+	val solve_time = Utility.time {
+		() =>
+		println("solving")
+		CNF.solve
+	} 
 	
-	var process_time = 0
+	var process_time = 0.0
 	if(CNF.clauses.size > 0) {
 		println("processing")
-		val process_time = Utility.time {
+		process_time = Utility.time {
 			CNF.post_process _
 		}
-		println(s"query: ${CNF.query}\n")
+		println(s"query: ${CNF.query}")
 
 		CNF.evaluate_correctness
 	}
-
-	println("expected")
-	println(OutputVariable.good.size)
-	println(OutputVariable.bad.size)
-	println(CNF.post_process) 
-	println("expected")
+	// print runtime and other metrics
 	println("print time : " + print_time)
 	println(s"encode time: $encode_time")
-//	println(s"solve_time: $solve_time")
+	println(s"solve_time: $solve_time")
 	println(s"process_time: $process_time")
-//	println(s"encoder_memory: $encoder_memory")
 	println("")
 	println(s"variables: ${Variable.all.size}")
 	println(s"clauses: ${Clause.size}")

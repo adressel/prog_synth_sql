@@ -36,9 +36,9 @@ object AttributeVariable {
       val attributes = Utility.getTableAttrs(table)
 
       for (i <- 0 until attributes.length) {
-				// get a list of all unique constants that occur for this attribute, from this table        
+        // get a list of all unique constants that occur for this attribute, from this table        
         val constantSet = Data.connection.createStatement().executeQuery(s"select distinct ${attributes(i)._1} from $table;");
-        
+
         // convert the constantSet to an ArrayBuffer
         val constVector: ArrayBuffer[Any] = ArrayBuffer()
         while (constantSet.next()) {
@@ -48,11 +48,10 @@ object AttributeVariable {
         // varchar, date, char, and timestamp are attribute types that need to have their values wrapped
         // in quotes.  Like name = "Bob" versus name = Bob
         if (attributes(i)._2 == "varchar" || attributes(i)._2 == "date"
-          	|| attributes(i)._2 == "char" || attributes(i)._2 == "timestamp") {
+          || attributes(i)._2 == "char" || attributes(i)._2 == "timestamp") {
           var tmpattr: Set[String] = output_var.map(x => x._1(i + columnNum).toString).toSet
           x += new AttributeVariable(table, attributes(i)._1, constVector.toVector, tmpattr.max, tmpattr.min, attributes(i)._2)
-        } 
-        // otherwise, no quotes are necessary
+        } // otherwise, no quotes are necessary
         else {
           var tmpattr: Set[Double] = output_var.map(x => (x._1(i + columnNum).toString).toDouble).toSet
           x += new AttributeVariable(table, attributes(i)._1, constVector.toVector, tmpattr.max, tmpattr.min, attributes(i)._2)
