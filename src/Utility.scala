@@ -4,12 +4,17 @@ import java.sql.Connection
 import java.sql.DatabaseMetaData
 import java.sql.ResultSet
 
+// Utility.scala simply contains helper functions that are used fairly
+// frequently throughout the program.  Most of these are SQL helper functions
+// It also keeps track of a couple of misc. metrics such as the number of queries.
 object Utility {
 	
 	def total_queries = query_count
 	var query_count = 0
+	// time spent running queries
 	var query_time = 0.0
 	
+	// a timing function
 	def time(func: () => Unit) : Double = {
 		val now = System.nanoTime
 		func()
@@ -54,10 +59,13 @@ object Utility {
 		
 	}
 	
+	// executes a statement.  (essentially shorthand)
 	def execute(statement : String) {
 	  Data.connection.createStatement.execute(statement)
 	}
 	
+	// get a Vector of Attributes from a table.  This vector contains a Tuple2
+	// which contains the attribute name and the attribute type
 	def getTableAttrs (tableName : String) : Vector[Tuple2[String, String]] = {
 		val results : ArrayBuffer[Tuple2[String,String]] = ArrayBuffer()
 		val statement = Data.connection.createStatement()

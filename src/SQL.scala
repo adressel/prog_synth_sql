@@ -3,15 +3,30 @@ import scala.util.Random
 import java.io.PrintWriter
 import scala.sys.process._
 
+// SQL.scala is responsible for randomly generating a table so that we
+// could do performance tests more efficiently.
+
+// SQL.scala randomly generates the data for the following tables:
+// User, Album, Photo, and Contains
+
+// Users own albums, which is indicated by the Album.owner field
+// Albums contain photos, which is a many-many relationship expressed in the Contains
+// table
+
 object SQL {
-  
+  // the root of all sql files
   val root = s"${Data.root}sql"
   
+  // size of user table
   val num_users = 400
+  // size of album table
   val num_albums = 400
+  // size of photo table
   val num_photos = 100
+  // number of photo-album relationships (size of contains table)
   val num_contains = 100
 
+  // rseed is the random seed
   val rseed = 100;
   val gen = new Random(rseed)
   
@@ -53,10 +68,12 @@ object SQL {
     Utility.execute("insert into contain values" + contains.map(x => x.insert_SQL).mkString(","))
   }
   
+  // generate a random Integer between 0 and max
   def i(max: Int) = {
     gen.nextInt(max)
   }
   
+  // generate a random string of length len
   def s(len: Int) = {
     gen.alphanumeric.take(len).mkString
   }
