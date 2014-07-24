@@ -57,47 +57,57 @@ object CNF {
   // post processing in an attempt to only return the smallest combination of clauses output by 
   // zchaff that will still give a good answer
   def post_process: String = {
+    // any tuples in the desired output
     val original = Utility.query_to_vector(Data.desired_query).toSet
+    // map every cvs into string
     val conditions = clauses.map(x => Variable.all(x - 1)).collect { case x: ConditionVariable => x }
     val wheres = conditions.map(x => x.clause)
     if (!wheres.isEmpty)
       query = s"${Data.desired_selects} where ${wheres.mkString(" and \n")}"
     else
       return "nothing in the where clauses!"
+      
+    //check whether the complete query can get exact desired output tuples
     if ((original -- Utility.query_to_vector(query).toSet).size != 0
       || (Utility.query_to_vector(query).toSet -- original).size != 0)
       return "The derived query we get is wrong! \n" + query //to check whether the derived query is right
 
+    // container for the selected clauses  
     val crucial_clauses: ArrayBuffer[ConditionVariable] = ArrayBuffer()
     var i = 0
+    
+    // neglect one of the clause in the conditions each time
+    // if the derived clauses set is the same as the desired output 
+    // then that clause is redundant
+    // otherwise that one is a crucial clause
     for (i <- 0 until (conditions.length - 1)) {
+      // remove the ith of the clause in the conditions each time
       val test_where = remove(conditions, i).map(x => x.clause)
       val test_query = s"${Data.desired_selects} where ${test_where.mkString(" and \n")}"
       val derived = Utility.query_to_vector(test_query).toSet
-      if ((derived -- original).size != 0) {
+      if ((derived -- original).size != 0) {// to check the clause is reduntant or not
         crucial_clauses += conditions(i)
       }
     }
 
     val crucial_wheres = crucial_clauses.map(x => x.clause)
     query = s"${Data.desired_selects}" + (if (!crucial_wheres.isEmpty) s" where ${crucial_wheres.mkString(" and \n")}" else "")
+    // try to find the smallest combination of crucial clauses by trying all the subset of crucial_clauses
     if ((Utility.query_to_vector(query).toSet -- original).size != 0) {
-      //conditions.filter(x => !crucial_clauses.contains(x)).map(x => println(x.clause))
-      for (
-        combination <- conditions.filter(x => !crucial_clauses.contains(x)).
-          toSet[ConditionVariable].subsets.map(_.toList).toList
-      ) {
-        if (!combination.isEmpty) {
-          val query_combined = query + " and " + combination.map(x => x.clause).mkString(" and \n")
-          if ((Utility.query_to_vector(query_combined).toSet -- original).size == 0) {
-            return query_combined
-          }
-        }
+      for (combination <- conditions.filter(x => !crucial_clauses.contains(x)).
+          toSet[ConditionVariable].subsets.map(_.toList).toList) {
+	        if (!combination.isEmpty) {
+	          val query_combined = query + " and " + combination.map(x => x.clause).mkString(" and \n")
+	          if ((Utility.query_to_vector(query_combined).toSet -- original).size == 0) {
+	            return query_combined
+	          }
+	        }
       }
     }
     query
   }
 
+  // remove ith element from the Array 
   def remove(xs: Array[ConditionVariable], i: Int) = (xs take i) ++ (xs drop (i + 1))
 }
 
