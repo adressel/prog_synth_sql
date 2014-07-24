@@ -5,9 +5,9 @@ import scala.collection.mutable.ArrayBuffer
 // A condition variable represents a select query
 
 abstract class ConditionVariable(
-  left: AttributeVariable,
-  op: String) extends Variable {
-  //
+  left: AttributeVariable,  // the left operand of this condition 
+  op: String                // an operator string e.g. <=, =, >=
+) extends Variable {
   def clause: String
 
   // query represents the string associated with the cv
@@ -17,9 +17,10 @@ abstract class ConditionVariable(
 // a UnaryCondition is a class that inherits from ConditionVariable.  It
 // represents a single attribute compared (=, <=, >=) with a literal.
 class UnaryCondition(
-  left: AttributeVariable,
-  op: String,
-  right: Any)
+  left: AttributeVariable,   // same as ConditionVariable
+  op: String,                // same as ConditionVariable
+  right: Any                 // a constant that is the right operand
+)
   extends ConditionVariable(left, op) {
   // wraps string literals in quotes so that SQL can understand.  
   // ex: user.name = "Bob" vs. user.name = Bob
@@ -43,9 +44,10 @@ class UnaryCondition(
 
 // A binary condition specifically deals with comparisons between two attributes
 class BinaryCondition(
-  left: AttributeVariable,
-  op: String,
-  right: AttributeVariable) extends ConditionVariable(left, op) {
+  left: AttributeVariable,  // left operand
+  op: String,               // operand string
+  right: attributeVariable  // right operand
+) extends ConditionVariable(left, op) {
 
   override def print = query
 
@@ -62,9 +64,8 @@ object ConditionVariable {
 
   // A vector of unary conditions
   private var cv_unary: Vector[ConditionVariable] = Vector()
-
-  // A method to get "all" condition variables
-  def all = cv_unary ++ cv_binary
+ 
+  def all = cv_unary ++ cv_binary // A method to get "all" condition variables
   def get_binary = cv_binary
   def get_unary = cv_unary
 

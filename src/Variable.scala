@@ -6,16 +6,16 @@ import scala.collection.mutable._
 // be a subclass of Variable to inherit it's id-tracking system
 
 object Variable {
-	type Literal = Tuple2[Int, Boolean]
-	var count = 0;
-	def newId() = {count += 1; count}
+	type Literal = Tuple2[Int, Boolean]    // define a literal type
+	var count = 0;                         // a variable id tracker
+	def newId() = {count += 1; count}      // give a new variable id to the variable constructor
 	
 	val all : ArrayBuffer[Variable] = ArrayBuffer()
 }
 
 class Variable {
-	val id = Variable.newId
-	Variable.all += this
-	def name = ""
+	val id = Variable.newId  // a unique id for zchaff .cnf files
+	Variable.all += this     // add this new variable to the variable master-list
+	def name = ""            
 	def print  = ""
 }
